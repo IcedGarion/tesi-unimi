@@ -16,9 +16,9 @@
 	 
 	\section{Indice}
 	\begin{itemize}
-		\item Introduzione
-		\item Descrizione e analisi dati
-		\item Descrizione dati
+		\item Capitolo introduttivo
+			\item Descrizione e analisi dati
+			\item Descrizione dati
 		\item Descrizione AI
 		\item Stato dell'arte metodologie di test
 		\item Descrizione test
@@ -33,32 +33,46 @@
 		Fra le diverse tipologie di intelligenze artificiali attualmente disponibili vengono considerate quelle di supporto alle decisioni, che si adattano particolarmente al problema e all'ambito in questione. Quando si sviluppa uno strumento di questo tipo è indispensabile porsi delle domande circa la qualità dei risultati prodotti dalla AI, confrontandoli con un modello ottimale di riferimento, che spesso non è disponibile oppure è molto difficile da produrre (in alcuni casi incalcolabile), e paragonandoli anche ad altre applicazioni già esistenti.
 
 
-	\section{Descrizione dell'ambito di riferimento}
+	\subsection{Descrizione dell'ambito di riferimento}
 		Il dominio considerato è quello della finanza, in particolare lo sviluppo di strategie di investimento intelligenti.\\
-		La AI da testare (\textbf{Sentyment}) è complessa e articolata, genera diverse strategie di investimento personalizzate per numerosi strumenti finanziari ed è anche in grado di piazzare direttamente ordini sul mercato, ovvero effettuare operazioni di acquisto e vendita. Il mercato in cui opera è quello delle criptovalute, in cui Bitcoin rappresenta in assoluto l'asset più famoso, ma è accompagnato da altre monete, come Ethereum, Bitcoin Cash e Ripple, meno famose ma con le loro particolarità e altrettanto scambiate.\\
+		La AI da testare (\textbf{Sentyment}) è complessa e articolata, genera diverse strategie di investimento personalizzate per numerosi strumenti finanziari ed è anche in grado di piazzare direttamente ordini sul mercato, ovvero effettuare operazioni di acquisto e vendita. Il mercato in cui opera è quello delle criptovalute, in cui Bitcoin rappresenta in assoluto l'asset più famoso, ma è accompagnato da altre monete come Ethereum, Bitcoin Cash e Ripple, meno famose ma con le loro particolarità e altrettanto scambiate.\\
 		L'obiettivo finale di Sentyment è quindi produrre delle \textbf{strategie di investimento}. Sono approcci di investimento personalizzati in funzione della propensione al rischio, degli obiettivi e degli interessi specifici del singolo investitore. Seguendo tale strategia, l’investitore può decidere sui diversi tipi di attività da includere nel proprio portafoglio di investimento. Una specifica strategia di investimento può essere determinata da una serie di fattori, come la propensione al rischio e i rendimenti che si vogliono perseguire sugli investimenti, nonché le attività, le regioni e i settori a cui si è interessati. Anche il periodo per il quale si intende investire contribuisce a configurare la strategia.\\
-		Definita una certa strategia, Sentyment la persegue decidendo quindi, in ogni "periodo di tempo" quale delle 3 possibili operazioni effettuare: \textbf{buy} (comprare il titolo azionario), \textbf{sell} (vendere) o \textbf{hold} (mantenere il portafoglio). Lo scopo a lungo termine è massimizzare il guadagno rispetto a quanto investito, oltre a rispettare i vincoli di rischio e interessi specifici dell'investitore. La AI è in grado di decidere quali fra queste operazioni effettuare al fine di massimizzare gli obiettivi.\\
-		Le azioni non sono effettuate istante per istante: il periodo di tempo considerato è l'ora. Ogni ora la piattaforma di trading di riferimento produce nuovi dati e questi sono disponibili per essere scaricati dai trader, che possono quindi compiere le azioni sopra descritte. Oltre alla cadenza oraria è anche possibile scegliere i minuti: 1, 5, 15, 30, 60, 240, 1440, 10080, 21600 (dipende dalla piattaforma di trading).\\
+		Definita una certa strategia, Sentyment la persegue decidendo quindi, in ogni "istante di tempo" quale delle 3 possibili operazioni effettuare: \textbf{buy} (comprare il titolo azionario), \textbf{sell} (vendere) o \textbf{hold} (mantenere il portafoglio). Lo scopo a lungo termine della strategia è massimizzare il guadagno rispetto a quanto investito, oltre a rispettare i vincoli di rischio e interessi specifici dell'investitore. La AI è in grado di decidere quali fra queste operazioni effettuare al fine di massimizzare gli obiettivi.\\
+		Le decisioni non sono prese esattamente "istante per istante": il periodo di tempo considerato è l'ora. Ogni ora la piattaforma di trading di riferimento produce nuovi dati e questi sono disponibili per essere scaricati dai trader, che possono quindi compiere le azioni sopra descritte. Oltre alla cadenza oraria è anche possibile scegliere i minuti: 1, 5, 15, 30, 60, 240, 1440, 10080, 21600 (dipende dalla piattaforma di trading).\\
+		
+
+	\subsection{Modello dei dati}
+		Tutti i dati usati dalla AI sono scaricati da una piattaforma di trading, \textbf{Kraken}, un sito per lo scambio di criptovalute. Ogni secondo, trader da tutto il mondo effettuano azioni di compravendita di titoli, esattamente nel modo in cui opera anche Sentyment, facendo crescere o diminuire il valore azionario di ogni asset. Kraken rende disponibile, attraverso delle API, lo storico degli scambi effettuati per ognuno degli asset che espone (110 coppie di valute che rappresentano i valori di scambio fra criptovalute e USD / EUR ): si fa distinzione fra dati "RAW", ovvero un semplice elenco di prezzi variabili nel tempo, e le candele ohlcv. Le candele sono uno degli strumenti grafici più popolari in quanto offrono un eccellente riferimento virtuale dei movimenti dei prezzi in un intervallo di tempo ad un minuto, orario, giornaliero, mensile ed altro. Esse operano come il grafico OHLC tranne che con il corpo colorato per tracciare la differenza tra il prezzo di apertura e quello di chiusura di una barra.\\
+		
+		\textbf{Immagine kraken candele}
+		
+		
+		Le candele ohlcv sono quindi la rappresentazione di un dato aggregato ora per ora (o secondo altre unità di tempo come minuto o giorno). Le informazioni che racchiudono sono indicate dal loro nome: open, high, low, close, volume. Prendendo come esempio le candele orarie: la creazione di ognuna di esse parte allo scoccare dell'ora e fissa un prezzo di apertura (open: il prezzo di vendita dell'asset in quel momento), per terminare dopo un'ora con un prezzo di chiusura (close: lo stesso prezzo di vendita dell'asset al momento di chiusura, che sarà ora cambiato rispetto a open); si calcola quali sono stati i picchi massimi e minimi di prezzo durante l'ora (high, low) e infine il volume rappresenta l'ammontare totale scambiato nell'ora.\\
+		La AI lavora quasi esclusivamente sulle candele e, anche se le API di kraken permettono di scaricare dati già aggregati, Sentyment scarica soltanto dati di trading raw e poi crea autonomamente le sue candele attraverso un modulo dati dedicato.
+		
+		
+		\textbf{LE API PERMETONO ANCHE DI....}
 		
 		
 		
-		kraken e come funziona
 		
-		
-		dati raw e candele
-		
-		
-		long e short
+	\subsection{Gudagnare con trading}
+		\textbf{long e short?}
+		E' importante notare innanzitutto che la ricchezza in possesso, calcolata in ogni istante, è data non soltanto dalla quantità di budget, ma anche dalla quantità di asset posseduti. I titoli hanno un valore monetario indicato dal loro prezzo e quindi il possesso di alcuni di questi, anche se il budget da investire è azzerato, comporta comunque una ricchezza investita che si può recuperare vendendo il titolo.\\
+		Esempio asset XBT-EUR, valuta di scambio fra Bitcoin e Euro. Partendo da un certo budget iniziale in Euro, si decide quando comprare titoli di Bitcoin e quando rivenderli per avere di nuovo Euro. Lo scopo quindi è non soltanto massimizzare gli Euro in possesso, con l'avanzare del tempo, ma anche i Bitcoin e / o una combinazione dei due titoli che porti comunque ad un aumento del valore dei due.\\
+		A seconda dell'aspettativa di rialzo o ribasso del titolo, ....https://www.money.it/Andare-short-e-long-definizione-e
 		
 		
 		una formula / spiegazione sul guadagno
 		
-		come si guadagna da trading (compri equity e rivendi per soldi)
+		come si guadagna da trading (compri equity e rivendi per soldi) + analisi tecnica grafici
 		
 		
+	\subsection{Esempi di strategie}
+		buy hold macd sma
 		
 		
-		
+	\section{Sentyment}
 		Sentyment è un organismo ampio, formato da numerosi componenti interconnessi come, per esempio:
 		\begin{itemize}
 			\item Modulo raccolta dati
