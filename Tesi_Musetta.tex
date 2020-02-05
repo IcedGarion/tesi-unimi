@@ -2,32 +2,41 @@
 \usepackage{multicol}
 \usepackage{hyperref}
 \usepackage{graphicx}
+\usepackage[noend]{algpseudocode}
 \graphicspath{ {./images/} }
 \usepackage[utf8]{inputenc}
 
 
 
-\title{\textbf{Titolo tesi}}
+\title{\textbf{Progettazione e sviluppo di una test suite automatica per intelligenze artificiali che si occupano di creare strategie di investimento e modulo raccolta dati}}
 \author{Garion Musetta\\~\\garion.musetta@studenti.unimi.it}
 
 \begin{document}
 	\pagenumbering{arabic}
 	\maketitle   
+	\newpage
 	 
 	\section{Indice}
 	\begin{itemize}
 		\item Capitolo introduttivo
-			\item Descrizione e analisi dati
-			\item Descrizione dati
+			\begin{itemize}
+			\item Descrizione dell'ambito di riferimento
+			\item Modello dei dati
+			\end{itemize}
+			
 		\item Descrizione AI
 		\item Stato dell'arte metodologie di test
 		\item Descrizione test
+			\begin{itemize}
+				\item Analisi offline a posteriori: maximum profit e genetic AI
+				\item Analisi online: Reinforcement Learning
+			\end{itemize}
 		\item Risultati
 	\end{itemize}
+	\newpage 
 	 
 	 
-	 
-   	\section{Introduzione }
+   	\section{Introduzione}
 		Scopo di questo documento è affrontare il tema delle metodologie di test per intelligenze artificiali, descriverne alcune tecniche ed analizzare risultati ottenuti applicandole in uno specifico dominio.
 		\\~\\
 		Fra le diverse tipologie di intelligenze artificiali attualmente disponibili vengono considerate quelle di supporto alle decisioni, che si adattano particolarmente al problema e all'ambito in questione. Quando si sviluppa uno strumento di questo tipo è indispensabile porsi delle domande circa la qualità dei risultati prodotti dalla AI, confrontandoli con un modello ottimale di riferimento, che spesso non è disponibile oppure è molto difficile da produrre (in alcuni casi incalcolabile), e paragonandoli anche ad altre applicazioni già esistenti.
@@ -35,37 +44,92 @@
 
 	\subsection{Descrizione dell'ambito di riferimento}
 		Il dominio considerato è quello della finanza, in particolare lo sviluppo di strategie di investimento intelligenti.\\
-		La AI da testare (\textbf{Sentyment}) è complessa e articolata, genera diverse strategie di investimento personalizzate per numerosi strumenti finanziari ed è anche in grado di piazzare direttamente ordini sul mercato, ovvero effettuare operazioni di acquisto e vendita. Il mercato in cui opera è quello delle criptovalute, in cui Bitcoin rappresenta in assoluto l'asset più famoso, ma è accompagnato da altre monete come Ethereum, Bitcoin Cash e Ripple, meno famose ma con le loro particolarità e altrettanto scambiate.\\
-		L'obiettivo finale di Sentyment è quindi produrre delle \textbf{strategie di investimento}. Sono approcci di investimento personalizzati in funzione della propensione al rischio, degli obiettivi e degli interessi specifici del singolo investitore. Seguendo tale strategia, l’investitore può decidere sui diversi tipi di attività da includere nel proprio portafoglio di investimento. Una specifica strategia di investimento può essere determinata da una serie di fattori, come la propensione al rischio e i rendimenti che si vogliono perseguire sugli investimenti, nonché le attività, le regioni e i settori a cui si è interessati. Anche il periodo per il quale si intende investire contribuisce a configurare la strategia.\\
+		La AI in questione (\textbf{Sentyment}) è complessa e articolata, genera diverse strategie di investimento personalizzate per numerosi strumenti finanziari ed è anche in grado di piazzare direttamente ordini sul mercato, ovvero effettuare operazioni di acquisto e vendita. Il mercato in cui opera è quello delle criptovalute, in cui Bitcoin rappresenta in assoluto l'asset più famoso, ma è accompagnato da altre monete come Ethereum, Bitcoin Cash e Ripple, meno famose ma con le loro particolarità e altrettanto scambiate.\\
+		L'obiettivo finale di Sentyment è produrre delle \textbf{strategie di investimento}: sono approcci di investimento personalizzati in funzione della propensione al rischio, degli obiettivi e degli interessi specifici del singolo investitore. Seguendo tale strategia, l’investitore può decidere sui diversi tipi di attività da includere nel proprio portafoglio di investimento. Una specifica strategia di investimento può essere determinata da una serie di fattori, come la propensione al rischio e i rendimenti che si vogliono perseguire sugli investimenti, nonché le attività, le regioni e i settori a cui si è interessati. Anche il periodo per il quale si intende investire contribuisce a configurare la strategia.\\
 		Definita una certa strategia, Sentyment la persegue decidendo quindi, in ogni "istante di tempo" quale delle 3 possibili operazioni effettuare: \textbf{buy} (comprare il titolo azionario), \textbf{sell} (vendere) o \textbf{hold} (mantenere il portafoglio). Lo scopo a lungo termine della strategia è massimizzare il guadagno rispetto a quanto investito, oltre a rispettare i vincoli di rischio e interessi specifici dell'investitore. La AI è in grado di decidere quali fra queste operazioni effettuare al fine di massimizzare gli obiettivi.\\
 		Le decisioni non sono prese esattamente "istante per istante": il periodo di tempo considerato è l'ora. Ogni ora la piattaforma di trading di riferimento produce nuovi dati e questi sono disponibili per essere scaricati dai trader, che possono quindi compiere le azioni sopra descritte. Oltre alla cadenza oraria è anche possibile scegliere i minuti: 1, 5, 15, 30, 60, 240, 1440, 10080, 21600 (dipende dalla piattaforma di trading).\\
 		
 
 	\subsection{Modello dei dati}
-		Tutti i dati usati dalla AI sono scaricati da una piattaforma di trading, \textbf{Kraken}, un sito per lo scambio di criptovalute. Ogni secondo, trader da tutto il mondo effettuano azioni di compravendita di titoli, esattamente nel modo in cui opera anche Sentyment, facendo crescere o diminuire il valore azionario di ogni asset. Kraken rende disponibile, attraverso delle API, lo storico degli scambi effettuati per ognuno degli asset che espone (110 coppie di valute che rappresentano i valori di scambio fra criptovalute e USD / EUR ): si fa distinzione fra dati "RAW", ovvero un semplice elenco di prezzi variabili nel tempo, e le candele ohlcv. Le candele sono uno degli strumenti grafici più popolari in quanto offrono un eccellente riferimento virtuale dei movimenti dei prezzi in un intervallo di tempo ad un minuto, orario, giornaliero, mensile ed altro. Esse operano come il grafico OHLC tranne che con il corpo colorato per tracciare la differenza tra il prezzo di apertura e quello di chiusura di una barra.\\
+		Tutti i dati usati dalla AI sono scaricati da una piattaforma di trading, \textbf{Kraken}, un sito per lo scambio di criptovalute. Ogni secondo, trader da tutto il mondo effettuano azioni di compravendita di titoli, esattamente nel modo in cui opera anche Sentyment, facendo crescere o diminuire il valore azionario di ogni asset. Kraken rende disponibile, attraverso delle API, lo storico degli scambi effettuati per ognuno degli asset che espone (110 coppie di valute che rappresentano i valori di scambio fra criptovalute e USD / EUR ): si fa distinzione fra dati "RAW", ovvero un semplice elenco di prezzi variabili nel tempo, e le \textbf{candele OHLCV}. Le candele sono uno degli strumenti grafici più popolari in quanto offrono un eccellente riferimento virtuale dei movimenti dei prezzi in un intervallo di tempo ad un minuto, orario, giornaliero, mensile ed altro.
+		\\~\\		
+		Le candele ohlcv sono quindi la rappresentazione di un dato aggregato ora per ora (o secondo altre unità di tempo come minuto o giorno). Le informazioni che racchiudono sono indicate dal loro nome: open, high, low, close, volume. Prendendo come esempio le candele orarie: la creazione di ognuna di esse parte allo scoccare dell'ora e fissa un prezzo di apertura (open: il prezzo di vendita dell'asset in quel momento), per terminare dopo un'ora con un prezzo di chiusura (close: lo stesso prezzo di vendita dell'asset al momento di chiusura, che sarà ora cambiato rispetto a open); si calcola quali sono stati i picchi massimi e minimi di prezzo durante l'ora (high, low) e infine il volume, che rappresenta l'ammontare totale scambiato nell'ora.\\ Le candele OHLCV rappresentano quindi la 'storia' dell'andamento dei prezzi di un certo asset durante il periodo di tempo fissato: iniziano con un certo prezzo, che evolve toccando un minimo e un massimo, e termina con un certo prezzo di chiusura; i prezzi minimo e massimo possono superare anche di molto quelli di apertura e chiusura. E' anche possibile il caso in cui il prezzo non evolve e open, high, low e close coincidono.\\ Volume, invece, rappresenta la somma totale della quantità di titoli mossi durante l'unità di tempo.
+		\\~\\
 		
-		\textbf{Immagine kraken candele}
 		
+		\textbf{ESEMPIO NUMERICO CREAZIONE CANDELE???}
+		(es, elenco prezzi in un'ora -> risultato candela valori ohlcv)
+		\\~\\
 		
-		Le candele ohlcv sono quindi la rappresentazione di un dato aggregato ora per ora (o secondo altre unità di tempo come minuto o giorno). Le informazioni che racchiudono sono indicate dal loro nome: open, high, low, close, volume. Prendendo come esempio le candele orarie: la creazione di ognuna di esse parte allo scoccare dell'ora e fissa un prezzo di apertura (open: il prezzo di vendita dell'asset in quel momento), per terminare dopo un'ora con un prezzo di chiusura (close: lo stesso prezzo di vendita dell'asset al momento di chiusura, che sarà ora cambiato rispetto a open); si calcola quali sono stati i picchi massimi e minimi di prezzo durante l'ora (high, low) e infine il volume rappresenta l'ammontare totale scambiato nell'ora.\\
 		La AI lavora quasi esclusivamente sulle candele e, anche se le API di kraken permettono di scaricare dati già aggregati, Sentyment scarica soltanto dati di trading raw e poi crea autonomamente le sue candele attraverso un modulo dati dedicato.
+		\\~\\
+		
+		\textbf{DIDASCALIEE}
+		\includegraphics[width=\linewidth]{kraken_raw}
+		\includegraphics[width=\linewidth]{kraken_ohlcv}
 		
 		
-		\textbf{LE API PERMETONO ANCHE DI....}
-		
+		Le immagini descrivono l'andamento dei prezzi, scambio per scambio, con sensibilità al secondo, e le corrispondenti candele ohlcv come esposte dalla piattaforma di trading. I bordi orizzontali che compongono i lati superiore e inferiore della candela sono il prezzo di apertura e quello di chiusura: se la candela è rossa il prezzo di chiusura è minore di quello di apertura (significa che il prezzo dell'asset è sceso durante l'unità di tempo), e quindi il bordo superiore sarà 'open' e quello inferiore 'close', mentre una candela verde indica una crescita del prezzo ('open è il lato inferiore mentre 'close' quello superiore). Le linee verticali della candela si estendono invece verso il prezzo minimo e massimo che l'asset ha toccato nel periodo di tempo fra apertura e chiusura della candela.
+		\\~\\
+		Le API di Kraken permettono di effettuare diversi tipi di operazioni, come scaricare lo storico dei prezzi di tutte le coppie valuta-criptovaluta disponibili, così come ricevere in tempo reale i nuovi dati sugli scambi di titoli. Inoltre è anche possibile, sempre tramite API, creare il proprio portafogli sulla piattaforma e piazzare ordini di acquisto e vendita; tutte funzionalità ben sfruttate da Sentyment, che opera sul mercato in autonomia.
 		
 		
 		
 	\subsection{Gudagnare con trading}
-		\textbf{long e short?}
-		E' importante notare innanzitutto che la ricchezza in possesso, calcolata in ogni istante, è data non soltanto dalla quantità di budget, ma anche dalla quantità di asset posseduti. I titoli hanno un valore monetario indicato dal loro prezzo e quindi il possesso di alcuni di questi, anche se il budget da investire è azzerato, comporta comunque una ricchezza investita che si può recuperare vendendo il titolo.\\
-		Esempio asset XBT-EUR, valuta di scambio fra Bitcoin e Euro. Partendo da un certo budget iniziale in Euro, si decide quando comprare titoli di Bitcoin e quando rivenderli per avere di nuovo Euro. Lo scopo quindi è non soltanto massimizzare gli Euro in possesso, con l'avanzare del tempo, ma anche i Bitcoin e / o una combinazione dei due titoli che porti comunque ad un aumento del valore dei due.\\
-		A seconda dell'aspettativa di rialzo o ribasso del titolo, ....https://www.money.it/Andare-short-e-long-definizione-e
+		E' importante notare innanzitutto che la ricchezza in possesso, calcolata in ogni istante, è data non soltanto dalla quantità di budget, ma anche dalla quantità di titoli posseduti. Gli asset finanziari hanno un valore monetario indicato dal loro prezzo e quindi il possesso di alcuni di questi, anche se il budget da investire è azzerato, comporta comunque una ricchezza investita che si può recuperare vendendo il titolo.\\
+		Esempio asset XBT/EUR, valuta di scambio fra Bitcoin e Euro. Partendo da un certo budget iniziale in Euro, si decide quando comprare titoli di Bitcoin e quando rivenderli per avere di nuovo Euro. Lo scopo quindi è non soltanto massimizzare gli Euro in possesso, con l'avanzare del tempo, ma anche i Bitcoin e / o una combinazione dei due titoli che porti comunque ad un aumento del valore dei due.\\
+		A seconda dell'aspettativa di rialzo o ribasso del titolo: andare \textbf{long} su XBT/EUR vuol dire acquistare Bitcoin vendendo Euro, puntando ad un apprezzamento (aumento di valore) della criptovaluta; in questo caso l’aspettativa è di un aumento del valore del cambio e si avrà quindi una visione rialzista del mercato. Andare \textbf{short} su XBT/EUR vuol dire vendere Bitcoin acquistando Euro, puntando quindi un apprezzamento dell'Euro nei confronti della criptomoneta. In questo caso l’aspettativa è di una diminuzione di valore del cambio. Si aprirà quindi una posizione che mira a una flessione del prezzo. La visione che il trader avrà del mercato sarà ribassista.\\~\\
+		Il punto centrale su cui si basano le strategie di investimento è cercare di indovinare se la valuta aumenterà o diminuirà di prezzo, per poi andare long o short a seconda della previsione. l'\textbf{analisi tecnica} è un metodo riconosciuto e largamente utilizzato per anticipare o prevedere l'andamento dei prezzi e si basa sull'aspetto tecnico del mercato, utilizzando grafici e dati storici. In particolare vengono analizzati prezzi, volumi scambiati e fasce temporali. Si utilizzano indicatori matematici, statistici e grafici e i segnali e i suggerimenti ricavati da questi strumenti accompagnano i trader nelle loro decisioni in merito all'apertura e chiusura di posizioni di trading. L'analisi tecnica è un metodo di previsione dei prezzi basato sui dati storici.
+		\\~\\
+		\textbf{Altro su analisi tecnica? https://www.xtb.com/it/scuola-di-trading/che-cosa-e-lanalisi-tecnica}
+		\\~\\
+		Supponendo che il mercato ad un certo punto cresca e si abbia "indovinato" un buon numero di previsioni, ci si ritroverà a possedere dei titoli che ora valgono un prezzo superiore rispetto al loro valore iniziale. Se i titoli crescono di valore, è bene quindi acquistarne finchè salgono, in questo modo si possiede un maggior numero di asset che andranno a valere sempre di più; in caso di perdita di valore del titolo, invece, generalmente si dovrebbe vendere i titoli, per riacquistare del budget investito che ora stava perdendo valore e poterlo investire in altri titoli che crescono.\\
+		Quando si decide di acquistare si sta effettuando la seguente operazione: dato un certo budget iniziale \textit{budget}, il valore del titolo \textit{price} e la quantità di titolo acquistato \textit{equity} e supponendo di spendere sempre tutto il budget per acquistare il titolo
+		\\
+		
+	    \begin{algorithmic}                             
+			\State $equity\gets budget/price$
+		\end{algorithmic}
+
+		\\~\\
+		Mentre, all'occorrenza di un'operazione di vendita, utilizzando equity appena acquistata:\\
+
+ 		\begin{algorithmic}                               
+			\State $budget\gets equity * price$
+		\end{algorithmic}
+
+		\\~\\
+		È possibile in ogni momento calcolare il ricavo o quantità di beni in possesso combinando il budget con equity, tenendo presente che dopo un acquisto il budget scende a zero e equity assume il valore indicato, mentre dopo una vendita è equity a scendere a zero e si ritorna in possesso di budget. Lo stesso budget riacquistato verrà usato nuovamente per comprare dei titoli facendo così crescere di nuovo equity, e così via. Un vincolo è quello di non poter effettuare due medesime operazioni di fila: 
+		\\~\\
+		Se si considera un certo budget iniziale \textit{initial\_budget}, il \textbf{guadagno} (\textit{gain}) in ogni istante è dato da:
+		\\
+		
+	   \begin{algorithmic}
+			\State $gain\gets (budget + equity * record) - initial\_budget$
+		\end{algorithmic}
+
+		\\~\\
+		Questa è la formula del guadagno che verrà usata da qui in avanti.		
+		\\~\\\\~\\
+		A questo punto è necessario introdurre il concetto di \textbf{fee}.\\
+		Le varie piattaforme di trading addebitano un costo per ogni singola operazione, sia di acquisto che di vendita, intestandosi una percentuale di budget speso dai trader come tassa per mantenere la piattaforma stessa. Nel caso di operazioni di acquisto, la tassa è calcolata come percentuale del budget speso per comprare il titolo, quindi viene scalata subito e il risultato è l'acquisto di una quantità leggermente minore di titoli (la restante dei quali viene pagata alla piattaforma); per le vendite invece la fee è tolta dal budget una volta che questo è ricalcolato vendendo equity, risultando in un ricavo leggermente minore di quello che si sarebbe ottenuto vendendo realmente l'intera quantità di titoli.\\
+		Nel caso di Kraken, la piattaforma di trading di riferimento su cui opera Sentyment, le fee sono del 0.26\%: significa che viene sottratto il 0.26\% di budget che si intende investire, per ogni operazione. Per altri mercati, valute o piattaforme di trading le fee possono variare e potrebbero non essere basaste su una percentuale di acquisto ma fisse (flat fee vs per share fee).
+		\\~\\
+		La presenza delle fee modifica abbastanza drasticamente il funzionamento del mercato e l'efficacia delle strategie di investimento, che devono essere adattate ad un mercato con fee; è necessario quindi riscrivere le formule per il guadagno e per le operazioni di acquisto e vendita titoli, che ora comprendono la percentuale di fee:\\
+		
+		RISCRIVI FORMULE CON FEE.
 		
 		
-		una formula / spiegazione sul guadagno
 		
-		come si guadagna da trading (compri equity e rivendi per soldi) + analisi tecnica grafici
+		
+		
+		
+		
+		
+		\\~\\
+		\textbf{ESEMPIO DI COME CAMBIEREBBE RISULTATO CON E SENZA FEE CON POCHI DATI DI ESEMPIO?}
+		\\~\\
+		Senza addentrarsi nelle diversità dei titoli e dei mercati, si può affermare che un'euristica generale e semplificata per guadagnare facendo trading è dunque "compra basso, vendi alto"; nella realtà i segnali di acquisto possono essere dati da altri indicatori più complessi e non sempre è possibile capire quando un titolo sta toccando un prezzo particolarmente alto o basso: è facile analizzare i grafici "a posteriori", ma non altrettanto semplice prevedere massimi e minimi locali online. Per questo si utilizzano delle semplici strategie fondamentali che aiutano a capire l'andamento dei prezzi.
 		
 		
 	\subsection{Esempi di strategie}
@@ -88,133 +152,14 @@
 		
 		
 	    \newpage
-	    
-    \begin{multicols}{2}
-			\section{Individuazione}
-			Il concetto principale da sviluppare per riconoscere una fake news è individuare delle caratteristiche peculiari che potrebbero, in maniera molto generale, appartenere alla categoria delle notizie false ma non appartenere a quelle vere (o viceversa). Se si volesse costruire un classificatore sarebbe necessario, in fase preliminare, definire appunto su quali caratteristiche basare la distinzione: per esempio, se si scoprisse che gran parte delle fake news utilizza un certo tipo di lessico oppure è formata da frasi molto (o molto poco) complesse, allora si potrebbe sviluppare un software che estragga queste caratteristiche dalle notizie e, per via di un training appropriato, che riesca a classificarle nella giusta categoria a seconda della caratteristica considerata.
-			Non è purtroppo un compito immediato identificare una \textbf{qualità discriminante}, che potrebbe risultare valida soltanto per alcuni sottoinsiemi delle notizie considerate e che comunque si potrebbe rivelare non più valida col passare del tempo; in questo documento verranno esplorate alcune di queste caratteristiche per cercare di scoprire, per quanto possibile, se si tratta di peculiarità che possono aiutare nella classificazione.
-	    
-	    \section{Features}
-		    Verrà utilizzato il termine \textbf{"feature"} per indicare le diverse caratteristiche pensate che possono aiutare a distinguere le notizie.
-		    
-			Sono state individuate inizialmente 3 feature: varietà lessicale, complessità morfologica e quantità di tweet correlati. 				
-			\\~\\
-			\textbf{Quantità di tweet correlati}: sono usati i primi termini che compaiono nel testo di una notizia come parole chiave per la \textbf{ricerca di Twitter}, per poi contare quanti risultati (tweet correlati) ha prodotto la ricerca. La logica dietro a questa feature è cercare di capire se il titolo o l'inizio della notizia riscuote particolare successo sui social, ovvero se in generale c'è molta più discussione intorno a notizie non confermate rispetto a quelle vere. Per come è stata concepita la feature, però, risulta difficile individuare quali termini all'interno della notizia utilizzare per la ricerca, dato che l'uso di troppe parole non produce mai nessun risultato.
-			\\~\\
-			\textbf{Complessità morfologica}: analisi della \textbf{struttura delle frasi} che compongono la notizia e del loro albero di parsing, per determinare quanto e' complessa, quante frasi la compongono e come sono costruite.
-			Si è ipotizzato che le notizie false potessero essere scritte in modo meno preciso, complesso, in quanto non redatte da professionisti del mestiere come giornalisti o scrittori; ma ci si potrebbe anche aspettare l'opposto: chi le scrive potrebbe adattare volutamente il suo stile per eludere i classificatori che fanno leva su alcune particolari caratteristiche.
-			\\~\\
-			\textbf{Varietà lessicale}: rappresenta il \textbf{numero di vocaboli diversi} utilizzati all'interno della news. Notizie molto brevi e con parole tutte diverse hanno quindi un valore molto alto per questa feature.
-			Combinata con la complessità morfologica, fornisce una quadro abbastanza ampio sullo stile di scrittura del redattore.
-
-		    
-	    \section{Implementazione}
-		    Il sistema e' stato implementato in modo da poter inserire, in qualsiasi momento, una nuova feature ed analizzare subito i risultati prodotti.\\~\\
-		    Tutto il codice del progetto si trova su bitbucket: 
-		    \href{https://bitbucket.org/IcedGarion/fake-news}{fake-news repository}. 
-		    
-			\subsection{Dataset}
-			Durante lo sviluppo si è utilizzato un dataset proposto da kaggle per un contest di machine learning riguardante la classificazione di fake news \cite{kaggledataset}. Il dataset presenta \textbf{20800 articoli} caratterizzati da titolo, autore, testo della notizia ed etichetta (fake / non fake) e contiene notizie di vario genere, da articoli di giornale a tweet. Le notizie etichettate come non fake provengono da fonti considerate affidabili, come famose testate giornalistiche. I record sono equamente distribuiti in 10413 fake e 10387 non fake.
-			\\~\\
-			È comunque possibile cambiare facilmente dataset ed eseguire il software in modo che produca i risultati per le feature che si vogliono considerare, applicate ai nuovi record, in modo che vengano prodotti nuovi grafici relativi ai nuovi dati.
-			
-			
-			\subsection{Features Extraction}
-			Di seguito verranno descritte dettagliatamente le feature e la loro implementazione.
-			Ciascuna di esse viene applicata a tutte le notizie del dataset e produce un valore numerico; sono poi proposti i risultati ottenuti sotto forma di grafici esplicativi. Per ogni feature, sono presenti due \textbf{istogrammi} che rappresentano la distribuzione dei valori della caratteristica sia per le notizie etichettate nel dataset come "affidabili" (non fake) che per quelle "non affidabili" (fake); l'ascissa rappresenta il valore ottenuto dai vari record rispetto alla feature in questione, mentre sull'asse y è riportata la frequenza con la quale un valore compare. È prodotto anche un \textbf{boxplot}, per meglio analizzare la distribuzione dei risultati, sempre in duplice istanza per le notizie vere e false.\\~\\
-			Avendo i grafici divisi per le due classi di notizie, è facile capire se la feature pensata è un buon discriminatore: basta guardare se ci sono differenze percettibili nella distribuzione dei valori fra i due grafici.\\
-			Più avanti sono anche proposti degli \textbf{scatterplot}, per visualizzare se ci sono interdipendenze fra le feature.
-			
-				\subsubsection{Morfological Complexity}
-					Viene analizzata la morfologia della frase, ovvero la struttura grammaticale delle parole e la loro categorizzazione in nome, pronome, verbo, aggettivo. Sono evidenziati soprattutto i legami che questi elementi hanno fra loro all'interno della frase: più la struttura è complessa e più la frase risulta scritta in modo preciso e formale.\\~\\
-					Per stimare, con un valore numerico, la complessità morfologica di una notizia, è stato utilizzato \textbf{Stanford Parser} \cite{stanfordparser}: analizza un testo e, per ogni frase, crea l'albero di parsing, individuando la struttura morfologica. Considerando poi la profondità dell'albero prodotto, si può valutare quanto la frase sia morfologicamente complessa.\\
-					Per ogni frase che compone la notizia viene calcolata questa profondità e poi si registra il valore massimo ottenuto in tutte le frasi: quello è il risultato della feature "morphological complexity".\\
-					Al parser viene dato in input tutto il testo della notizia, senza modifiche o preprocessing; l'unica modifica apportata riguarda la divisione dell'intero testo in frasi, necessario per utilizzare la funzione desiderata, ed è stata effettuata dividendo tramite un'espressione regolare che indica la punteggiatura di fine frase.
-					\\~\\
-					\textbf{DISTRIBUZIONE FEATURE}
-					\\~\\
-					\includegraphics[width=\linewidth]{morfological_hist_fake}
-					\\~\\
-					\includegraphics[width=\linewidth]{morfological_hist_notfake}
-					\\~\\
-					\includegraphics[width=\linewidth]{morfological_box}
-					
-					I primi due istogrammi rappresentano la distribuzione dei valori ottenuti applicando la metrica a tutte le notizie del dataset. Il primo riguarda soltanto le notizie etichettate come fake, il secondo quelle affidabili.\\
-					Entrambe le distribuzioni seguono un modello a campana, ma \textbf{si possono notare delle differenze}: nel primo caso, i valori sono più spostati verso sinistra (valori bassi più frequenti), mentre nel secondo sono più concentrati sul valore più frequente, con meno dispersione.\\
-					Questa prima osservazione potrebbe aiutare ad isolare le notizie con valore di morphological complexity minore di 10 e classificarle come false.
-					\\~\\
-					Anche il boxplot evidenzia questa caratteristica: si osserva più dispersione nella distribuzione delle notizie fake, con una quantità maggiore di valori bassi rispetto a quelle non fake.
-					
-				\subsubsection{Twitter}
-				Inizialmente il testo della notizia viene pre-processato, si rimuove punteggiatura e caratteri non validi e sono estratte le prime 5 parole che compaiono. Attraverso le \textbf{API di Twitter} si esegue una ricerca utilizzando questi primi termini come parole chiave e poi si contano i tweet correlati risultanti.\\
-				Il numero di risultati dipende molto da quali parole compaiono per prime nella notizia e soprattutto da \textit{quanti} termini si sceglie di usare. Il numero massimo di post che Twitter restituisce è 100.
-				\\~\\
-				\\~\\
-				\\~\\
-				\\~\\
-				\\~\\
-				
-				\textbf{DISTRIBUZIONE FEATURE}	
-				\\~\\
-				\includegraphics[width=\linewidth]{twitter_hist_fake}
-				\\~\\
-				\includegraphics[width=\linewidth]{twitter_hist_notfake}
-				\\~\\
-				\includegraphics[width=\linewidth]{twitter_box}
-				\\~\\
-				
-				I grafici indicano che questa \textbf{non è una buona feature} da utilizzare per la distinzione: il numero di tweet correlati risultati è quasi sempre 0 \textit{oppure} 100, senza una vera distribuzione a campana. Inoltre questo risultato è lo stesso sia per le fake news che per le notizie affidabili: non c'è modo di distinguere le due categorie basandosi soltanto sui grafici di questa feature.
-				\\~\\
-				Una spiegazione potrebbe essere che, se le prime parole scelte sono molto comuni o fanno riferimento ad un argomento molto discusso, il risultato è il massimo (100); se, invece, si tratta di parole poco usate il risultato scende subito a 0, senza valori intermedi.
-				A causa della distribuzione atipica, il boxplot generato non riesce a distinguere fra i dati della distribuzione e gli outliers, che si trovano tutti nel mezzo, e risulta quindi poco esplicativo.
-				\\~\\
-				Per capire meglio se la forma del grafico prodotto dipende soltanto dai parametri scelti, o se invece è a causa della feature in sè combinata con la logica della ricerca di twitter, allora è stata provata una variante. Invece che usate le prime 5 parole per la ricerca, vengono prese le prime 3. Il risultato è il medesimo, con i valori più spostati verso il 100 (rispetto a prima, dove era il valore 0 a comparire più frequentemente). Non c'è una frequenza alta di valori intermedi, si ha sempre 0 oppure 100, in entrambe le classi di notizie.
-				\\~\\
-				\includegraphics[width=\linewidth]{twitter3_hist_fake}
-				\\~\\
-				\includegraphics[width=\linewidth]{twitter3_hist_notfake}
-				
-				\subsubsection{Lexical Variety}
-				Per ogni termine diverso che compare nel testo della notizia, sono contate le sue occorrenze, utilizzando una funzione della \textbf{libreria pattern.metrics}. Il testo non viene manipolato: non è stata eseguita nessuna fase di preprocessing in cui le frasi vengono divise e le parole non sono sottoposte a stemming, per preservare la forma originale in cui è scritta la notizia.
-				\\~\\								
-				\textbf{DISTRIBUZIONE FEATURE}						
-				\\~\\
-				\includegraphics[width=\linewidth]{lexical_hist_fake}
-				\\~\\
-				\includegraphics[width=\linewidth]{lexical_hist_notfake}
-				\\~\\
-				\includegraphics[width=\linewidth]{lexical_box}
-				\\~\\
-				Come per morphological complexity, il grafico ha una forma a campana ed è ben distribuito. Si nota che, nel caso delle fake news, è presente una coda ampia oltre il valore 0.8, ci sono molti valori massimi (1.0) e in generale la distribuzione è più ampia e non tutta concentrata al centro. Per quanto riguarda le notizie affidabili, queste sono quasi tutte concentrate verso 0.4 - 0.6.\\
-				Questo è forse \textbf{il dato più significativo registrato}: indica che le fake news hanno una probabilità maggiore di presentare una varietà lessicale più alta rispetto alle notizie affidabili, che si traduce nel fatto che il testo delle fake è più vario. Analizzando nello specifico la coda di valori a 1.0, si nota che sono tutte notizie di pochissime parole, tutte diverse.\\~\\
-				
-				\subsubsection{Combinazione Feature}
-				Invece che considerare soltanto una feature, è possibile analizzare i risultati di due (o più) caratteristiche prese insieme. Misurando l'interdipendenza fra due feature è possibile visualizzare se una delle due influenza l'altra; inoltre può servire per isolare delle regioni in cui sono presenti soltanto fake news e quindi registrare il range di valori di entrambe le feature in cui si ottiene questo isolamento.\\~\\
-				Inizialmente sono riportati due scatterplot in cui vengono combinate due feature senza ottenere un risultato significativo: i valori sono sparsi in tutto il grafico e le notizie fake e quelle non fake sono mischiate fra loro; non è possibile trovare una zona in cui si raggruppa una categoria.
-				\\~\\						
-				\includegraphics[width=\linewidth]{twitter_morfological_scatter}
-				\\~\\
-				\includegraphics[width=\linewidth]{lexical_twitter_scatter}
-				\\~\\
-				La feature di Twitter combinata con le altre due non produce nessun risultato particolare.\\Se invece si considerano le due caratteristiche linguistiche insieme, si nota qualcosa di più interessante.
-				\\~\\
-				\includegraphics[width=\linewidth]{lexical_morfological_scatter}
-				\\~\\
-				Innanzitutto i valori sono molto più distribuiti rispetto ai grafici precedenti, analogamente a quanto succedeva con le singole feature. È possibile isolare una zona in cui sono presenti soltanto fake news: queste hanno tutte un basso valore di complessità morfologica e un alto valore di varietà lessicale.\\
-				Questo risultato conferma quanto trovato in precedenza: nel dataset considerato, \textbf{le notizie con poche parole tutte diverse}, con una forma della frase molto semplice \textbf{sono quasi sicuramente false}.\\~\\
-				Separando dal dataset questo sottoinsieme di notizie con valore di lexical variety maggiore di 0.8 e morphological complexity minore di 10 (\textbf{313 record}), se ne può analizzare il testo per capire se si tratta di anomalie, di notizie particolari o altro. Sono, molto spesso, titoli click-bait per articoli falsi, frasi apparentemente senza un senso (comunque classificate come non affidabili, come \textit{non-notizie}), pubblicità, tweet con opinioni personali o che non riguardano delle notizie; ma anche vere e proprie fake news, notizie volutamente false.
-
-		\section{Conclusioni e Lavori futuri}	
-		È stato analizzato il dataset applicando diverse feature a tutte le notizie che conteneva e sono stati generati i grafici delle distribuzioni, per visualizzare i valori prodotti dalle varie caratteristiche. Per le feature linguistiche si è notato che all'interno di un certo range erano presenti soltanto fake news, quindi sono state considerate assieme per isolare in modo più preciso la zona contenente le notizie false. Utilizzando questo raggruppamento si sono separate dal dataset alcune notizie false per analizzarle nel dettaglio.
-		\\~\\
-		Grazie all'analisi svolta è stato possibile classificare "manualmente" soltanto una parte delle fake news contenute nel dataset, ovvero quelle con bassa complessità morfologica e alta varietà dei termini. Proponendo nuove feature possibili e ripetendo l'analisi potrebbe essere possibile trovare altre caratteristiche che aiutino nella distinzione e, avendo a disposizione abbastanza indicatori, riuscire a distinguere interamente le notizie affidabili da quelle false.
-	   	\end{multicols}		       	
-
-
+		\cite{es}
+	
 		\begin{thebibliography}{9}
-			\bibitem{kaggledataset}
-				https://www.kaggle.com/c/fake-news/
-			\bibitem{stanfordparser}
-				 Sebastian Schuster and Christopher D. Manning. 2016. Enhanced English Universal Dependencies: An Improved Representation for Natural Language Understanding Tasks. In LREC 2016. 
+			\bibitem{es}
+			Chalup, S., \& Maire, F. (1999, July). A study on hill climbing algorithms for neural network training. In Proceedings of the 1999 Congress on Evolutionary Computation-CEC99 (Cat. No. 99TH8406) (Vol. 3, pp. 2014-2021). IEEE.
+			\bibitem{}
+			Bengio, Y. (2009). Learning deep architectures for AI. Foundations and trends® in Machine Learning, 2(1), 1-127.
+			\bibitem{}
+			An, G. (1996). The effects of adding noise during backpropagation training on a generalization performance. Neural computation, 8(3), 643-674.
 		\end{thebibliography}
 \end{document}
