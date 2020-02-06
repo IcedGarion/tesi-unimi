@@ -5,17 +5,24 @@
 \usepackage[noend]{algpseudocode}
 \graphicspath{ {./images/} }
 \usepackage[utf8]{inputenc}
+\usepackage{imakeidx}
+
+\makeindex[columns=3, title=Alphabetical Index, intoc]
+
+\usepackage{amsmath}
+\numberwithin{equation}{section}
+\renewcommand{\theequation}{Eq. \thesection.\arabic{equation}}
 
 
-
-\title{\textbf{Progettazione e sviluppo di una test suite automatica per intelligenze artificiali che si occupano di creare strategie di investimento e modulo raccolta dati}}
+\title{\textbf{Progettazione e sviluppo di modulo raccolta dati e test suite automatica per intelligenze artificiali che si occupano di creare strategie di investimento}}
 \author{Garion Musetta\\~\\garion.musetta@studenti.unimi.it}
 
 \begin{document}
 	\pagenumbering{arabic}
 	\maketitle   
 	\newpage
-	 
+	\tableofcontents
+
 	\section{Indice}
 	\begin{itemize}
 		\item Capitolo introduttivo
@@ -58,18 +65,29 @@
 		
 		
 		\textbf{ESEMPIO NUMERICO CREAZIONE CANDELE???}
-		(es, elenco prezzi in un'ora -> risultato candela valori ohlcv)
+		(es, elenco prezzi in un'ora - > risultato candela valori ohlcv)
 		\\~\\
 		
 		La AI lavora quasi esclusivamente sulle candele e, anche se le API di kraken permettono di scaricare dati già aggregati, Sentyment scarica soltanto dati di trading raw e poi crea autonomamente le sue candele attraverso un modulo dati dedicato.
 		\\~\\
 		
-		\textbf{DIDASCALIEE}
-		\includegraphics[width=\linewidth]{kraken_raw}
+
+		\begin{figure}
+		\begin{center}
+		\includegraphics[width=10cm]{kraken_raw}
+		\caption{\\~\\Elenco transazioni Bitcoin/Euro relative ad una finestra di minuti. I record mostrano l'ora in cui è avvenuto il trade, il tipo di operazione (buy / sell), il prezzo di scambio del titolo e la quantità di titoli scambiati. L'elenco dei dati 'raw' di trade è disponibile tramite le API kraken ed è la fonte grezza di dati finanziari utilizzati per calcolare i grafici OHLCV, fondamentali per l'analisi dei mercati. (fonte: https://www.kraken.com/)}
+		\end{center}
+		\end{figure}
+		\begin{figure}
+		\begin{center}
 		\includegraphics[width=\linewidth]{kraken_ohlcv}
+		\caption{\\~\\Grafico OHLCV ricavato dai prezzi in Figura 1. Le candele sono di durata 1 ora e quindi i prezzi elencati sopra rientrano soltanto in parte nell'ultima candela (rossa) delle 15:00 - 16:00, ancora aperta e quindi in creazione. La candela è rossa perchè, come si nota dai prezzi, il valore del titolo  è in discesa: partendo da circa 8.568 (probabilmente più alto nei record precedenti) si scende verso 8.567.\\~\\Le linee colorate rappresentano le medie mobili dei prezzi di chiusura; usate per analisi tecnica, sono rispettivamente le medie a 10 (verde), 21 (azzurro= )e 100 (blu) candele. Più candele sono considerate nella media e meno questa cambierà bruscamente, avendo quindi la media a 100 candele (cioè 100 ore) molto più lenta delle altre. (fonte: https://www.kraken.com/)}
+		\end{center}
+		\end{figure}
+
 		
 		
-		Le immagini descrivono l'andamento dei prezzi, scambio per scambio, con sensibilità al secondo, e le corrispondenti candele ohlcv come esposte dalla piattaforma di trading. I bordi orizzontali che compongono i lati superiore e inferiore della candela sono il prezzo di apertura e quello di chiusura: se la candela è rossa il prezzo di chiusura è minore di quello di apertura (significa che il prezzo dell'asset è sceso durante l'unità di tempo), e quindi il bordo superiore sarà 'open' e quello inferiore 'close', mentre una candela verde indica una crescita del prezzo ('open è il lato inferiore mentre 'close' quello superiore). Le linee verticali della candela si estendono invece verso il prezzo minimo e massimo che l'asset ha toccato nel periodo di tempo fra apertura e chiusura della candela.
+		Le immagini descrivono l'andamento dei prezzi, scambio per scambio, e le corrispondenti candele ohlcv come esposte dalla piattaforma di trading. I bordi orizzontali che compongono i lati superiore e inferiore della candela sono il prezzo di apertura e quello di chiusura: se la candela è rossa il prezzo di chiusura è minore di quello di apertura (significa che il prezzo dell'asset è sceso durante l'unità di tempo), e quindi il bordo superiore sarà 'open' e quello inferiore 'close', mentre una candela verde indica una crescita del prezzo ('open è il lato inferiore mentre 'close' quello superiore). Le linee verticali della candela si estendono invece verso il prezzo minimo e massimo che l'asset ha toccato nel periodo di tempo fra apertura e chiusura della candela.
 		\\~\\
 		Le API di Kraken permettono di effettuare diversi tipi di operazioni, come scaricare lo storico dei prezzi di tutte le coppie valuta-criptovaluta disponibili, così come ricevere in tempo reale i nuovi dati sugli scambi di titoli. Inoltre è anche possibile, sempre tramite API, creare il proprio portafogli sulla piattaforma e piazzare ordini di acquisto e vendita; tutte funzionalità ben sfruttate da Sentyment, che opera sul mercato in autonomia.
 		
@@ -87,26 +105,24 @@
 		Quando si decide di acquistare si sta effettuando la seguente operazione: dato un certo budget iniziale \textit{budget}, il valore del titolo \textit{price} e la quantità di titolo acquistato \textit{equity} e supponendo di spendere sempre tutto il budget per acquistare il titolo
 		\\
 		
-	    \begin{algorithmic}                             
-			\State $equity\gets budget/price$
-		\end{algorithmic}
-
+		\begin{equation}
+			equity=budget/price
+		\end{equation}
 		\\~\\
 		Mentre, all'occorrenza di un'operazione di vendita, utilizzando equity appena acquistata:\\
 
- 		\begin{algorithmic}                               
-			\State $budget\gets equity * price$
-		\end{algorithmic}
+		\begin{equation}
+			budget=equity*price
+		\end{equation}
 
 		\\~\\
 		È possibile in ogni momento calcolare il ricavo o quantità di beni in possesso combinando il budget con equity, tenendo presente che dopo un acquisto il budget scende a zero e equity assume il valore indicato, mentre dopo una vendita è equity a scendere a zero e si ritorna in possesso di budget. Lo stesso budget riacquistato verrà usato nuovamente per comprare dei titoli facendo così crescere di nuovo equity, e così via. Un vincolo è quello di non poter effettuare due medesime operazioni di fila: 
 		\\~\\
 		Se si considera un certo budget iniziale \textit{initial\_budget}, il \textbf{guadagno} (\textit{gain}) in ogni istante è dato da:
 		\\
-		
-	   \begin{algorithmic}
-			\State $gain\gets (budget + equity * record) - initial\_budget$
-		\end{algorithmic}
+		\begin{equation}
+			gain=(budget+equity*price)-initial\_budget
+		\end{equation}
 
 		\\~\\
 		Questa è la formula del guadagno che verrà usata da qui in avanti.		
@@ -115,27 +131,55 @@
 		Le varie piattaforme di trading addebitano un costo per ogni singola operazione, sia di acquisto che di vendita, intestandosi una percentuale di budget speso dai trader come tassa per mantenere la piattaforma stessa. Nel caso di operazioni di acquisto, la tassa è calcolata come percentuale del budget speso per comprare il titolo, quindi viene scalata subito e il risultato è l'acquisto di una quantità leggermente minore di titoli (la restante dei quali viene pagata alla piattaforma); per le vendite invece la fee è tolta dal budget una volta che questo è ricalcolato vendendo equity, risultando in un ricavo leggermente minore di quello che si sarebbe ottenuto vendendo realmente l'intera quantità di titoli.\\
 		Nel caso di Kraken, la piattaforma di trading di riferimento su cui opera Sentyment, le fee sono del 0.26\%: significa che viene sottratto il 0.26\% di budget che si intende investire, per ogni operazione. Per altri mercati, valute o piattaforme di trading le fee possono variare e potrebbero non essere basaste su una percentuale di acquisto ma fisse (flat fee vs per share fee).
 		\\~\\
-		La presenza delle fee modifica abbastanza drasticamente il funzionamento del mercato e l'efficacia delle strategie di investimento, che devono essere adattate ad un mercato con fee; è necessario quindi riscrivere le formule per il guadagno e per le operazioni di acquisto e vendita titoli, che ora comprendono la percentuale di fee:\\
-		
-		RISCRIVI FORMULE CON FEE.
-		
-		
-		
-		
-		
-		
-		
-		
+		La presenza delle fee modifica abbastanza drasticamente il funzionamento del mercato e l'efficacia delle strategie di investimento, che devono essere adattate ad un mercato con fee; è necessario quindi riscrivere le formule per il guadagno e per le operazioni di acquisto e vendita titoli, che ora comprendono la percentuale di fee.\\
+		Per gli acquisti, considerando un certo budget iniziale \textit{budget} (o il budget risultato di una precedente vendita), il valore del titolo \textit{price}, la quantità di titolo acquistato \textit{equity} e una tassa \textit{fee}:\\
+		\begin{equation}
+			equity=(budget*(1-fee))/price
+		\end{equation}
 		\\~\\
+		Per le vendite:\\
+		\begin{equation}
+			budget=(equity*price)*(1-fee)
+		\end{equation}
+		\\~\\
+		Dal momento che le budget e equity sono già calcolati togliendo le fee per ogni operazione di acquisto e vendita, la formula del guadagno rimane la stessa.\\~\\
+		
+		
+		
+		
+		
+		
+		
+		
 		\textbf{ESEMPIO DI COME CAMBIEREBBE RISULTATO CON E SENZA FEE CON POCHI DATI DI ESEMPIO?}
 		\\~\\
-		Senza addentrarsi nelle diversità dei titoli e dei mercati, si può affermare che un'euristica generale e semplificata per guadagnare facendo trading è dunque "compra basso, vendi alto"; nella realtà i segnali di acquisto possono essere dati da altri indicatori più complessi e non sempre è possibile capire quando un titolo sta toccando un prezzo particolarmente alto o basso: è facile analizzare i grafici "a posteriori", ma non altrettanto semplice prevedere massimi e minimi locali online. Per questo si utilizzano delle semplici strategie fondamentali che aiutano a capire l'andamento dei prezzi.
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		Senza addentrarsi nelle diversità dei titoli e dei mercati, si può affermare che una strategia generale e semplificata per guadagnare facendo trading è dunque "compra basso, vendi alto"; nella realtà i segnali di acquisto possono essere dati da altri indicatori più complessi e non sempre è possibile capire quando un titolo sta toccando un prezzo particolarmente alto o basso: è facile analizzare i grafici "a posteriori", ma non altrettanto semplice prevedere massimi e minimi locali online. Per questo si utilizzano delle semplici strategie fondamentali che aiutano a capire l'andamento dei prezzi.
 		
 		
 	\subsection{Esempi di strategie}
-		buy hold macd sma
+		Come già accennato, l'\textbf{analisi tecnica} è lo studio dell'andamento dei prezzi dei mercati finanziari nel tempo, allo scopo di prevederne le tendenze future, mediante principalmente metodi grafici e statistici. In senso lato è quella teoria di analisi secondo cui è possibile prevedere l'andamento futuro del prezzo di un bene quotato, studiando la sua storia passata. Viene utilizzata, assieme all'analisi fondamentale, per la definizione delle decisioni di operatività finanziaria.\\
+		L'analisi tecnica si prefigge di analizzare e comprendere, attraverso l'analisi del grafico, l'andamento dei prezzi, il quale a sua volta rispecchia le decisioni degli investitori; inoltre si basa sull'assunto fondamentale che, poiché il comportamento degli investitori si ripete nel tempo, al verificarsi di certe condizioni grafiche, anche i prezzi si muoveranno di conseguenza. Il compito principale dell'analisi tecnica è quindi quello dell'identificare un cambiamento di tendenza rispetto ad uno stadio iniziale, mantenendo una posizione di investimento fino a quando non vi sia prova che la tendenza stessa si sia di nuovo invertita.\\
+		Per individuare un trend si fa uso di indicatori tecnici, basati su prezzo e volume, calcolati a partire dai grafici: questi analizzano i movimenti di prezzo a breve termine e alcuni dei più noti e usati sono Moving Average Crossover (o SMA: simple moving average), MACD (moving average convergence / divergence), RSI (relative strength index) e Bollinger Bands. Allo scopo di introdurre le strategie e l'analisi tecnica, ne verranno presentate alcune.
+		\\~\\
+		\subsubsection{SMA}
 		
 		
+		
+	\newpage
+	\section{Ruolo delle intelligenze artificiali}		
+	
+	
+	\newpage
 	\section{Sentyment}
 		Sentyment è un organismo ampio, formato da numerosi componenti interconnessi come, per esempio:
 		\begin{itemize}
@@ -162,4 +206,6 @@
 			\bibitem{}
 			An, G. (1996). The effects of adding noise during backpropagation training on a generalization performance. Neural computation, 8(3), 643-674.
 		\end{thebibliography}
+	
+		\printindex
 \end{document}
