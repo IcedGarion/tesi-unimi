@@ -7,7 +7,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{imakeidx}
 
-\makeindex[columns=3, title=Alphabetical Index, intoc]
+\makeindex[columns=3, Index, intoc]
 
 \usepackage{amsmath}
 \numberwithin{equation}{section}
@@ -23,23 +23,6 @@
 	\newpage
 	\tableofcontents
 
-	\section{Indice}
-	\begin{itemize}
-		\item Capitolo introduttivo
-			\begin{itemize}
-			\item Descrizione dell'ambito di riferimento
-			\item Modello dei dati
-			\end{itemize}
-			
-		\item Descrizione AI
-		\item Stato dell'arte metodologie di test
-		\item Descrizione test
-			\begin{itemize}
-				\item Analisi offline a posteriori: maximum profit e genetic AI
-				\item Analisi online: Reinforcement Learning
-			\end{itemize}
-		\item Risultati
-	\end{itemize}
 	\newpage 
 	 
 	 
@@ -169,14 +152,32 @@
 	\subsection{Esempi di strategie}
 		Come già accennato, l'\textbf{analisi tecnica} è lo studio dell'andamento dei prezzi dei mercati finanziari nel tempo, allo scopo di prevederne le tendenze future, mediante principalmente metodi grafici e statistici. In senso lato è quella teoria di analisi secondo cui è possibile prevedere l'andamento futuro del prezzo di un bene quotato, studiando la sua storia passata. Viene utilizzata, assieme all'analisi fondamentale, per la definizione delle decisioni di operatività finanziaria.\\
 		L'analisi tecnica si prefigge di analizzare e comprendere, attraverso l'analisi del grafico, l'andamento dei prezzi, il quale a sua volta rispecchia le decisioni degli investitori; inoltre si basa sull'assunto fondamentale che, poiché il comportamento degli investitori si ripete nel tempo, al verificarsi di certe condizioni grafiche, anche i prezzi si muoveranno di conseguenza. Il compito principale dell'analisi tecnica è quindi quello dell'identificare un cambiamento di tendenza rispetto ad uno stadio iniziale, mantenendo una posizione di investimento fino a quando non vi sia prova che la tendenza stessa si sia di nuovo invertita.\\
-		Per individuare un trend si fa uso di indicatori tecnici, basati su prezzo e volume, calcolati a partire dai grafici: questi analizzano i movimenti di prezzo a breve termine e alcuni dei più noti e usati sono Moving Average Crossover (o SMA: simple moving average), MACD (moving average convergence / divergence), RSI (relative strength index) e Bollinger Bands. Allo scopo di introdurre le strategie e l'analisi tecnica, ne verranno presentate alcune.
+		Per individuare un trend si fa uso di indicatori tecnici, basati su prezzo e volume, calcolati a partire dai grafici: questi analizzano i movimenti di prezzo a breve termine e alcuni dei più noti e usati sono Moving Average Crossover, MACD (moving average convergence / divergence), RSI (relative strength index) e Bollinger Bands.\\
+		Analizzando i grafici passati mediante queste strategie è possibile ricavare i parametri per gli indicatori che meglio si adattano al mercato in analisi e riutilizzare l'indicatore, applicandolo ai dati futuri, per identificare i trend.\\~\\
+		
+		\subsubsection{Moving Average Crossover}
+		Questa strategia prevede il calcolo di una o più medie mobili a diverso periodo, le cui intersezioni nel grafico definiscono un segnale di buy o sell.\\
+		Il moving average crossover si verifica quando, nel grafico di due medie mobili ciascuna basata su diversi periodi, le linee di queste medie mobili si incrociano. Non prevede la direzione futura ma mostra le tendenze. Questo indicatore utilizza due (o più) medie mobili, una più lenta e una più veloce. La più veloce è una media mobile a breve termine. Per i mercati azionari di fine giornata, ad esempio, può essere un periodo di 5, 10 o 25 giorni mentre la più lenta è la media mobile di medio o lungo termine (ad esempio periodo di 50, 100 o 200 giorni). Una media a breve termine è più veloce perché considera i prezzi solo per un breve periodo di tempo ed è quindi più reattiva alle variazioni giornaliere dei prezzi. D'altra parte, una media mobile a lungo termine è considerata più lenta in quanto incapsula i prezzi per un periodo più lungo, tuttavia tende ad attenuare i disturbi che si riflettono spesso nelle medie mobili a breve termine.
+		\\
+		Una moving average, come una linea a sé stante, viene spesso sovrapposta nei grafici per indicare l'andamento dei prezzi. Un crossover si verifica quando una media mobile più veloce (cioè una media mobile di periodo più breve) attraversa una media mobile più lenta (cioè una media mobile di periodo più lungo). In altre parole, accade quando la linea della media mobile del periodo più breve attraversa una linea della media mobile del periodo più lungo: questo punto di incontro viene utilizzato per comprare o vendere titoli (quando la media veloce supera quella lenta, si ha un segnale di \textit{buy}, mentre \textit{sell} se viceversa)
 		\\~\\
-		\subsubsection{SMA}
+		\begin{figure}
+		\includegraphics[width=\linewidth]{moving_avg}
+		\caption{Andamento dei prezzi per il titolo TESLA/DOLLARO, accompagnato da due medie mobili a diverso periodo: fast\_ma a 20 giorni mentre slow\_ma a 100 giorni. Le frecce verdi e rosse indicano i segnali di buy e sell ricavati dalle intersezioni fra le medie}
+		\end{figure}
+		\\~\\
+		Ci sono diverse declinazioni della strategia a medie mobili, come ad esempio SMA (simple moving average), che utilizza come segnale di buy / sell il crossover fra i prezzi di chiusura e la media mobile semplice; EMA usa una media esponenziale; MACD (moving average convergence / divergence) usa come prima statistica la differenza fra la media veloce e quella lenta e, come seconda statistica, la media di queste differenze.
+		\\\textbf{PARLARE DI TUTTE LE STRATEGIE? MACD, RSI, BOLLINGER?}
+		\\~\\
+		Calcolati gli indicatori statistici più adatti alla situazione e scelti i parametri migliori (come i periodi delle medie da usare), si è costruito un modello di trend del titolo e si è in grado di prevedere quando il trend si ripropone. Prendendo l'esempio di una moving average crossover con una media veloce e una lenta, analizzato che per la maggior parte dei casi si riscontra un guadagno vendendo quando la media lenta supera quella veloce e comprando quando accade l'opposto, allora si può affermare che sarà molto probabile guadagnare ancora, in futuro, ripetendo le medesime operazioni.
 		
 		
-		
-	\newpage
-	\section{Ruolo delle intelligenze artificiali}		
+	\subsection{Ruolo delle intelligenze artificiali e scopo della tesi}		
+	L'apprendimento automatico e diverse tecniche hanno creato nuovi sistemi per individuare pattern, cosa che il cervello umano non è in grado di fare. Dal momento che la finanza è quantitativa, la AI nel trading azionario sta guadagnando terreno. Le società finanziarie hanno investito molto nell'intelligenza artificiale in passato e studiano e implementano le applicazioni finanziarie di machine learning e del deep learning nelle loro operazioni.\\
+	L'analisi tecnica è dunque implementata in sistemi automatici, che sono molto più efficienti di un trader umano e offrono diversi vantaggi. Le AI separano le informazioni prevedibili da qualsiasi "rumore casuale", gli algoritmi apprendono dall'accuratezza delle previsioni precedenti e si adeguano continuamente, abbastanza veloci da prevedere il mutamento della situazione del mercato anche in un orizzonte di pochi giorni. Possono imparare dai successi e fallimenti e riconfigurare ogni giorno le approssimazioni del funzionamento interno del mercato, poiché viene alimentato con nuovi dati.\\
+	Oltre agli indiscutibili vantaggi computazionali di una macchina rispetto al cervello, ci sono altri aspetti da considerare che hanno portato alla crescita delle AI nel settore. Si può infondere la conoscenza degli esperti dell'ambito in un software che si auto adatta e migliora, senza avere gli svantaggi dell'errore umano; si può estendere per permettergli di gestire diversi ambiti, dal recupero della materia prima (i dati di trading) fino alla vendita del prodotto finito (vendita di strategie di investimento). È possibile costruire sistemi complessi che modellano intere realtà umane.\\~\\
+	Sentyment è uno di questi software descritti. Si occupa di raccogliere dati, elaborarli e, attraverso una AI li analizza per produrre strategie di investimento. Il modulo di intelligenza artificiale è molto ampio: esistono molte AI che operano producendo costantemente nuovi segnali di buy / sell per le strategie e sono monitorate da una ulteriore, singola AI. Questo supervisore decide quale fra le molte AI sta avendo più successo e la promuove come attiva da utilizzare.\\
+	Lo scopo della tesi è sviluppare il supervisore e inserirlo all'interno del complesso sistema di Sentyment, impiegando tecniche di test per intelligenze artificiali che permettano di scegliere un rappresentante migliore fra una serie di agenti che operano indipendentemente.
 	
 	
 	\newpage
@@ -193,19 +194,26 @@
 		
 		Sentyment è composta da tante AI e vengono scambiate spesso; obiettivo finale della tesi è saper dire quando scambiare una con l'altra. (grazie ai test)
 	    
-		
-		
-	    \newpage
-		\cite{es}
+	\newpage
+	\section{Metodologie di test per intelligenze artificiali}	
+	\subsection{Stato dell'arte dei test}
+	\subsection{Analisi offline: maximum profit e genetic AI}
+	\subsection{Analisi online: reinforcement learning}
 	
-		\begin{thebibliography}{9}
-			\bibitem{es}
-			Chalup, S., \& Maire, F. (1999, July). A study on hill climbing algorithms for neural network training. In Proceedings of the 1999 Congress on Evolutionary Computation-CEC99 (Cat. No. 99TH8406) (Vol. 3, pp. 2014-2021). IEEE.
-			\bibitem{}
-			Bengio, Y. (2009). Learning deep architectures for AI. Foundations and trends® in Machine Learning, 2(1), 1-127.
-			\bibitem{}
-			An, G. (1996). The effects of adding noise during backpropagation training on a generalization performance. Neural computation, 8(3), 643-674.
-		\end{thebibliography}
-	
-		\printindex
+	\newpage
+	\section{Risultati}
+		
+	\newpage
+	\cite{es}
+
+	\begin{thebibliography}{9}
+		\bibitem{es}
+		Chalup, S., \& Maire, F. (1999, July). A study on hill climbing algorithms for neural network training. In Proceedings of the 1999 Congress on Evolutionary Computation-CEC99 (Cat. No. 99TH8406) (Vol. 3, pp. 2014-2021). IEEE.
+		\bibitem{}
+		Bengio, Y. (2009). Learning deep architectures for AI. Foundations and trends® in Machine Learning, 2(1), 1-127.
+		\bibitem{}
+		An, G. (1996). The effects of adding noise during backpropagation training on a generalization performance. Neural computation, 8(3), 643-674.
+	\end{thebibliography}
+
+	\printindex
 \end{document}
