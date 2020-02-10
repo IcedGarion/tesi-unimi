@@ -9,4 +9,4 @@ piu' strategie
 
 
 # TODO
-commenti noe e immagini nel posto giusto!
+spiegare questione stage e aggiunta nuovi moduli da me?

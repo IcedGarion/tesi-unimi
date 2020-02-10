@@ -45,33 +45,30 @@
 		I dati usati dalla AI in questione sono scaricati dalla piattaforma di trading \textbf{Kraken}, usata per lo scambio di criptovalute (https://www.kraken.com/). Ogni secondo, trader da tutto il mondo effettuano azioni di compravendita di titoli, facendo crescere o diminuire il valore azionario di ogni asset, esattamente nel modo in cui opera anche Sentyment. Kraken rende disponibile, attraverso delle API (application programming interface), un elenco di record contenenti timestamp e prezzo, che formano lo storico degli scambi effettuati per ognuno degli asset che espone. Questi sono 110 coppie di valute che rappresentano i valori di scambio fra criptovalute e USD / EUR. Si fa distinzione fra dati "RAW", ovvero un semplice elenco di prezzi variabili nel tempo, e le "\textit{candele OHLCV}" (\textit{open}, \textit{high}, \textit{low}, \textit{close}).\\~\\ Le candele sono uno degli strumenti grafici più popolari in quanto offrono un eccellente riferimento virtuale dei movimenti dei prezzi in un intervallo di tempo: al minuto, all'ora, al giorno, mensile ed altro.\\
 		Sono dunque la rappresentazione di un dato aggregato secondo l'unità di tempo selezionata. Le informazioni che racchiudono sono indicate dal loro nome. Prendendo come esempio le candele orarie: la creazione di ognuna di esse parte allo scoccare dell'ora e fissa un prezzo di apertura (\textit{open}: il prezzo di vendita dell'asset in quel momento), per terminare dopo un'ora con un prezzo di chiusura (\textit{close}: lo stesso prezzo di vendita dell'asset al momento di chiusura, che sarà ora cambiato rispetto a open); si calcola quali sono stati i picchi massimi e minimi di prezzo durante l'ora (\textit{high}, \textit{low}) e infine il volume, che rappresenta l'ammontare totale scambiato nell'ora.\\
 		Le candele OHLCV rappresentano dunque la storia dell'andamento dei prezzi di un certo asset durante il periodo di tempo fissato: iniziano con un certo prezzo, all'apertura dello slot temporale, che durante il periodo considerato evolve e crea i punti minimo e massimo, per poi terminare alla chiusura dello slot con la determinazione del prezzo finale; i prezzi minimo e massimo possono superare anche di molto quelli di apertura e chiusura. Esiste la possibilità per cui il prezzo non evolva nel periodo selezionato e che i quattro termini, open, close, high e low, coincidano\\ Volume è invece la somma totale della quantità di titoli comprati e venduti durante l'unità di tempo.
-		\\~\\
 		
-		
-		\textcolor{red}{\textbf{?ESEMPIO NUMERICO CREAZIONE CANDELE?}
-			(es, elenco prezzi in un'ora - > risultato candela valori ohlcv)}
+%		\textcolor{red}{\textbf{?ESEMPIO NUMERICO CREAZIONE CANDELE?}
+%			(es, elenco prezzi in un'ora e creazione candela valori ohlcv)}
 		\\~\\
 		
 		Sentyment lavora quasi esclusivamente su queste candele e, anche se le API di Kraken permettono di scaricare dati già aggregati, la AI scarica soltanto dati di trading raw per poi creare autonomamente le sue candele attraverso un modulo dati dedicato.
-		\\~\\
-		
+				
 
-		\begin{figure}
+		\begin{figure}[H]
 		\begin{center}
 		\includegraphics[width=10cm]{kraken_raw}
-		\caption{\\~\\Elenco transazioni Bitcoin/Euro relative ad una finestra di minuti. I record mostrano l'ora in cui è avvenuto il trade, il tipo di operazione (buy / sell), il prezzo di scambio del titolo e la quantità di titoli scambiati. L'elenco dei dati 'raw' di trade è disponibile tramite le API kraken ed è la fonte grezza di dati finanziari utilizzati per calcolare i grafici OHLCV, fondamentali per l'analisi dei mercati. (fonte: https://www.kraken.com/)}
+		\caption{\\~\\Elenco transazioni Bitcoin/Euro relative ad una finestra di minuti. I record mostrano l'ora in cui è avvenuto il trade, il tipo di operazione (buy / sell), il prezzo di scambio del titolo e la quantità di titoli scambiati. L'elenco dei dati di trade 'raw' è disponibile tramite le API kraken ed è la fonte grezza di dati finanziari utilizzati per calcolare i grafici OHLCV, fondamentali per l'analisi dei mercati. (fonte: https://www.kraken.com/)}
 		\end{center}
 		\end{figure}
-		\begin{figure}
+		\begin{figure}[H]
 		\begin{center}
 		\includegraphics[width=\linewidth]{kraken_ohlcv}
-		\caption{\\~\\Grafico OHLCV ricavato dai prezzi in Figura 1. Le candele sono di durata 1 ora e quindi i prezzi elencati sopra rientrano soltanto in parte nell'ultima candela (rossa) delle 15:00 - 16:00, ancora aperta e quindi in creazione. La candela è rossa perchè, come si nota dai prezzi, il valore del titolo  è in discesa: partendo da circa 8.568 (probabilmente più alto nei record precedenti) si scende verso 8.567.\\~\\Le linee colorate rappresentano le medie mobili dei prezzi di chiusura; usate per analisi tecnica, sono rispettivamente le medie a 10 (verde), 21 (azzurro= )e 100 (blu) candele. Più candele sono considerate nella media e meno questa cambierà bruscamente, avendo quindi la media a 100 candele (cioè 100 ore) molto più lenta delle altre. (fonte: https://www.kraken.com/)}
+		\caption{\\~\\Grafico OHLCV ricavato dai prezzi in Figura 1. Sulle ascisse è rappresentata l'ora mentre le ordinate sono il prezzo (in Euro) del titolo Bitcoin. Le "barre" orizzontali verdi e rosse sono le candele OHLCV: verdi se il prezzo è in crescita (\textit{open} minore di \textit{close}), rosse se in discesa (\textit{open} maggiore di \textit{close}). Le candele sono di durata 1 ora e quindi i prezzi elencati nella precedente immagine rientrano soltanto in parte nell'ultima candela (rossa) delle 15:00 - 16:00, ancora aperta e quindi in creazione. La candela è rossa perchè, come si nota dai prezzi, il valore del titolo  è in discesa: partendo da circa 8.568 (probabilmente più alto nei record precedenti) si scende verso 8.567.\\
+		Le linee colorate rappresentano le medie mobili dei prezzi di chiusura; usate per analisi tecnica, sono rispettivamente le medie a 10 (verde), 21 (azzurro) e 100 (blu) candele. Più candele sono considerate nella media e meno questa cambierà bruscamente, avendo quindi la media a 100 candele (cioè 100 ore) molto più lenta delle altre. (fonte: https://www.kraken.com/)}
 		\end{center}
 		\end{figure}
+		\newpage
 
-		\\~\\		
-
-		Le immagini descrivono l'andamento dei prezzi, scambio per scambio, e le corrispondenti candele ohlcv come esposte dalla piattaforma di trading. I bordi orizzontali che compongono i lati superiore e inferiore della candela sono il prezzo di apertura e quello di chiusura: se la candela è rossa il prezzo di chiusura è minore di quello di apertura (significa che il prezzo dell'asset è sceso durante l'unità di tempo), e quindi il bordo superiore sarà 'open' e quello inferiore 'close', mentre una candela verde indica una crescita del prezzo ('open è il lato inferiore mentre 'close' quello superiore). Le linee verticali della candela si estendono invece verso il prezzo minimo e massimo che l'asset ha toccato nel periodo di tempo fra apertura e chiusura della candela.
+		Le immagini descrivono l'andamento dei prezzi scambio per scambio e le corrispondenti candele ohlcv come esposte dalla piattaforma di trading. I bordi orizzontali che compongono i lati superiore e inferiore della candela sono il prezzo di apertura e quello di chiusura: se la candela è rossa il prezzo di chiusura è minore di quello di apertura (significa che il prezzo dell'asset è sceso durante l'unità di tempo), e quindi il bordo superiore rappresenta il valore di \textit{open} e quello inferiore \textit{close}, mentre una candela verde indica una crescita del prezzo (\textit{open} è il lato inferiore mentre \textit{close} quello superiore). Le linee verticali della candela si estendono invece verso il prezzo minimo e massimo che l'asset ha toccato nel periodo di tempo fra apertura e chiusura della candela.
 		\\~\\
 		Le API di Kraken permettono di effettuare diversi tipi di operazioni, come scaricare lo storico dei prezzi di tutte le coppie valuta-criptovaluta disponibili, dal 2013; restare in attesa per ricevere in tempo reale i nuovi dati sugli scambi di titoli; inoltre è anche possibile creare il proprio portafogli sulla piattaforma e piazzare ordini di acquisto e vendita. Tutte funzionalità ben sfruttate da Sentyment, che opera sul mercato in autonomia.
 		
@@ -79,12 +76,12 @@
 		
 	\subsection{Gudagnare con il trading}
 		E' importante notare che la ricchezza in possesso, calcolata in ogni istante, è data dalla quantità di budget e dalla quantità di titoli posseduti. Gli asset finanziari hanno un valore monetario indicato dal loro prezzo, quindi il possesso di alcuni di questi, anche se il budget da investire è azzerato, comporta comunque una ricchezza investita che si può recuperare rivendendo il titolo.\\
-		Si prende come esempio l'asset XBT/EUR, valuta di scambio fra Bitcoin e Euro. Partendo da un budget iniziale in Euro, bisogna decidere quando comprare titoli di Bitcoin e quando rivenderli per avere di nuovo Euro. Lo scopo quindi è non soltanto massimizzare gli Euro in possesso, con l'avanzare del tempo, ma anche i Bitcoin e / o una combinazione dei due titoli che porti comunque ad un aumento del valore dei due.\\
-		A seconda dell'aspettativa di rialzo o ribasso del titolo: andare \textbf{long} su XBT/EUR vuol dire acquistare Bitcoin vendendo Euro, puntando ad un apprezzamento (aumento di valore) della criptovaluta; in questo caso l’aspettativa è di un aumento del valore del cambio e si avrà quindi una visione rialzista del mercato. Andare \textbf{short} su XBT/EUR vuol dire vendere Bitcoin acquistando Euro, puntando quindi un apprezzamento dell'Euro nei confronti della criptomoneta. In questo caso l’aspettativa è di una diminuzione di valore del cambio. Si aprirà quindi una posizione che mira a una flessione del prezzo. La visione che il trader avrà del mercato sarà ribassista.\\~\\
-		Il punto centrale su cui si basano le strategie di investimento è cercare di indovinare se la valuta aumenterà o diminuirà di prezzo, per poi andare long o short a seconda della previsione. l'\textbf{analisi tecnica} è un metodo riconosciuto e largamente utilizzato per anticipare o prevedere l'andamento dei prezzi e si basa sull'aspetto tecnico del mercato, utilizzando grafici e dati storici. In particolare vengono analizzati prezzi, volumi scambiati e fasce temporali. Si utilizzano indicatori matematici, statistici e grafici e i segnali e i suggerimenti ricavati da questi strumenti accompagnano i trader nelle loro decisioni in merito all'apertura e chiusura di posizioni di trading. L'analisi tecnica è un metodo di previsione dei prezzi basato sui dati storici.
+		Si prende come esempio l'asset XBT/EUR, valuta di scambio fra Bitcoin e Euro. Partendo da un budget iniziale in Euro, bisogna decidere quando comprare titoli di Bitcoin e quando rivenderli per avere di nuovo Euro. Lo scopo della AI, quindi, non è soltanto massimizzare gli Euro in possesso, ma anche il numero di titoli Bitcoin o del quantitativo di entrambi i titoli da avere in portafoglio che porti all'aumento del loro valore.\\
+		A seconda delle aspettative sul rialzo o ribasso di un titolo è possibile agire in due modi: andare \textit{long} o andare \textit{short}. Andare \textbf{long} vuol dire acquistare Bitcoin vendendo Euro, puntando ad un apprezzamento (aumento di valore) della criptovaluta; in questo caso l’aspettativa è di un aumento del valore del cambio e si avrà quindi una visione rialzista (bullish) del mercato. Andare \textbf{short} vuol dire vendere Bitcoin acquistando Euro, puntando quindi un apprezzamento dell'Euro nei confronti della criptomoneta. In questo caso l’aspettativa è di una diminuzione di valore del cambio. Si aprirà quindi una posizione che mira a una flessione del prezzo. La visione che il trader avrà del mercato sarà ribassista (bearish).\\~\\
+		Il punto centrale su cui si basano le strategie di investimento è indovinare se la valuta aumenterà o diminuirà di prezzo, per poi andare long o short a seconda della previsione. L'\textbf{analisi tecnica} è un metodo riconosciuto e largamente utilizzato per anticipare o prevedere l'andamento dei prezzi e si basa sull'aspetto tecnico del mercato, utilizzando grafici e dati storici. In particolare vengono analizzati prezzi, volumi scambiati e fasce temporali. Si utilizzano indicatori matematici, statistici e grafici e i segnali e i suggerimenti ricavati da questi strumenti accompagnano i trader nelle loro decisioni in merito all'apertura e chiusura di posizioni di trading. L'analisi tecnica è un metodo di previsione dei prezzi basato sui dati storici.
 		\\~\\
-		\textbf{Altro su analisi tecnica? https://www.xtb.com/it/scuola-di-trading/che-cosa-e-lanalisi-tecnica}
-		\\~\\
+%		\textbf{Altro su analisi tecnica?
+%		https://www.xtb.com/it/scuola-di-trading/che-cosa-e-lanalisi-tecnica}
 		Supponendo che il mercato ad un certo punto cresca e si abbia "indovinato" un buon numero di previsioni, ci si ritroverà a possedere dei titoli che ora valgono un prezzo superiore rispetto al loro valore iniziale. Se i titoli crescono di valore, è bene quindi acquistarne finchè salgono, in questo modo si possiede un maggior numero di asset che andranno a valere sempre di più; in caso di perdita di valore del titolo, invece, generalmente si dovrebbe vendere i titoli, per riacquistare del budget investito che ora stava perdendo valore e poterlo investire in altri titoli che crescono.\\
 		Quando si decide di acquistare si sta effettuando la seguente operazione: dato un certo budget iniziale \textit{budget}, il valore del titolo \textit{price} e la quantità di titolo acquistato \textit{equity} e supponendo di spendere sempre tutto il budget per acquistare il titolo
 		\\
@@ -100,7 +97,7 @@
 		\end{equation}
 
 		\\~\\
-		È possibile in ogni momento calcolare il ricavo o quantità di beni in possesso combinando il budget con equity, tenendo presente che dopo un acquisto il budget scende a zero e equity assume il valore indicato, mentre dopo una vendita è equity a scendere a zero e si ritorna in possesso di budget. Lo stesso budget riacquistato verrà usato nuovamente per comprare dei titoli facendo così crescere di nuovo equity, e così via. Un vincolo è quello di non poter effettuare due medesime operazioni di fila: 
+		È possibile in ogni momento calcolare il ricavo o quantità di beni in possesso combinando il budget con equity, tenendo presente che dopo un acquisto il budget scende a zero e equity assume il valore indicato, mentre dopo una vendita è equity a scendere a zero e si ritorna in possesso di budget. Lo stesso budget riacquistato verrà usato nuovamente per comprare dei titoli facendo così crescere di nuovo equity, e così via. Un vincolo è quello di non poter effettuare due medesime operazioni di fila. 
 		\\~\\
 		Se si considera un certo budget iniziale \textit{initial\_budget}, il \textbf{guadagno} (\textit{gain}) in ogni istante è dato da:
 		\\
@@ -135,8 +132,7 @@
 		
 		
 		
-		\textbf{ESEMPIO DI COME CAMBIEREBBE RISULTATO CON E SENZA FEE CON POCHI DATI DI ESEMPIO?}
-		\\~\\
+%		\textbf{ESEMPIO DI COME CAMBIEREBBE RISULTATO CON E SENZA FEE CON POCHI DATI DI ESEMPIO?}
 		
 		
 		
@@ -147,28 +143,29 @@
 		
 		
 		
-		Senza addentrarsi nelle diversità dei titoli e dei mercati, si può affermare che una strategia generale e semplificata per guadagnare facendo trading è dunque "compra basso, vendi alto"; nella realtà i segnali di acquisto possono essere dati da altri indicatori più complessi e non sempre è possibile capire quando un titolo sta toccando un prezzo particolarmente alto o basso: è facile analizzare i grafici "a posteriori", ma non altrettanto semplice prevedere massimi e minimi locali online. Per questo si utilizzano delle semplici strategie fondamentali che aiutano a capire l'andamento dei prezzi.
+		Senza addentrarsi nelle diversità dei titoli e dei mercati, si può affermare che una strategia generale e semplificata per guadagnare facendo trading è \textit{compra basso, vendi alto}; nella realtà i segnali di acquisto possono essere dati da altri indicatori più complessi e non sempre è possibile capire quando un titolo sta toccando un prezzo particolarmente alto o basso: è facile analizzare i grafici a posteriori, ma non altrettanto semplice prevedere massimi e minimi locali online. Per questo si utilizzano delle semplici strategie fondamentali che aiutano a capire l'andamento dei prezzi.
 		
 		
 	\subsection{Esempi di strategie}
 		Come già accennato, l'\textbf{analisi tecnica} è lo studio dell'andamento dei prezzi dei mercati finanziari nel tempo, allo scopo di prevederne le tendenze future, mediante principalmente metodi grafici e statistici. In senso lato è quella teoria di analisi secondo cui è possibile prevedere l'andamento futuro del prezzo di un bene quotato, studiando la sua storia passata. Viene utilizzata, assieme all'analisi fondamentale, per la definizione delle decisioni di operatività finanziaria.\\
 		L'analisi tecnica si prefigge di analizzare e comprendere, attraverso l'analisi del grafico, l'andamento dei prezzi, il quale a sua volta rispecchia le decisioni degli investitori; inoltre si basa sull'assunto fondamentale che, poiché il comportamento degli investitori si ripete nel tempo, al verificarsi di certe condizioni grafiche, anche i prezzi si muoveranno di conseguenza. Il compito principale dell'analisi tecnica è quindi quello dell'identificare un cambiamento di tendenza rispetto ad uno stadio iniziale, mantenendo una posizione di investimento fino a quando non vi sia prova che la tendenza stessa si sia di nuovo invertita.\\
 		Per individuare un trend si fa uso di indicatori tecnici, basati su prezzo e volume, calcolati a partire dai grafici: questi analizzano i movimenti di prezzo a breve termine e alcuni dei più noti e usati sono Moving Average Crossover, MACD (moving average convergence / divergence), RSI (relative strength index) e Bollinger Bands.\\
-		Analizzando i grafici passati mediante queste strategie è possibile ricavare i parametri per gli indicatori che meglio si adattano al mercato in analisi e riutilizzare l'indicatore, applicandolo ai dati futuri, per identificare i trend.\\~\\
+		Analizzando i grafici passati mediante queste strategie è possibile ricavare i parametri per gli indicatori che meglio si adattano al mercato in analisi e riutilizzare l'indicatore, applicandolo ai dati futuri, per identificare nuovi trend.\\~\\
 		
 		\subsubsection{Moving Average Crossover}
 		Questa strategia prevede il calcolo di una o più medie mobili a diverso periodo, le cui intersezioni nel grafico definiscono un segnale di buy o sell.\\
 		Il moving average crossover si verifica quando, nel grafico di due medie mobili ciascuna basata su diversi periodi, le linee di queste medie mobili si incrociano. Non prevede la direzione futura ma mostra le tendenze. Questo indicatore utilizza due (o più) medie mobili, una più lenta e una più veloce. La più veloce è una media mobile a breve termine. Per i mercati azionari di fine giornata, ad esempio, può essere un periodo di 5, 10 o 25 giorni mentre la più lenta è la media mobile di medio o lungo termine (ad esempio periodo di 50, 100 o 200 giorni). Una media a breve termine è più veloce perché considera i prezzi solo per un breve periodo di tempo ed è quindi più reattiva alle variazioni giornaliere dei prezzi. D'altra parte, una media mobile a lungo termine è considerata più lenta in quanto incapsula i prezzi per un periodo più lungo, tuttavia tende ad attenuare i disturbi che si riflettono spesso nelle medie mobili a breve termine.
 		\\
-		Una moving average, come una linea a sé stante, viene spesso sovrapposta nei grafici per indicare l'andamento dei prezzi. Un crossover si verifica quando una media mobile più veloce (cioè una media mobile di periodo più breve) attraversa una media mobile più lenta (cioè una media mobile di periodo più lungo). In altre parole, accade quando la linea della media mobile del periodo più breve attraversa una linea della media mobile del periodo più lungo: questo punto di incontro viene utilizzato per comprare o vendere titoli (quando la media veloce supera quella lenta, si ha un segnale di \textit{buy}, mentre \textit{sell} se viceversa)
+		Una moving average, come una linea a sé stante, viene spesso sovrapposta nei grafici per indicare l'andamento dei prezzi. Un crossover si verifica quando una media mobile più veloce (cioè una media mobile di periodo più breve) attraversa una media mobile più lenta (cioè una media mobile di periodo più lungo).\\
+		In altre parole, accade quando la linea della media mobile del periodo più breve attraversa una linea della media mobile del periodo più lungo: questo punto di incontro viene utilizzato per comprare o vendere titoli (quando la media veloce supera quella lenta, si ha un segnale di \textit{buy}, mentre \textit{sell} se viceversa)
 		\\~\\
 		\begin{figure}
 		\includegraphics[width=\linewidth]{moving_avg}
 		\caption{Andamento dei prezzi per il titolo TESLA/DOLLARO, accompagnato da due medie mobili a diverso periodo: fast\_ma a 20 giorni mentre slow\_ma a 100 giorni. Le frecce verdi e rosse indicano i segnali di buy e sell ricavati dalle intersezioni fra le medie}
 		\end{figure}
-		\\~\\
+	
 		Ci sono diverse declinazioni della strategia a medie mobili, come ad esempio SMA (simple moving average), che utilizza come segnale di buy / sell il crossover fra i prezzi di chiusura e la media mobile semplice; EMA usa una media esponenziale; MACD (moving average convergence / divergence) usa come prima statistica la differenza fra la media veloce e quella lenta e, come seconda statistica, la media di queste differenze.
-		\\\textbf{PARLARE DI TUTTE LE STRATEGIE? MACD, RSI, BOLLINGER?}
+%		\\\textbf{PARLARE DI TUTTE LE STRATEGIE? MACD, RSI, BOLLINGER?}
 		\\~\\
 		Calcolati gli indicatori statistici più adatti alla situazione e scelti i parametri migliori (come i periodi delle medie da usare), si è costruito un modello di trend del titolo e si è in grado di prevedere quando il trend si ripropone. Prendendo l'esempio di una moving average crossover con una media veloce e una lenta, analizzato che per la maggior parte dei casi si riscontra un guadagno vendendo quando la media lenta supera quella veloce e comprando quando accade l'opposto, allora si può affermare che sarà molto probabile guadagnare ancora, in futuro, ripetendo le medesime operazioni.
 		
@@ -176,30 +173,43 @@
 	\subsection{Ruolo delle intelligenze artificiali e scopo della tesi}		
 	L'apprendimento automatico e diverse tecniche hanno creato nuovi sistemi per individuare pattern, cosa che il cervello umano non è in grado di fare. Dal momento che la finanza è quantitativa, la AI nel trading azionario sta guadagnando terreno. Le società finanziarie hanno investito molto nell'intelligenza artificiale in passato e studiano e implementano le applicazioni finanziarie di machine learning e del deep learning nelle loro operazioni.\\
 	L'analisi tecnica è dunque implementata in sistemi automatici, che sono molto più efficienti di un trader umano e offrono diversi vantaggi. Le AI separano le informazioni prevedibili da qualsiasi "rumore casuale", gli algoritmi apprendono dall'accuratezza delle previsioni precedenti e si adeguano continuamente, abbastanza veloci da prevedere il mutamento della situazione del mercato anche in un orizzonte di pochi giorni. Possono imparare dai successi e fallimenti e riconfigurare ogni giorno le approssimazioni del funzionamento interno del mercato, poiché viene alimentato con nuovi dati.\\
-	Oltre agli indiscutibili vantaggi computazionali di una macchina rispetto al cervello, ci sono altri aspetti da considerare che hanno portato alla crescita delle AI nel settore. Si può infondere la conoscenza degli esperti dell'ambito in un software che si auto adatta e migliora, senza avere gli svantaggi dell'errore umano; si può estendere per permettergli di gestire diversi ambiti, dal recupero della materia prima (i dati di trading) fino alla vendita del prodotto finito (vendita di strategie di investimento). È possibile costruire sistemi complessi che modellano intere realtà umane.\\~\\
+	Oltre agli indiscutibili vantaggi computazionali di una macchina rispetto al cervello, ci sono altri aspetti da considerare che hanno portato alla crescita delle AI nel settore. Si può infondere la conoscenza degli esperti dell'ambito in un software che si auto adatta e migliora, senza avere gli svantaggi dell'errore umano; si può estendere per permettergli di gestire diversi ambiti, dal recupero della materia prima (i dati di trading) fino alla vendita del prodotto finito (vendita di strategie di investimento). È possibile costruire sistemi complessi che modellano intere realtà.\\~\\
 	Sentyment è uno di questi software descritti. Si occupa di raccogliere dati, elaborarli e, attraverso una AI li analizza per produrre strategie di investimento. Il modulo di intelligenza artificiale è molto ampio: esistono molte AI che operano producendo costantemente nuovi segnali di buy / sell per le strategie e sono monitorate da una ulteriore, singola AI. Questo supervisore decide quale fra le molte AI sta avendo più successo e la promuove come attiva da utilizzare.\\
 	Lo scopo della tesi è sviluppare il supervisore e inserirlo all'interno del complesso sistema di Sentyment, impiegando tecniche di test per intelligenze artificiali che permettano di scegliere un rappresentante migliore fra una serie di agenti che operano indipendentemente.
 	
 	
 	\newpage
 	\section{Sentyment}
-		Sentyment è un organismo ampio, formato da numerosi componenti interconnessi come, per esempio:
-		\begin{itemize}
-			\item Modulo raccolta dati
-			\item Test suite
-			\item Modulo di trading
-		\end{itemize}
+	Siccome il fine ultimo della tesi è inserire un nuovo modulo operativo in Sentyment, è necessario prendere familiarità con il software e i dati che tratta.\\
+	L'applicazione era già esistente e in grado di raccogliere dati da Kraken e produrre le strategie ma mancava di un'architettura modulare, di componenti separati che assolvono a ruoli precisi e definiti e di un'interfaccia ad API per interrogare il sistema in esecuzione. Era quindi necessario sviluppare da zero \textit{data module} e \textit{coordinator} e permettere l'integrazione del resto del sistema già esistente nella nuova architettura a moduli. Era inoltre richiesto lo sviluppo della nuova AI di controllo, supervisore che sceglie la migliore fra le AI in esecuzione.\\
+	Tutti i moduli del sistema sono scritti in python3, comprese le AI stesse. Alcune loro parti sono state riscritte in cython e Go per migliorare le prestazioni.
+	\\~\\
 	
+	\begin{figure}[h]
+		\includegraphics[width=\linewidth]{Sentyment}
+		\caption{\\~\\Architettura di Sentyment. Nei riquadri sono mostrati i quattro principali componenti, suddivisi al loro interno in ulteriori sotto-moduli. Il grafico è diviso in \textit{front-end} e \textit{back-end}, che rappresentano rispettivamente le interfacce esposte all'utente utilizzatore del sistema, e la parte di logica non accessibile dall'esterno}
+	\end{figure}
+	\\~\\
 	
-		Sviluppo modulo dati da me.
-		
-		Sentyment è composta da tante AI e vengono scambiate spesso; obiettivo finale della tesi è saper dire quando scambiare una con l'altra. (grazie ai test)
+	\begin{itemize}
+		\item \textit{data module} raccoglie i record di trade tramite le API Kraken, gestisce la creazione e scrittura delle candele OHLCV e permettere l'accesso a tutti i dati e i database. Quando i dati di trade raw sono scaricati e salvati su uno storage temporaneo da \textit{raw data}, allora \textit{data manager} li copia sul database permanente e in automatico scatta la creazione delle nuove candele OHLCV, che sono create a partire dai dati raw allo scoccare della nuova ora (o minuto/giorno, a seconda delle configurazioni scelte) e inserite nel database.
+		\item \textit{coordinator} rappresenta le interfacce esposte per il controllo e l'interrogazione dello stato di Sentyment. È l'unico punto di accesso al sistema in esecuzione, tramite delle API esposte su server è possibile conoscere quali asset stanno attualmente venendo scaricati, quali sono le candele che si vogliono creare e impostarne i timeframe, attivare o disattivare i download dati e forzare la creazione di specifiche candele.
+		\item \textit{AI module} era la parte preesistente di intelligenza artificiale. Contiene le numerose AI che creano le strategie di investimento e il supervisore che sceglie la migliore fra queste, ogni periodo fissato di tempo. È inoltre presente un modulo che crea report che descrivono l'andamento delle AI, i dati che stanno processando e le statistiche calcolate per ognuna di esse, per misurarne la performance online.
+		\item \textit{trading module} si occupa di seguire le strategie create dalle AI per effettuare direttamente operazioni di acquisto e vendita tramite le API di Kraken. È collegato ad un portafoglio Kraken che contiene un certo budget ed è libero di fare trading. Oltre ad agire sul mercato vero, le AI operano anche in un ambiente simulato, che permette di riprodurre e monitorare quale sarebbe stato il loro comportamento nel mercato reale o in nuovi mercati non ancora raggiunti, al fine di calcolare ulteriori statistiche e tracciare l'evoluzione delle AI.
+	\end{itemize}
+	
+	Come già accennato, sono stati sviluppati \textit{data module} e \textit{coordinator}, ridisegnando la preesistente architettura di Sentyment e integrando gli altri componenti. Durante lo sviluppo, si sono incontrati alcuni ostacoli:
+	
+	Prima di sviluppare la AI supervisore sono state testate le AI singolarmente attraverso alcune metodologie di test che saranno descritte di seguito. È stato svolto un lavoro di analisi dei dati prodotti dalle AI, confrontandoli con alcune strategie di base e con altre intelligenze artificiali sviluppate al fine di misurarne le prestazioni e solo dopo le AI sono state confrontate fra di loro. I metodi ritenuti migliori per il confronto sono stati scelti in seguito ad un'analisi del contesto e della natura finanziaria dei dati, 
+	
 	    
 	\newpage
 	\section{Metodologie di test per intelligenze artificiali}	
 	\subsection{Stato dell'arte dei test}
 	\subsection{Analisi offline: maximum profit e genetic AI}
 	\subsection{Analisi online: reinforcement learning}
+	%https://tams.informatik.uni-hamburg.de/publications/2019/MSc_Ronja_Gueldenring.pdf
+	https://tams.informatik.uni-hamburg.de/publications/2019/MSc\_Ronja\_Gueldenring.pdf
 	
 	\newpage
 	\section{Risultati}
