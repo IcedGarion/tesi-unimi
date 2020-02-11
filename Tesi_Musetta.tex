@@ -6,6 +6,14 @@
 \graphicspath{ {./images/} }
 \usepackage[utf8]{inputenc}
 \usepackage{xcolor}
+
+
+%\usepackage[a4paper, total={6in, 12cm}, margin=3cm]{geometry}
+
+
+\setlength{\voffset}{-0.5in}
+\setlength{\textheight}{710pt}
+
 \usepackage{imakeidx}
 
 \makeindex[columns=3, Index, intoc]
@@ -180,11 +188,16 @@
 	
 	\newpage
 	\section{Sentyment}
-	Siccome il fine ultimo della tesi è inserire un nuovo modulo operativo in Sentyment, è necessario prendere familiarità con il software e i dati che tratta.\\
-	L'applicazione era già esistente e in grado di raccogliere dati da Kraken e produrre le strategie ma mancava di un'architettura modulare, di componenti separati che assolvono a ruoli precisi e definiti e di un'interfaccia ad API per interrogare il sistema in esecuzione. Era quindi necessario sviluppare da zero \textit{data module} e \textit{coordinator} e permettere l'integrazione del resto del sistema già esistente nella nuova architettura a moduli. Era inoltre richiesto lo sviluppo della nuova AI di controllo, supervisore che sceglie la migliore fra le AI in esecuzione.\\
-	Tutti i moduli del sistema sono scritti in python3, comprese le AI stesse. Alcune loro parti sono state riscritte in cython e Go per migliorare le prestazioni.
+	\textcolor{red}{parlare dello stage? + altro da presentazione sentyment?}
+	
+	Sentyment è il prodotto di un'azienda milanese che opera nel settore informatico-finanziario. Nexid Edge, precedentemente noto come Blockchain360, è un ramo del gruppo NEXiD votato per perseguire l'innovazione tecnologica e sviluppare soluzioni di digital business rivoluzionarie. SentYment è la nuova Business Unit dedicata all'intelligenza artificiale.\\
+	L'obiettivo è offrire alle organizzazioni un accesso senza pari a tecnologie all'avanguardia che uniscono il meglio della tecnologia e dell'imprenditorialità per elevare la saggezza collettiva. Al momento, grazie all'intensa collaborazione con Nexid Finance, Nexid Edge è attiva nel fornire progetti di consulenza digitale end-to-end, per offrire ai clienti un'esperienza di \textit{augmented consulting}.
 	\\~\\
 	
+	Dato che il fine ultimo della tesi è inserire un nuovo modulo operativo in Sentyment, è necessario prendere familiarità con il software e i dati che tratta.\\
+	L'applicazione era già esistente e in grado di raccogliere dati da Kraken e produrre le strategie ma mancava di un'architettura modulare, di componenti separati che assolvono a ruoli precisi e definiti e di un'interfaccia ad API per interrogare il sistema in esecuzione. Era quindi necessario sviluppare da zero \textit{data module} e \textit{coordinator} e permettere l'integrazione del resto del sistema già esistente nella nuova architettura a moduli. Era inoltre richiesto lo sviluppo della nuova AI di controllo, supervisore che sceglie la migliore fra le AI in esecuzione.\\
+	Tutti i moduli del sistema sono scritti in python3, comprese le AI stesse. Alcune loro parti sono state riscritte in cython e Go per migliorare le prestazioni.
+		
 	\begin{figure}[h]
 		\includegraphics[width=\linewidth]{Sentyment}
 		\caption{\\~\\Architettura di Sentyment. Nei riquadri sono mostrati i quattro principali componenti, suddivisi al loro interno in ulteriori sotto-moduli. Il grafico è diviso in \textit{front-end} e \textit{back-end}, che rappresentano rispettivamente le interfacce esposte all'utente utilizzatore del sistema, e la parte di logica non accessibile dall'esterno}
@@ -198,10 +211,16 @@
 		\item \textit{trading module} si occupa di seguire le strategie create dalle AI per effettuare direttamente operazioni di acquisto e vendita tramite le API di Kraken. È collegato ad un portafoglio Kraken che contiene un certo budget ed è libero di fare trading. Oltre ad agire sul mercato vero, le AI operano anche in un ambiente simulato, che permette di riprodurre e monitorare quale sarebbe stato il loro comportamento nel mercato reale o in nuovi mercati non ancora raggiunti, al fine di calcolare ulteriori statistiche e tracciare l'evoluzione delle AI.
 	\end{itemize}
 	
-	Come già accennato, sono stati sviluppati \textit{data module} e \textit{coordinator}, ridisegnando la preesistente architettura di Sentyment e integrando gli altri componenti. Durante lo sviluppo, si sono incontrati alcuni ostacoli:
-	
+	Come già accennato, sono stati sviluppati \textit{data module} e \textit{coordinator}, ridisegnando la preesistente architettura di Sentyment e integrando gli altri componenti.\\
 	Prima di sviluppare la AI supervisore sono state testate le AI singolarmente attraverso alcune metodologie di test che saranno descritte di seguito. È stato svolto un lavoro di analisi dei dati prodotti dalle AI, confrontandoli con alcune strategie di base e con altre intelligenze artificiali sviluppate al fine di misurarne le prestazioni e solo dopo le AI sono state confrontate fra di loro. I metodi ritenuti migliori per il confronto sono stati scelti in seguito ad un'analisi del contesto e della natura finanziaria dei dati, 
 	
+	
+	\newpage
+	\section{Elaborazione dati}
+	\subsection{Creazione candele OHLCV}
+	Formule di o h l c v, e esempi con img e tabelle di creazione.
+	\subsection{Indicatori}
+	Formule e esempi calcolo indicatori RSI e altre statistiche
 	    
 	\newpage
 	\section{Metodologie di test per intelligenze artificiali}	
