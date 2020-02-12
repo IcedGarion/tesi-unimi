@@ -1,0 +1,32 @@
+cita guijarro
+https://www.intechopen.com/books/decision-support-systems/testing-methods-for-decision-support-systems
+
+praticamente da dove hai preso l'idea (ma non e' gratis)
+Guijarro-Berdiñas, B., & Alonso-Betanzos, A. (2002). Empirical evaluation of a hybrid intelligent monitoring system using different measures of effectiveness. Artificial Intelligence in Medicine, 24(1), 71-96.
+
+dei metodi di test per decision support
+https://www.researchgate.net/publication/14259101_Testing_and_validation_of_computerized_decision_support_systems
+
+On Evaluating Brain Tissue Classifiers without a Ground Truth
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2702211/
+
+
+se mai dovrai parlare della tua ai genetica
+https://towardsdatascience.com/genetic-algorithm-implementation-in-python-5ab67bb124a6
+
+https://www.geeksforgeeks.org/maximum-profit-by-buying-and-selling-a-share-at-most-k-times/
+
+tensor trade (magari ti dice perche' usano rl in trading)
+https://towardsdatascience.com/trade-smarter-w-reinforcement-learning-a5e91163f315
+
+importante: dice come mai devi comparare tua ai con strategie
+https://towardsdatascience.com/the-easiest-way-to-evaluate-the-performance-of-trading-strategies-in-python-4959fd798bb3
+
+technical analysis
+https://towardsdatascience.com/a-possible-trading-strategy-technical-analysis-with-python-ee1168b5f117
+
+mab con formule
+https://lilianweng.github.io/lil-log/2018/01/23/the-multi-armed-bandit-problem-and-its-solutions.html
+
+mab implementato
+https://towardsdatascience.com/solving-the-multi-armed-bandit-problem-b72de40db97c
