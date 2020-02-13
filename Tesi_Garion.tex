@@ -313,14 +313,61 @@ I progetti di intelligenza artificiale sono davvero unici in quanto ruotano atto
 \section{Analisi offline: maximum profit e genetic AI}
 \section{Analisi online: reinforcement learning}
 %https://tams.informatik.uni-hamburg.de/publications/2019/MSc_Ronja_Gueldenring.pdf
-https://tams.informatik.uni-hamburg.de/publications/2019/MSc\_Ronja\_Gueldenring.pdf
+Verrà ora affrontato il tema centrale della tesi: sviluppare una AI supervisore in grado di scegliere un rappresentante migliore fra una serie di agenti intelligenti.\\
+Sentyment è composta da numerose AI che creano strategie di investimento e ognuna opera indipendentemente dalle altre, producendo costantemente dati relativi ai nuovi trade aggiornati in tempo reale e differenziandosi leggermente dalle altre. Le AI attive sono solitamente 12, ma il numero potrebbe variare a seconda degli iperparametri scelti durante il ciclo di test. Per ogni AI sono dunque noti i suoi \textit{trigger}, cioè le operazioni di buy / sell relative ad un certo timestamp che l'agente ha prodotto.
+
+\begin{fig}
+    \begin{center}
+    	\begin{tabular}{||c c ||} 
+    		\hline
+    		time & trigger \\ [0.5ex] 
+    		\hline\hline
+    		2020-01-13 21:00:00 & 1 \\
+    		\hline
+    		2020-01-13 22:00:00 & 0 \\
+    		\hline
+    		2020-01-13 23:00:00 & 0 \\
+    		\hline
+    		2020-01-13 00:00:00 & 0 \\
+    		\hline
+    		2020-01-13 00:00:00 & 0 \\
+    		\hline
+    		2020-01-13 01:00:00 & -1 \\ [1ex] 
+    		\hline
+    	\end{tabular}
+    \end{center}
+	\caption{I trigger sono rappresentati da un valore numerico: 0 per hold, 1 per buy e -1 sell.}
+
+\end{fig}
+\\~\\
+Inizialmente si può supporre di raccogliere dati per alcune settimane e poi utilizzare questo dataset per scegliere una AI, quindi ricominciare la fase di osservazione e ripetere il ciclo; in una fase più avanzata, però, anche il tempo lungo cui prendere le misure diventa un parametro del supervisore e deve essere deciso.
+Avendo l'elenco di operazioni di ogni AI per un certo periodo, è possibile calcolare uno \textit{score} che tenga conto di diverse statistiche. La AI supervisore, basandosi su questo score sceglie qual è la AI che lo massimizza di più rispetto alle altre, tenendo conto anche del fatto che il punteggio varia a seconda del periodo di tempo considerato e anche all'interno dello stesso dataset, se si scelgono punti iniziali e finali differenti.\\~\\
+Un approccio di machine learning che si adatta particolarmente al contesto descritto è il \textit{reinforcement learning}, tecnica di apprendimento automatico che punta a realizzare agenti autonomi in grado di scegliere azioni da compiere per il conseguimento di determinati obiettivi tramite interazione con l'ambiente in cui sono immersi.
+L'apprendimento per rinforzo \cite{rl} è uno dei tre paradigmi principali dell'apprendimento automatico, insieme a \textit{supervised} e \textit{unsupervised learning}. A differenza degli altri due, questo paradigma si occupa di problemi di decisioni sequenziali, in cui l'azione da compiere dipende dallo stato attuale del sistema e ne determina quello futuro.\\
+La qualità di un'azione è data da un valore numerico di "ricompensa", ispirata al concetto di reinforcement, che ha lo scopo di incoraggiare comportamenti corretti dell'agente. Questo tipo di apprendimento è solitamente modellato tramite i processi decisionali di Markov e può essere effettuato con diverse tipologie di algoritmi.\\~\\
+Questa tecnica si basa sul presupposto che all'interno di un sistema si possano: scegliere degli output sulla base degli input ricevuti, valutare l'efficacia degli output rispetto ad un preciso parametro di riferimento e cambiare il meccanismo di scelta degli input per massimizzare la valutazione di efficacia.\\
+Quando si effettua una scelta efficace allora la valutazione di efficacia manda in output un premio proporzionale all'efficacia della scelta. Quando invece è effettuata una scelta inefficace allora l'output della valutazione manda una penalità proporzionale. Osservando le scelte e le ricompense, si cerca di modificare la funzione matematica che regola le scelte in modo da massimizzare la quantità e la qualità dei "premi".\\
+
+\begin{fig}
+	\begin{center}
+			\includegraphics[width=10cm]{rl}
+	\end{center}
+	\caption{Figura: Idea generale di \textit{reinforcement learning}: un agente interagisce con l'ambiente per imparare dall'esperienza. Per ogni istante di tempo \textit{t} l'agente è in un certo stato \textit{S\textsubscript{t}} ed esegue l'azione \textit{A\textsubscript{t}}. Come risultato, passa in un nuovo stato \textit{S\textsubscript{t+1}} e riceve una ricompensa \textit{R\textsubscript{t+1}}}
+\end{fig}
+
+\\~\\Nel contesto di Sentyment il supervisore rappresenta l'agente che opera le scelte. L'ambiente (i dati in input) sono i dataset di qualche settimana che, a ogni iterazione del ciclo di scelta della nuova AI rappresentante, vengono forniti all'algoritmo di reinforcement learning. La scelta che il supervisore deve operare ad ogni passo è decidere quale fra le dodici AI sta, secondo lui, agendo meglio delle altre; mentre l'output della scelta, ovvero la valutazione di efficacia, è il risultato di una funzione di score calcolata con indicatori statistici finanziari a partire dai trigger della AI scelta, il cui risultato viene confrontato con quello prodotto dalle altre AI competitori.
+
+\section{Q-learning}
+
+\subsection{Multi-armed bandit}
+Un problema noto che si adatta alla situazione e fa uso di tecniche di reinforcement learning, implementato usando algoritmi di q-learning. La sua versione classica discosta leggermente da questo ambito ma può essere revisionato per trarre vantaggio dalla sua semplicità.\cite{rl}\\
+Il problema originale illustra un contesto di gioco in cui.....
 
 \newpage
 \chapter{Risultati}
 \label{cap5}
 
 \newpage
-\cite{es}
 
 %
 %			BIBLIOGRAFIA
@@ -332,6 +379,8 @@ https://tams.informatik.uni-hamburg.de/publications/2019/MSc\_Ronja\_Gueldenring
 	Bengio, Y. (2009). Learning deep architectures for AI. Foundations and trends® in Machine Learning, 2(1), 1-127.
 	\bibitem{}
 	An, G. (1996). The effects of adding noise during backpropagation training on a generalization performance. Neural computation, 8(3), 643-674.
+	\bibitem{rl}
+	Sutton, R. S., \& Barto, A. G. (1998). Introduction to reinforcement learning (Vol. 135). Cambridge: MIT press.
 \end{thebibliography}
 \end{document}
 
