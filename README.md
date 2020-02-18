@@ -24,3 +24,8 @@ E qua puoi citare cos'e' un decision support: https://www.researchgate.net/publi
   (cioe, a parte intro bella, come si deve guardare a mano il dato e testarlo 
    con grafici vs max e vs altri)
 
+
+
+
+# TODO adesso adesso
+elaborazione dati: spiega tutto per bene modulo raccolta dati con img e note e tanto allungamento
