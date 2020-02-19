@@ -7,6 +7,8 @@ piu' strategie
 
 - strategie devono battere buy hold mai detto!
 
+ora c'e' nuovo capitolo 3 con cripto; devi cambiare in giro quando dici (di piu' nel capitolo 3) che prima era eleborazione dati ma ora e' il 4
+
 
 # TODO
 spiegare questione stage e aggiunta nuovi moduli da me?
@@ -27,5 +29,3 @@ E qua puoi citare cos'e' un decision support: https://www.researchgate.net/publi
 
 
 
-# TODO adesso adesso
-elaborazione dati: spiega tutto per bene modulo raccolta dati con img e note e tanto allungamento

@@ -252,7 +252,6 @@ Lo scopo della tesi è sviluppare il supervisore e inserirlo all'interno del com
 \newpage
 \chapter{Sentyment}
 \label{cap2}
-\textcolor{red}{parlare dello stage? + altro da presentazione sentyment?}
 
 Sentyment è il prodotto di un'azienda milanese che opera nel settore informatico-finanziario. Nexid Edge è un ramo del gruppo NEXiD votato per perseguire l'innovazione tecnologica e sviluppare soluzioni di digital business rivoluzionarie. SentYment è la nuova Business Unit dedicata all'intelligenza artificiale.\\
 L'obiettivo è offrire alle organizzazioni un accesso senza pari a tecnologie all'avanguardia che uniscono il meglio della tecnologia e dell'imprenditorialità per elevare la saggezza collettiva. Al momento, grazie all'intensa collaborazione con Nexid Finance, Nexid Edge è attiva nel fornire progetti di consulenza digitale end-to-end, per offrire ai clienti un'esperienza di \textit{augmented consulting}. \footnote{Nexid, Srl. URL: https://nexid.it/}\\
@@ -280,39 +279,136 @@ Verranno ora brevemente presentati i componenti di Sentyment.
 Come già accennato, sono stati sviluppati \textit{data module} e \textit{coordinator}, ridisegnando la preesistente architettura di Sentyment e integrando gli altri componenti. Durante la riprogettazione si sono potute scegliere liberamente la logica di implementazione e le tecnologie da impiegare, con la restrizione di dover utilizzare Python3, con \textit{sqlalchemy}\footnote{SQLAlchemy è un toolkit SQL open-source e object-relational mapper (ORM) per Python} come \textit{ORM}\footnote{l'Object-Relational Mapping (ORM) è una tecnica di programmazione che favorisce l'integrazione di sistemi software aderenti al paradigma della programmazione orientata agli oggetti con sistemi RDBMS (Relational Database Management System). Un prodotto ORM fornisce, mediante un'interfaccia orientata agli oggetti, tutti i servizi inerenti alla persistenza dei dati, astraendo nel contempo le caratteristiche implementative dello specifico RDBMS utilizzato.} e \textit{flask}\footnote{Flask è un micro framework web scritto in Python. Ha un nucleo semplice ma estendibile: ci sono ad esempio estensioni per la validazione delle form, la gestione del caricamento dei file, varie tecnologie di autenticazione ed altro} per implementare il server e le API.\\
 Prima di sviluppare la AI supervisore sono state testate le AI singolarmente attraverso alcune metodologie di test che saranno descritte di seguito. È stato svolto un lavoro di analisi dei dati prodotti dalle AI, confrontandoli con alcune strategie di base e con altre intelligenze artificiali sviluppate al fine di misurarne le prestazioni e solo dopo le AI sono state confrontate fra di loro. I metodi ritenuti migliori per il confronto sono stati scelti in seguito ad un'analisi del contesto e alla natura finanziaria dei dati.
 
-\section{Strumenti utilizzati}
-Sentyment è quasi totalmente scritta in Python3, tranne per alcune parti in cui si ha bisogno di elevate performance e che quindi sono state riscritte in Cython\footnote{Cython è un linguaggio di programmazione che mira ad essere un superset del linguaggio di programmazione Python, progettato per fornire prestazioni di tipo C con codice scritto principalmente in Python con sintassi aggiuntiva opzionale ispirata al C}. Queste comprendono, ad esempio, gran parte del codice delle AI, ma non solo.\\
+\section{Strumenti e tecnologie utilizzati}
+Sentyment è quasi totalmente scritta in Python3, tranne per alcune parti in cui si ha bisogno di elevate performance che sono quindi state riscritte in Cython\footnote{Cython è un linguaggio di programmazione che mira ad essere un superset del linguaggio di programmazione Python, progettato per fornire prestazioni di tipo C con codice scritto principalmente in Python con sintassi aggiuntiva opzionale ispirata al C}. Queste comprendono, ad esempio, gran parte del codice delle AI, ma non solo.\\
 Si fa uso estensivo di librerie di analisi dati quali \textit{numpy}\footnote{NumPy è una libreria open source per il linguaggio di programmazione Python, che aggiunge supporto a grandi matrici e array multidimensionali insieme a una vasta collezione di funzioni matematiche di alto livello per poter operare efficientemente su queste strutture dati.}, \textit{pandas}\footnote{Pandas è una libreria software scritta per il linguaggio di programmazione Python per la manipolazione e l'analisi dei dati. In particolare, offre strutture dati e operazioni per manipolare tabelle numeriche e serie temporali. Il nome deriva dal termine "panel data", termine econometrico per set di dati che include osservazioni su più periodi di tempo per gli stessi individui.} e \textit{matplotlib}\footnote{Matplotlib è una libreria per la creazione di grafici per il linguaggio di programmazione Python e la libreria matematica NumPy. Fornisce API orientate agli oggetti che permettono di inserire grafici all'interno di applicativi} per visualizzare i grafici dei dati, soprattutto nella parte di sviluppo e analisi.\\
 Queste librerie sono i classici strumenti utilizzati nell'analisi dati con Python e sono i più utilizzati; le alternative attualmente presenti non offrono le stesse funzionalità con la medesima efficienza e per questo erano anche i \textit{tool} già usati nella prima versione di Sentyment.\\
-Pandas, in particolare, permette di importare grandi quantità di dati direttamente da database o da file ed è in grado di gestirli in modo efficiente indicizzandoli e garantendo un accesso rapido. Un ampio set di operazioni statistiche sui dati lo rende uno strumento indispensabile in \textit{data science} e ampiamente utilizzato. Basti pensare ad un AI a cui servono in input moltissimi dati: quando questi sono salvati su database è facile eseguire letture e query puntuali ma quando , invece, si ha bisogno di portarne in memoria un gran numero per processarli con funzioni al di là delle potenzialità di \textit{SQL}, serve un ulteriore strumento capace di gestire l'accesso efficiente alla memoria e che offra direttamente queste funzioni di analisi.\\~\\
+Pandas, in particolare, permette di importare grandi quantità di dati direttamente da database o da file ed è in grado di gestirli in modo efficiente indicizzandoli e garantendo un accesso rapido. Un ampio set di operazioni statistiche sui dati lo rende uno strumento indispensabile in \textit{data science} e ampiamente utilizzato. Basti pensare ad un AI a cui servono in input moltissimi dati: quando questi sono salvati su database è facile eseguire piccole letture e query puntuali e aggregate ma quando, invece, si ha bisogno di portarne in memoria un gran numero per processarli con funzioni al di là delle potenzialità di \textit{SQL}, serve un ulteriore strumento capace di gestire l'accesso efficiente alla memoria e che offra direttamente queste funzioni di analisi (esempio con funzione \textit{resample} nel Capitolo 3).\\~\\
 
-Il database scelto è di tipo \textit{relazionale}. Si è scelta l'opzione relazionale invece di \textit{no-sql} in quanto i dati sono tutti perfettamente strutturati (schema dati in dettaglio nel Capitolo 3): la sorgente principale da cui partono tutte le elaborazioni è rappresentata dai dati di trading \textit{raw} forniti da Kraken. Questi hanno ciascuno un riferimento al \textit{timestamp} e alla tipologia dell'operazione di trade, la quantità di titoli venduti / acquistati e il loro volume. Sostanzialmente non servono altre informazioni per la creazione delle candele OHLCV, che sono anch'esse strutturate ed esplicitano \textit{open}, \textit{high}, \textit{low}, \textit{close}, \textit{volume}, \textit{timestamp} finale e altri dati secondari. Le AI lavorano tutte sulle candele e necessitano soltanto degli attributi appena citati.\\~\\
-L'unica eccezione sono le AI. Sono memorizzate come un insieme di parametri che permettono la loro ricreazione in un secondo momento, se necessaria, e sono salvati in formato \textit{JSON}.\footnote{JSON, acronimo di JavaScript Object Notation, è un formato adatto all'interscambio di dati fra applicazioni client/server. È basato sul linguaggio JavaScript ma ne è indipendente.} Dato che i parametri sono diversi, non strutturati e con possibilità di molteplici valori nulli, la memorizzazione in JSON già adottata nella prima versione di Sentyment sembrava comunque adatta, permettendo una compressione più efficiente dei dati e un accesso orientato al documento. Di una specifica AI si vogliono conoscere i suoi parametri, ma il nome / \textit{id} della AI é noto: per esempio, in seguito ad un'analisi durante un nuovo ciclo di test / sviluppo, si vuole continuare dalla AI più promettente fra quelle della precedente iterazione e quindi si accede al documento che contiene tutti i parametri della AI scelta.\\
+Il database scelto è di tipo \textit{relazionale}. Si è scelta l'opzione relazionale invece di \textit{noSQL} in quanto i dati sono tutti perfettamente strutturati (schema dati in dettaglio nel Capitolo 3): la sorgente principale da cui partono tutte le elaborazioni è rappresentata dai dati di trading \textit{raw} forniti da Kraken. Questi hanno ciascuno un riferimento al \textit{timestamp}, alla tipologia dell'operazione di trade, la quantità di titoli venduti / acquistati e il loro volume. Sostanzialmente non servono altre informazioni per la creazione delle candele OHLCV, che sono anch'esse strutturate ed esplicitano \textit{open}, \textit{high}, \textit{low}, \textit{close}, \textit{volume}, \textit{timestamp} finale e altri dati secondari. Le AI lavorano tutte sulle candele e necessitano soltanto degli attributi appena citati.\\~\\
+L'unica eccezione, in cui dati non sono perfettamente strutturati, sono le AI. Sono memorizzate come un insieme di parametri che permettono la loro ricreazione in un secondo momento, se necessaria, e sono salvati in formato \textit{JSON}.\footnote{JSON, acronimo di JavaScript Object Notation, è un formato adatto all'interscambio di dati fra applicazioni client/server. È basato sul linguaggio JavaScript ma ne è indipendente.} Dato che i parametri sono diversi, non strutturati e con possibilità di molteplici valori nulli, la memorizzazione in JSON già adottata nella prima versione di Sentyment sembrava comunque adatta, permettendo una compressione più efficiente dei dati e un accesso orientato al documento. Di una specifica AI si vogliono conoscere i suoi parametri, ma il nome / \textit{id} della AI é noto: per esempio, in seguito ad un'analisi durante un nuovo ciclo di test / sviluppo, si vuole continuare dalla AI più promettente fra quelle della precedente iterazione e quindi si accede al documento che contiene tutti i parametri della AI scelta.\\
 I JSON dei parametri delle AI non sono scritti su database, ma sono dei file che risiedono direttamente su file system nelle directory di Sentyment, strutturate in modo da poter accedere ai parametri di una certa AI usando il suo identificativo. In sviluppi futuri potrebbe essere più adatto l'uso di un database non relazionale per la memorizzazione delle AI, oppure sfruttare i tipi di dato JSON presenti in ormai tutti i RDMBS moderni e quindi salvare tutto nello stesso database.\\~\\
 Fra i database relazionali è stato scelto \textit{Mysql}\footnote{MySQL o Oracle MySQL è un Relational database management system (RDBMS) composto da un client a riga di comando e un server. È un software libero rilasciato a doppia licenza ed è sviluppato per essere il più possibile conforme agli standard ANSI SQL e ODBC SQL. I sistemi e i linguaggi di programmazione che supportano MySQL sono molto numerosi.} perché meglio si sposa con l'ORM di \textit{sqlalchemy}.\\~\\
 
-%TODO sqlalchemy e flask! cos'è un ORM
-% TODO: se aggiungi qualche riga e/ o immagini riessci a fare 1 pag in piu
+Sqlalchemy permette di manipolare database SQL direttamente da Python. Mappa lo schema tabellare dei dati in uno a oggetti più facilmente processabile dal linguaggio di programmazione scelto, in questo caso Python. Grazie alla tecnologia degli ORM, il modello dei dati è sempre disponibile come classe del linguaggio e risulta quindi più comodo il loro accesso e manipolazione: ora si lavora con collezioni di oggetti invece che con un semplice elenco di record contenenti alcuni campi.\\
+L'ORM mette anche a disposizione un motore di astrazione per le \textit{query}. Tramite un modello ad API le query eseguite in Python sono tradotte nel dialetto SQL del DBMS sottostante. Al programmatore resta il compito di scrivere le query usando l'\textit{expression language}\footnote{Expression Language (EL) è un linguaggio per creare una rappresentazione interpretabile di conoscenze specifiche. In questo caso è un linguaggio creato da sqlalchemy appositamente per rappresentare query SQL nel linguaggio di Python.} di sqlalchemy, il sistema usato per rappresentare strutture dei database relazionali e espressioni usando Python.\\~\\
+
+\textit{Flask}, infine, è un microframework per Python ed implementa \textit{coordinator}, il web server che espone le informazioni disponibili sullo stato di esecuzione di Sentyment. È molto minimalista se mantenute le impostazioni di default e serve soltanto documenti JSON e non pagine HTML.\\
+In futuri sviluppi le informazioni fornite dal web server in JSON potrebbero essere processate da un ulteriore componente, che le esporrebbe in modo più user-friendly attraverso un software di front-end e permetterebbe l'interrogazione di \textit{coordinator}, attraverso le API, in maniera più intuitiva.
 
 
 \newpage
-\chapter{Elaborazione dati}
+\chapter{Criptovalute}
+Intro bitcoin? perche' sentyment si focalizza su queste e 2 parole di intro su come fare trade rispetto a valute normali?
+Ethereum ha tante cose interessanti tipo smart contract e linguaggio solidity.
+
+\newpage
+\chapter{Elaborazione dati di trading}
 \label{cap3}
-In questo capitolo si andrà principalmente a descrivere il lavoro svolto dal software di raccolta dati, \textit{data module}, e alcuni dettagli della sua implementazione. Attraverso l'analisi delle operazioni svolte dal programma si darà anche un ulteriore sguardo ai dati, a come sono organizzati dalla piattaforma di trading e all'interno del software di Nexid, e a come si processano per ottenere un formato utile per l'elaborazione da parte delle AI.\\
-Anche se Sentyment comprendeva già una parte di logica di scaricamento dati, in seguito alla sua riorganizzazione è stato necessario riscrivere questa parte di software convertendola interamente in un modulo separato, sempre attivo e pronto a scaricare, con cui si può interagire attraverso \textit{coordinator}. Svolge diverse attività fra cui scaricare con le API di Kraken, creare le candele OHLCV a partire dai dati scaricati e gestire il database.\\
+In questo capitolo si andrà principalmente a descrivere il lavoro svolto dal software di raccolta e gestione dati, \textit{data module}, e alcuni dettagli della sua implementazione. Attraverso l'analisi delle operazioni svolte dal programma si darà anche un ulteriore sguardo ai dati, a come sono organizzati dalla piattaforma di trading e all'interno del software di Nexid, e a come si processano per ottenere un formato utile per l'elaborazione da parte delle AI.\\
+Anche se Sentyment comprendeva già una parte di logica di scaricamento dati, in seguito alla sua riorganizzazione è stato necessario riscrivere questa parte di software convertendola interamente in un modulo separato, sempre attivo e pronto a scaricare, con cui si può interagire attraverso \textit{coordinator}. Svolge diverse attività fra cui scaricare grazie alle API di Kraken, creare le candele OHLCV a partire dai dati scaricati e gestire il database.\\~\\
 I requisiti dell'applicativo sono i seguenti:
 \begin{itemize}
-	\item %TODO avantiii
+	\item ?
+\end{itemize}
+
+\section{Download dati Kraken}
+L'input di tutto il sistema sono i dati di trade. Un modulo intero è dedicato alla logica di scaricamento dati, il cui fine è soltanto fornire i suddetti dati alle intelligenze artificiali, che rappresentano la parte principale del software. Tutta l'architettura è orientata al dato; le AI stesse ignorano l'esistenza di \textit{data module}, perché di fatto accedono direttamente al database per prelevare i dati, ignorando chi lo abbia riempito. Un metodo strutturato per "riempire" il database e preparare i dati per le AI è quindi un passo iniziale e fondamentale per tutta l'architettura.\\~\\
+Le API di Kraken si dividono in \textit{pubbliche} e \textit{private}: tutte le attività svolte da \textit{data module} fanno uso soltanto delle interfacce pubbliche, mentre quelle private, le quali necessitano di un API Key\footnote{Una chiave per API (API Key) è un identificatore univoco utilizzato per autenticare un utente, uno sviluppatore o il programma chiamante un'API. Tuttavia, vengono in genere utilizzati per autenticare un progetto con l'API anziché un utente umano. Spesso si usano per accedere a quelle API che forniscono servizi a pagamento o per superare limitazioni di utilizzo.}, servono per collegare un portafoglio con budget e permettono di eseguire operazioni di acquisto e vendita di titoli. Sono utilizzate soprattutto dal modulo di trading.\\
+Le API pubbliche permettono molti tipi di operazioni fra cui, le più usate:
+\begin{itemize}
+	\item \textbf{Get tradable asset pairs}: elenco di tutti gli asset trattati da Kraken,i \textit{ticker}\footnote{Il ticker è un’abbreviazione che identifica le società che vengono quotate su un mercato finanziario. Quando una società decide di ‘diventare pubblica’, sceglie il tipo di mercato sui cui essere quotata e il ticker di identificazione. Il ticker viene chiamato anche ticker azionario oppure ticker simbolo. Il termine deriva in effetti dal ‘ticker tape’ o ‘nastro per telescrivente’, un nastro su cui, nel passato, si trasmettevano le informazioni relative ai prezzi.}, con associato il nome usato e altre informazioni. Sono 110 in totale le coppie di valute di scambio fra una criptovaluta e la sua controparte in Euro o Dollaro. Alcuni esempi:
+	\begin{itemize}
+		\item XXBTZEUR: ticker che rappresenta la valuta Bitcoin-Euro (XBT-EUR)
+		\item XXBTZUSD: Bitcoin-Dollaro (XBT-USD)
+		\item XETHZEUR: Ethereum-Euro (ETH-EUR)
+		\item XETHZUSD: Ethereum-Dollaro (ETH-USD)\\
+		
+		Non ci sono soltanto valute di scambio fra Euro / Dollaro e una criptovaluta, ma bensì anche scambi fra criptovaluta e criptovaluta, come, ad esempio:
+		\item ADAETH: valuta di scambio fra le due criptovalute Cardano (ADA)\footnote{Cardano è una piattaforma che gestisce la criptovaluta ADA. Il progetto è guidato dall'ex co-fondatore di Ethereum. Lo scopo di Cardano è creare una piattaforma adatta allo sviluppo di smart contracts e un sistema di pagamento (altro sulle criptovalute nel Capitolo 3).} ed Ethereum (ETH)
+		\item XZECXXBT: Zcash (ZEC)\footnote{Zcash è una criptovaluta che offre privacy e trasparenza selettiva delle transazioni. I pagamenti Zcash sono pubblicati su una blockchain pubblica, ma il mittente, il ricevente e il valore della transazione possono rimanere privati. Come Bitcoin Zcash ha una fornitura fissa totale di 21 milioni di unità.} e Bitcoin (XBT)\\
+		
+		Gli asset che scambiano due criptovalute fanno parte dei ticker gestiti da Kraken e quindi sono comunque scaricati e memorizzati nel database, ma non verranno usati nel resto del progetto.
+		
+	\end{itemize}
+	
+	L'elenco è scaricato in una fase iniziale di setup del modulo dati e ha lo scopo di memorizzare su database i nomi usati da Kraken per tutti gli asset che fornisce, in modo da poterli utilizzare nelle altre API per la fase successiva, in cui si richiede l'elenco di trade di uno specifico ticker.\\Come si può notare sono usati nomi particolari per rappresentare i ticker ed è quindi necessario memorizzare il mapping fra nome reale e nome usato da Kraken per poi poter utilizzare le API che seguono.\\
+	\textcolor{red}{Esempio JSON ritornato?}
+	
+	\item \textbf{Get recent trades}: Ora che si conoscono i nomi dei ticker usati da Kraken si possono usare per richiedere, per ciascuno di essi, l'elenco delle transazioni di mercato. Questa è in assoluto la API più usata dal modulo dati: riceve i dati di trade \textit{raw} che costituiscono l'input principale da cui partono le successive elaborazioni. I dati di trade sono memorizzati e saranno usati per creare le candele OHLCV, l'input per le intelligenze artificiali.\\
+	Attraverso questa API è possibile sia richiedere dei dati storici in un certo periodo di tempo passato, sia ricevere aggiornamenti sui nuovi dati disponibili. In entrambi i casi va specificato come parametro il ticker di cui si vuole conoscere l'elenco degli scambi. Come secondo parametro serve dunque un riferimento temporale che indichi quali trade sono richiesti di preciso (parametro \textit{since}).\\~\\%TODO: riferimento a BUCHI KRAKEN? da mettere tipo alla fine fine???
+	Esempio di documento JSON restituito dalla chiamata a questa interfaccia, usando come parametri il ticker XXBZEUR e il riferimento a gennaio 2020:
+	\begin{verbatim}
+	{
+	  "error":[],
+	  "result":
+	  {
+	    "XXBTZEUR":
+	    [
+        ["6410.20000","0.07588465",1577833204.9008,"b","m",""],
+        ["6410.00000","0.02911527",1577833220.5154,"s","l",""],
+        ["6410.00000","0.02910911",1577833261.2323,"s","l",""],
+        ["6435.50000","0.08000000",1577842069.8177,"s","l",""], ...
+	    ]
+	    "last":"1577842069817694680"
+	  }
+	}
+	\end{verbatim}
+
+	Otre ad alcuni metadati utili per riutilizzare le API, sono principalmente elencati una serie molto lunga di record formati da sei campi: \textit{price}, \textit{volume}, \textit{time}, \textit{buy/sell}, \textit{market/limit}, \textit{miscellaneous}.\\ Prendendo come esempio il primo record:
+	\begin{itemize}
+		\item \textit{price}: 6410.20000. Siccome la valuta è Bitcoin-Euro, il numero indica il valore di un titolo Bitcoin espresso in Euro.
+		\item \textit{volume}: 0.07588465. La quantità di titoli Bitcoin scambiati in quell'istante.
+		\item \textit{time}: 1577833204.9008. Timestamp associato all'operazione in formato unix timestamp.\footnote{Nei sistemi operativi Unix e Unix-like il tempo viene rappresentato come offset in secondi rispetto alla mezzanotte del 1º gennaio 1970. I decimali rappresentano la frazione di secondo.}
+		\item \textit{buy/sell}: "b". Indicazione del tipo di operazione: 'b' (buy) o 's' (sell).
+		\item \textit{market/limit}: "m". Indica se comprare a prezzo di mercato (m) o se applicare un limit. Un limit order è un ordine inserito nell’order book con un prezzo limite specifico. Quando è inserito un limit order, l’operazione verrà eseguita solo se il prezzo di mercato raggiunge il prezzo limite. È quindi possibile usare limit order per comprare a un prezzo più basso o per vendere a un prezzo più alto rispetto all’attuale prezzo di mercato.
+		\item \textit{miscellaneous}: "". Spazio per eventuali commenti o casi particolari.
+	\end{itemize}
+	
+	
+	Il campo \textit{last} serve da passare come nuovo parametro \textit{since} nella prossima chiamata, a indicare di scaricare ancora i dati dal punto in cui ci si era fermati. Siccome il volume dei dati di trade è molto elevato,\footnote{I dati di trade di Bitcoin per il solo anno 2019 hanno un'occupazione dell'ordine di grandezza dei 10 Gb.} viene diviso in frammenti; per continuare a scaricare frammento per frammento si sfrutta la combinazione di questi due parametri.
+	
+	\item \textbf{Get OHLC data}: Kraken offre anche la possibilità di scaricare direttamente le candele OHLCV create a partire dai dati di trade raw, ma questa funzionalità è già implementata all'interno di Sentyment stesso. Ad ogni modo, sono comunque riportati alcuni esempi di dati scaricati tramite questa API.\\
+	Esempio di documento JSON restituito dalla chiamata, con parametri il ticker XXBTZEUR, il timestamp di gennaio 2020 e la lunghezza di candela a un minuto:
+	\begin{verbatim}
+	{
+	  "error":[],
+	  "result":
+	  {
+	    "XXBTZEUR":
+	    [
+	      [1582093500,"9384.7","9384.7","9384.6","9384.6","9384.6","0.35398923",9],
+	      [1582093560,"9384.6","9384.7","9384.0","9384.0","9384.5","0.04147968",5],
+	      [1582093620,"9384.1","9384.1","9384.0","9384.0","9384.0","0.40413908",5], ...
+	      [1582136640,"9433.6","9433.6","9433.5","9433.5","9433.5","0.33265963",4]
+	    ],
+	    "last":1582136580
+	  }
+	} 
+	\end{verbatim}
+	
+	La struttura del documento è simile a quella restituita nell'esempio precedente, con la differenza che ora i record sono composti da attributi diversi:
+	\begin{itemize}
+		\item \textit{time}
+		\item \textit{open, high, low, close}
+		\item \textit{vwap}
+		\item \textit{volume}
+		\item \textit{count}
+		%TODO: da finire elenco e poi una breve conclusione su raccolta dati kraken
+		%TODO: non ci stanno i dati quassu.....
+	\end{itemize}
+
+	
 \end{itemize}
 
 \section{Creazione candele OHLCV}
 \textcolor{red}{Formule di ohlcv e esempi con immagini e tabelle di creazione}
 Le candele sono interamente generate grazie alla libreria di Python \textit{pandas}, chiamando il metodo \textit{resample}:
 
-
-
 \section{Indicatori}
 \textcolor{red}{Formule e esempi calcolo indicatori SMA EMA MACD RSI e altre statistiche}
+
+\section{Creazione strategie}
 
 \newpage
 \chapter{Test per intelligenze artificiali}	
