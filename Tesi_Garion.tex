@@ -309,7 +309,9 @@ In questo capitolo si andrà principalmente a descrivere il lavoro svolto dal so
 Anche se Sentyment comprendeva già una parte di logica di scaricamento dati, in seguito alla sua riorganizzazione è stato necessario riscrivere questa parte di software convertendola interamente in un modulo separato, sempre attivo e pronto a scaricare, con cui si può interagire attraverso \textit{coordinator}. Svolge diverse attività fra cui scaricare grazie alle API di Kraken, creare le candele OHLCV a partire dai dati scaricati e gestire il database.\\~\\
 I requisiti dell'applicativo sono i seguenti:
 \begin{itemize}
-	\item ?
+	\item Scaricare dati di trade \textit{raw} per diversi tipi di asset, restando aggiornati in tempo reale con l'arrivo di nuovi
+	\item Fornire la possibilità di scaricare dati passati
+	\item Creare candele OHLCV a partire dai dati scaricati e poter sceglierne i parametri (lunghezza candela, periodo da considerare)
 \end{itemize}
 
 \section{Download dati Kraken}
@@ -333,11 +335,11 @@ Le API pubbliche permettono molti tipi di operazioni fra cui, le più usate:
 	\end{itemize}
 	
 	L'elenco è scaricato in una fase iniziale di setup del modulo dati e ha lo scopo di memorizzare su database i nomi usati da Kraken per tutti gli asset che fornisce, in modo da poterli utilizzare nelle altre API per la fase successiva, in cui si richiede l'elenco di trade di uno specifico ticker.\\Come si può notare sono usati nomi particolari per rappresentare i ticker ed è quindi necessario memorizzare il mapping fra nome reale e nome usato da Kraken per poi poter utilizzare le API che seguono.\\
-	\textcolor{red}{Esempio JSON ritornato?}
+	%TODO: Esempio JSON ritornato?
 	
 	\item \textbf{Get recent trades}: Ora che si conoscono i nomi dei ticker usati da Kraken si possono usare per richiedere, per ciascuno di essi, l'elenco delle transazioni di mercato. Questa è in assoluto la API più usata dal modulo dati: riceve i dati di trade \textit{raw} che costituiscono l'input principale da cui partono le successive elaborazioni. I dati di trade sono memorizzati e saranno usati per creare le candele OHLCV, l'input per le intelligenze artificiali.\\
-	Attraverso questa API è possibile sia richiedere dei dati storici in un certo periodo di tempo passato, sia ricevere aggiornamenti sui nuovi dati disponibili. In entrambi i casi va specificato come parametro il ticker di cui si vuole conoscere l'elenco degli scambi. Come secondo parametro serve dunque un riferimento temporale che indichi quali trade sono richiesti di preciso (parametro \textit{since}).\\~\\%TODO: riferimento a BUCHI KRAKEN? da mettere tipo alla fine fine???
-	Esempio di documento JSON restituito dalla chiamata a questa interfaccia, usando come parametri il ticker XXBZEUR e il riferimento a gennaio 2020:
+	Attraverso questa API è possibile sia richiedere dei dati storici in un certo periodo di tempo passato, sia ricevere aggiornamenti sui nuovi dati disponibili. In entrambi i casi va specificato come parametro il ticker di cui si vuole conoscere l'elenco degli scambi. Come secondo parametro è necessario un riferimento temporale che indichi quali trade sono richiesti di preciso (parametro \textit{since}).\\~\\%TODO: riferimento a BUCHI KRAKEN? da mettere tipo alla fine fine???
+	Esempio di documento JSON restituito dalla chiamata a questa interfaccia, usando come parametri il ticker XXBTZEUR e il riferimento a gennaio 2020:
 	\begin{verbatim}
 	{
 	  "error":[],
@@ -377,36 +379,74 @@ Le API pubbliche permettono molti tipi di operazioni fra cui, le più usate:
 	  {
 	    "XXBTZEUR":
 	    [
-	      [1582093500,"9384.7","9384.7","9384.6","9384.6","9384.6","0.35398923",9],
-	      [1582093560,"9384.6","9384.7","9384.0","9384.0","9384.5","0.04147968",5],
-	      [1582093620,"9384.1","9384.1","9384.0","9384.0","9384.0","0.40413908",5], ...
-	      [1582136640,"9433.6","9433.6","9433.5","9433.5","9433.5","0.33265963",4]
+	      [1582093500,"9384.7","9384.7","9384.6","9384.6","9384.6",
+	        "0.35398923",9],
+	      [1582093560,"9384.6","9384.7","9384.0","9384.0","9384.5",
+	        "0.04147968",5],
+	      [1582093620,"9384.1","9384.1","9384.0","9384.0","9384.0",
+	        "0.40413908",5],
+	      [1582136640,"9433.6","9433.6","9433.5","9433.5","9433.5",
+	        "0.33265963",4], ...
 	    ],
 	    "last":1582136580
 	  }
 	} 
 	\end{verbatim}
 	
-	La struttura del documento è simile a quella restituita nell'esempio precedente, con la differenza che ora i record sono composti da attributi diversi:
+	La struttura del documento è simile a quella restituita nell'esempio precedente, con la differenza che ora i record sono composti da attributi diversi. Prendendo come esempio il primo record:
 	\begin{itemize}
-		\item \textit{time}
-		\item \textit{open, high, low, close}
-		\item \textit{vwap}
-		\item \textit{volume}
-		\item \textit{count}
-		%TODO: da finire elenco e poi una breve conclusione su raccolta dati kraken
-		%TODO: non ci stanno i dati quassu.....
+		\item \textit{time}: 1582093500. Timestamp finale della candela. La candela delle 12:00 comprende i trade dalle 11:00 alle 11:59.
+		\item \textit{open, high, low, close}: rispettivamente 9384.7, 9384.7, 9384.6, 9384.6. Prezzo di apertura e chiusura della candela, minimo e massimo.
+		\item \textit{vwap}: 9384.6. Prezzo medio della candela.\footnote{In finanza, Volume Weighted Average Price (VWAP) è il rapporto tra il valore scambiato e il volume totale scambiato in un determinato orizzonte temporale. È una misura del prezzo medio al quale un titolo viene negoziato nell'orizzonte di negoziazione.}
+		\item \textit{volume}: 0.35398923. Somma totale della quantità di titoli scambiati durante l'intervallo di tempo della candela.
+		\item \textit{count}: 9. Numero di operazioni buy / sell realmente eseguite all'interno della durata della candela.
 	\end{itemize}
+
+	Il significato e la definizione degli attributi delle candele verranno trattati in dettaglio più avanti.\\
+	Il modulo di scaricamento è molto semplice e interroga solamente le API di Kraken, memorizzando di volta in volta blocchi di dati su database. L'unica difficoltà incontrata risulta essere la comprensione di alcuni parametri delle API, che si dimostrano non perfettamente documentate e pertanto è lasciato ai programmatori scoprire il significato di alcune interfacce.\\
+	Per esempio il parametro \textit{last}, che dovrebbe indicare l'ultimo timestamp fra i record ritornati nella chiamata e che va passato come parametro \textit{since} nella successiva chiamata, per ripartire dall'ultimo trade, è controverso. La documentazione riporta "\textit{return trade data since given id}", intendendo quindi che si tratti di un identificatore: curiosamente in moltissimi casi (soprattutto nei dati OHLC, che hanno tutti timestamp preciso all'ora) ha lo stesso valore del timestamp e quindi questo significa che i timestamp sono usati come id. Quando, però, il valore ha dei decimali, che nel caso di un unix timestamp indicano frazioni di secondo, questi sono aggiunti in coda all'identificatore con un \textit{padding}\footnote{Il padding è una delle numerose pratiche che prevedono l'aggiunta di dati all'inizio, a metà o alla fine di un messaggio. È usato per rendere uniforme un certo dato, allineandolo alla lunghezza specificata: se la lunghezza del messaggio finale deve assumere precisamente un certo valore ma il testo contenuto è più breve, si aggiungono tanti valori di padding quanti la differenza fra la lunghezza del messaggio da inviare e quella del testo contenuto.} a 0 di nove cifre. Quando si richiedono i dati a partire da un certo timestamp che non ha decimali, quindi, bisogna aggiungere il padding altrimenti l'id richiesto non viene trovato nei database di Kraken. In risposta è invece ritornano il record con id minore di tutti, che è quello che più si avvicina al valore richiesto, estremamente basso rispetto a tutti gli altri id presenti nel database dato che ha nove cifre mancanti.\\~\\
+	Tutte queste informazioni si possono inferire analizzando molte chiamate con argomenti particolari ma non vi è una documentazione completa che espone chiaramente l'uso corretto del parametro e il risultato sono dei comportamenti inaspettati nei programmi che usano le API. Una volta capito il problema è facile aggirarlo, ma la scelta progettuale di utilizzare i timestamp convertiti a id è discutibile e inoltre non chiaramente documentata.
 
 	
 \end{itemize}
 
 \section{Creazione candele OHLCV}
-\textcolor{red}{Formule di ohlcv e esempi con immagini e tabelle di creazione}
-Le candele sono interamente generate grazie alla libreria di Python \textit{pandas}, chiamando il metodo \textit{resample}:
+%TODO: Formule di ohlcv e esempi con immagini e tabelle di creazione
+Una volta memorizzati tutti i dati di trade raw e disponibili per le letture, è il momento di creare il dato aggregato che riassume le operazioni di scambio e che rappresenta la principale fonte di input per le intelligenze artificiali.\\~\\
+Le candele sono interamente generate grazie alla libreria di Python \textit{pandas}, chiamando il metodo \textit{resample}\footnote{Da documentazione pandas: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.resample.html}:
+\begin{verbatim}
+def resample(self, rule, ... ):
+	Resample time-series data.
+	
+	Convenience method for frequency conversion and resampling of time series.
+	Object must have a datetime-like index (DatetimeIndex, PeriodIndex, 
+	or TimedeltaIndex), or pass datetime-like values to the on or level keyword.
+	
+\end{verbatim}
+
+È un metodo della classe DataFrame, quindi viene chiamato a partire da un oggetto contenente il dataset da ricampionare per creare la candela; come parametro è usato \textit{rule}, un \textit{timedelta} che rappresenta la lunghezza della candela.
+\\~\\
+Supponendo di avere dunque tutti i dati raw disponibili nel database e di voler creare candele con timeframe di un'ora, per tutto il mese di gennaio 2020, il procedimento seguito è il seguente:
+
+%TODO pseudo algo leggi db - resample - scrivi su db
+
+\\~\\
+Dal punto di vista concettuale, il metodo citato aggrega i dati creando un nuovo record contenente i quattro attributi \textit{open}, \textit{high}, \textit{low}, \textit{close}, \textit{volume}. Formalmente:
+\begin{itemize}
+	\item \textit{open}
+	\item \textit{high}
+	\item \textit{low}
+	\item \textit{close}
+	\item \textit{volume}: sommatoria singoli volumi %TODO: formula 
+\end{itemize}
+
+Dove, per ogni record, \textit{price} è il prezzo dell'asset scambiato, \textit{volume} è....
+
+
+%TODO: un esempio numerico di dati raw e risultato resample
 
 \section{Indicatori}
-\textcolor{red}{Formule e esempi calcolo indicatori SMA EMA MACD RSI e altre statistiche}
+%TODO: Formule e esempi calcolo indicatori SMA EMA MACD RSI e altre statistiche
 
 \section{Creazione strategie}
 
