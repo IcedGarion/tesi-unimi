@@ -5,6 +5,7 @@ strategie (molte di piu'?), buy / hold da battere ecc
 CAP2
 stato arte test + sentyment
 
+Sentyment magari allunga? anche se non c'e' piu' molto da dire visto che e' black box...
 tot 1+2 = 40 pag
 
 
