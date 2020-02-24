@@ -1,7 +1,16 @@
+CAP1
+molto piu' lungo, devi spiegare bene tutto quello che serve per andare avanti quindi in dettaglio formule,
+strategie (molte di piu'?), buy / hold da battere ecc
+
+CAP2
+stato arte test + sentyment
+
+tot 1+2 = 40 pag
+
+
 # TODO
 bold e cose in giro per migliorare leggibilita'
 piu immagini
-Si possono aggiungere cose in giro (vedi grassetto), tipo:
 Esempio numerico creazione candele
 piu' strategie
 

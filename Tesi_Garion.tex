@@ -98,7 +98,7 @@ La tesi \`e organizzata come segue:
 %
 
 
-\chapter{Introduzione}
+\chapter{Financial trading}
 \label{cap1}
 Scopo di questo documento è affrontare il tema delle metodologie di test per intelligenze artificiali, descriverne alcune tecniche ed analizzare risultati ottenuti applicandole in uno specifico dominio.
 \\~\\
@@ -250,9 +250,28 @@ Lo scopo della tesi è sviluppare il supervisore e inserirlo all'interno del com
 
 
 \newpage
-\chapter{Sentyment}
+\chapter{AI per financial prediction e Sentyment}
 \label{cap2}
+La predizione del mercato azionario è stata una questione importante nel campo della finanza, ingegneria e matematica a causa del suo potenziale guadagno finanziario. Data la grande quantità di capitale negoziato attraverso il mercato azionario, questo è visto come una grande opportunità e ha richiamato molti investimenti. Inoltre, la previsione del mercato azionario comporta la sfida di dimostrare se il mercato finanziario è prevedibile o no. Dal momento che non c'è stato consenso sulla validità dell'ipotesi che nel mercato ci sia spazio per la predizione, i ricercatori hanno molto faticato per dimostrarne la prevedibilità\cite{nn1}. L'\textit{ipotesi del mercato efficiente} (EMH: Efficient Market Hypothesis) è un'ipotesi in economia finanziaria che afferma che i prezzi delle attività riflettono tutte le informazioni disponibili. Una conseguenza diretta è che è impossibile "battere il mercato" in modo coerente basandosi sul rischio poiché i prezzi di mercato dovrebbero reagire solo a nuove informazioni. È una teoria che fa sorgere molte controversie e come tale non ancora dimostrata, il che lascia spazio ai tentativi di sviluppo di un algoritmo che sia in grado di prevedere parte dell'andamento dei mercati.\\~\\
+Con l'avvento di computer più veloci e vaste informazioni su Internet, i mercati azionari sono diventati più accessibili agli investitori strategici o al pubblico generale. Internet fornisce la fonte principale di informazioni e ha un impatto significativo sui mercati azionari e le tecniche di estrazione e utilizzo delle informazioni a supporto del processo decisionale hanno raggiunto un'importanza critica. Per prevedere il mercato azionario con precisione, vari algoritmi e modelli di predizione sono stati proposti da molti ricercatori sia accademici che nell'industria.\\~\\
 
+\section{Stato dell'arte delle AI}
+Da quando il mercato azionario è stato introdotto per la prima volta, molti hanno tentato di prevederne il comportamento utilizzando vari strumenti computazionali come \textit{Linear egression} (LR), \textit{Neural Network} (NNs), \textit{Genetic Algorithm} (GA), \textit{Support Vector Machine} (SVMs), \textit{Case-based Reasoning} (CR) e altri.\\~\\
+Nell'ultimo decennio, Neural Network sono state ampiamente utilizzate e in molti casi hanno mostrato prestazioni migliori rispetto ad altri approcci. Una \textbf{rete neurale} (ANN "Artificial Neural Network"), normalmente chiamata solo "rete neurale" (NN "Neural Network"), è un modello matematico/informatico di calcolo basato sulle reti neurali biologiche. Tale modello è costituito da un gruppo di interconnessioni di informazioni costituite da neuroni artificiali e processi che utilizzano un approccio di connessionismo di calcolo. Nella maggior parte dei casi una rete neurale artificiale è un sistema adattivo che cambia la propria struttura in base a informazioni esterne o interne che scorrono attraverso la rete stessa durante la fase di apprendimento.\\
+Il primo modello di previsione del mercato azionario basato su Neural Network è stato implementato da White\cite{whitenn}. Ha usato \textit{Feed Forward Neural Networks} (FFNN)\footnote{Una rete neurale feed-forward ("rete neurale con flusso in avanti") o rete feed-forward è una rete neurale artificiale dove le connessioni tra le unità non formano cicli, differenziandosi dalle reti neurali ricorrenti. In questa rete neurale le informazioni si muovono solo in una direzione, avanti, rispetto a nodi d'ingresso, attraverso nodi nascosti (se esistenti) fino ai nodi d'uscita. Nella rete non ci sono cicli. Le reti feed-forward non hanno memoria di input avvenuti a tempi precedenti, per cui l'output è determinato solamente dall'attuale input. } per decodificare regolarità precedentemente non rilevate nei movimenti di prezzo degli asset, come fluttuazioni di prezzo di azioni ordinarie, e ha mostrato come cercare tali regolarità usando FFNNs. Dal tentativo iniziale di White, un numero di ricercatori ha partecipato allo sviluppo di un modello di previsione del mercato azionario accurato. Phua et al. \cite{puann} ha utilizzato Neural Network con Genetic Algorithm per prevedere l'indice di scambio del mercato azionario di Singapore\footnote{L'indice FTSE Straits Times (STI) è un indice di borsa ponderato per la capitalizzazione che è considerato l'indice di riferimento per il mercato azionario di Singapore. Tiene traccia delle prestazioni delle prime 30 società quotate alla Borsa di Singapore.}, ottenendo un tasso di accuratezza dell'81\%. Kim e Han \cite{kimnn} hanno anche combinato Neural Network con Genetic Algorithm e pronosticato Korea Composite Stock Index 200\footnote{Korea Composite Stock Index (KOSPI): indice di borsa azionario della Corea del Sud, che ospita più di 780 società quali Samsung, Hyundai e Kia motors}. He raggiunto l'82\% di accuratezza nel prevedere sia le tendenze in aumento e in calo del mercato azionario.\\~\\
+Genetic Algorithm è stato studiato e dimostrato essere efficace nell'esplorare uno spazio complesso in modo adattivo, guidato dal meccanismo evolutivo di riproduzione, crossover e mutazione.\\
+Un \textbf{algoritmo genetico} è un algoritmo euristico utilizzato per tentare di risolvere problemi di ottimizzazione per i quali non si conoscono altri algoritmi efficienti di complessità lineare o polinomiale. L'aggettivo "genetico", ispirato al principio della selezione naturale ed evoluzione biologica, deriva dal fatto che gli algoritmi genetici attuano dei meccanismi concettualmente simili a quelli dei processi biochimici scoperti dalla biologia.\\
+In sintesi gli algoritmi genetici consistono in algoritmi che permettono di valutare diverse soluzioni di partenza (come se fossero diversi individui biologici) e che ricombinandole  ed introducendo elementi di disordine (mutazioni genetiche casuali) producono nuove soluzioni che vengono valutate scegliendo le migliori nel tentativo di convergere verso soluzioni "di ottimo". Nonostante questo utilizzo nell'ambito dell'ottimizzazione, data la natura intrinsecamente casuale dell'algoritmo genetico, non vi è modo di sapere a priori se sarà effettivamente in grado di trovare una soluzione accettabile al problema considerato. La soluzione trovata sarà frutto di una procedura casuale e quindi difficilmente riproducibile. 
+\\~\\
+Di recente, molti ricercatori hanno impiegato Genetic Algorithm per migliorare le prestazioni delle tecniche di AI. Nell'ambito delle Neural Network, Genetic Algorithm  è comunemente usato per selezionare la topologia di rete e determinare il numero ottimale di layer nascosti e di elementi di elaborazione.\\~\\
+Molti ricercatori hanno confrontato le Neural Network con approcci statistici per il riconoscimento di pattern \cite{nng}\cite{nns}. Yoon et al. \cite{nny} ha sottolineato la superiorità di Neural Network sull'analisi discriminante classica. Garliauskas \cite{nng} ha inoltre esaminato la previsione del mercato azionario utilizzando NN in combinazione con un approccio alle \textit{funzioni kernel}\footnote{Le funzioni kernel sono una classe di algoritmi per l'analisi di pattern, schemi, il cui elemento maggiormente conosciuto sono le Support Vector Machine (SVM). Lo scopo generale dell'analisi di pattern è di trovare e studiare tipi generici di relazioni. Le funzioni kernel si approcciano al problema mappando i dati in uno spazio di caratteristiche multidimensionale, trasformando i dati in un insieme di punti dello spazio euclideo.} e il metodo dell'errore di previsione ricorsivo\footnote{Errore di predizione: è una misura di quanto bene il modello prevede la variabile di risposta, o di come i campioni sono classificati nella categoria corretta.}.\\
+Garliauskas \cite{nng} ha concluso che, nel prevedere le serie temporali finanziarie, le Neural Network hanno prestazioni migliori rispetto ai metodi statistici classici. In generale, numerosi studi hanno dimostrato che le Neural Network hanno la capacità di prevedere i mercati azionari in modo più accurato rispetto ad altri metodi \cite{nny}\cite{nnk}\cite{nnp}\cite{nns2}.
+
+\subsection{Supporto delle informazioni sugli eventi}
+
+
+\section{Sentyment}
+\textcolor{red}{Spiega fra tutti quelli esposti quale algoritmi usa, che è una black box in realtà... deve essere molto piu' lungo il capitolo, parla di qualcos'altro intorno a sentyment!!\\}
 Sentyment è il prodotto di un'azienda milanese che opera nel settore informatico-finanziario. Nexid Edge è un ramo del gruppo NEXiD votato per perseguire l'innovazione tecnologica e sviluppare soluzioni di digital business rivoluzionarie. SentYment è la nuova Business Unit dedicata all'intelligenza artificiale.\\
 L'obiettivo è offrire alle organizzazioni un accesso senza pari a tecnologie all'avanguardia che uniscono il meglio della tecnologia e dell'imprenditorialità per elevare la saggezza collettiva. Al momento, grazie all'intensa collaborazione con Nexid Finance, Nexid Edge è attiva nel fornire progetti di consulenza digitale end-to-end, per offrire ai clienti un'esperienza di \textit{augmented consulting}. \footnote{Nexid, Srl. URL: https://nexid.it/}\\
 In questo documento, tuttavia, si fa riferimento a "Sentyment" intendendo l'applicazione sviluppata e non la divisione AI di Nexid.
@@ -443,7 +462,7 @@ Dal punto di vista concettuale, il metodo citato aggrega i dati creando un nuovo
 Dove, per ogni record, \textit{price} è il prezzo dell'asset scambiato, \textit{volume} è....
 
 
-%TODO: un esempio numerico di dati raw e risultato resample
+%TODO: un esempio numerico di dati raw tabellari e risultato resample
 
 \section{Indicatori}
 %TODO: Formule e esempi calcolo indicatori SMA EMA MACD RSI e altre statistiche
@@ -472,7 +491,8 @@ I progetti di intelligenza artificiale sono davvero unici in quanto ruotano atto
 
 \section{Test per decision support AI}
 
-\section{Stato dell'arte dei test}
+\section{Test framework workflow}
+
 \section{Analisi offline: maximum profit e genetic AI}
 \section{Analisi online: reinforcement learning}
 %https://tams.informatik.uni-hamburg.de/publications/2019/MSc_Ronja_Gueldenring.pdf
@@ -538,12 +558,33 @@ Il problema originale illustra un contesto di gioco in cui.....
 %			BIBLIOGRAFIA
 %
 \begin{thebibliography}{9}
+	\bibitem{nn1}
+	Lawrence, R. (1997). Using neural networks to forecast stock market prices. University of Manitoba, 333, 2006-2013.
+	\bibitem{whitenn}
+	White, H. (1988). Economic prediction using neural networks: The case of IBM daily stock returns.
+	\bibitem{puann}
+	Phua, P. K. H., Ming, D., \& Lin, W. (2000, July). Neural network with genetic algorithms for stocks prediction. In Fifth Conference of the Association of Asian-Pacific Operations Research Societies, 5th-7th July, Singapore. sn.
+	\bibitem{kimnn}
+	Kim, K. J., \& Han, I. (2000). Genetic algorithms approach to feature discretization in artificial neural networks for the prediction of stock price index. Expert systems with Applications, 19(2), 125-132.
+	\bibitem{nng}
+	Garliauskas, A. (1999, October). Neural network chaos and computational algorithms of forecast in finance. In IEEE SMC'99 Conference Proceedings. 1999 IEEE International Conference on Systems, Man, and Cybernetics (Cat. No. 99CH37028) (Vol. 2, pp. 638-643). IEEE.
+	\bibitem{nns}
+	Schumann, M., \& Lohrbach, T. (1993, January). Comparing artificial neural networks with statistical methods within the field of stock market prediction. In [1993] Proceedings of the Twenty-sixth Hawaii International Conference on System Sciences (Vol. 4, pp. 597-606). IEEE.
+	\bibitem{nny}
+	Yoon, Y., Swales Jr, G., \& Margavio, T. M. (1993). A comparison of discriminant analysis versus artificial neural networks. Journal of the Operational Research Society, 44(1), 51-60.
+	\bibitem{nnk}
+	Kim, J. W., Weistroffer, H. R., \& Redmond, R. T. (1993). Expert systems for bond rating: a comparative analysis of statistical, rule‐based and neural network systems. Expert systems, 10(3), 167-172.
+	\bibitem{nnp}
+	Patuwo, E., Hu, M. Y., \& Hung, M. S. (1993). Two‐group classification using neural networks. Decision Sciences, 24(4), 825-845.
+	\bibitem{nns2}
+	Subramanian, V., Hung, M. S., \& Hu, M. Y. (1993). An experimental evaluation of neural networks for classification. Computers \& operations research, 20(7), 769-782.
 	\bibitem{es}
 	Chalup, S., \& Maire, F. (1999, July). A study on hill climbing algorithms for neural network training. In Proceedings of the 1999 Congress on Evolutionary Computation-CEC99 (Cat. No. 99TH8406) (Vol. 3, pp. 2014-2021). IEEE.
-	\bibitem{}
-	Bengio, Y. (2009). Learning deep architectures for AI. Foundations and trends® in Machine Learning, 2(1), 1-127.
-	\bibitem{}
-	An, G. (1996). The effects of adding noise during backpropagation training on a generalization performance. Neural computation, 8(3), 643-674.
+	
+	%\bibitem{}
+	%Bengio, Y. (2009). Learning deep architectures for AI. Foundations and trends® in %Machine Learning, 2(1), 1-127.
+	%\bibitem{}
+	%An, G. (1996). The effects of adding noise during backpropagation training on a %generalization performance. Neural computation, 8(3), 643-674.
 	\bibitem{aitest}
 	Schmelzer, R. (2020, January 3). How Do You Test AI Systems?. Forbes. Last accessed 21th Feb 2020: https://www.forbes.com/sites/cognitiveworld/2020/01/03/how-do-you-test-ai-systems.
 	\bibitem{rl}
