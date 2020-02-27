@@ -1,6 +1,8 @@
 CAP1
 molto piu' lungo, devi spiegare bene tutto quello che serve per andare avanti quindi in dettaglio formule,
 strategie (molte di piu'?), buy / hold da battere ecc
+flow chart dlla tua AI o di qualcosa
+TIME SERIES da spiegare e tutte le definizioni di qualsiasi termine
 
 CAP2
 stato arte test + sentyment
@@ -10,6 +12,7 @@ tot 1+2 = 40 pag
 
 
 # TODO
+didascalie sbagliate, cambia font e numero figura
 bold e cose in giro per migliorare leggibilita'
 piu immagini
 Esempio numerico creazione candele
