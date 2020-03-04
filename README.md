@@ -1,7 +1,6 @@
 CAP1
 molto piu' lungo, devi spiegare bene tutto quello che serve per andare avanti quindi in dettaglio formule,
 strategie (molte di piu'?), buy / hold da battere ecc
-flow chart dlla tua AI o di qualcosa
 TIME SERIES da spiegare e tutte le definizioni di qualsiasi termine
 
 CAP2
@@ -39,6 +38,11 @@ E qua puoi citare cos'e' un decision support: https://www.researchgate.net/publi
   (cioe, a parte intro bella, come si deve guardare a mano il dato e testarlo 
    con grafici vs max e vs altri)
 
+===============================================================================0
+# TODO
+CAP 3 creazione candele, indicatori e strategie. La parte numerica dei dati
 
+CAP 4 metriche reinforcement learning e meta learner
 
+POI fai girare i veri test online e offline prima di andare avanti a scrivere
 
