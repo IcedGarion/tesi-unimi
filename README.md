@@ -42,7 +42,8 @@ E qua puoi citare cos'e' un decision support: https://www.researchgate.net/publi
 # TODO
 CAP 3 creazione candele, indicatori e strategie. La parte numerica dei dati
 
-CAP 4 metriche reinforcement learning e meta learner
+CAP 4 multi-armed bandit e tua implementazione / risultati
 
 POI fai girare i veri test online e offline prima di andare avanti a scrivere
 
+didascalie e tabelle: nomi
