@@ -39,7 +39,8 @@ E qua puoi citare cos'e' un decision support: https://www.researchgate.net/publi
    con grafici vs max e vs altri)
 
 ===============================================================================0
-# TODO
+# IDEE
+
 CAP 3 creazione candele, indicatori e strategie. La parte numerica dei dati
 
 CAP 4 multi-armed bandit e tua implementazione / risultati
@@ -48,9 +49,18 @@ POI fai girare i veri test online e offline prima di andare avanti a scrivere
 
 didascalie e tabelle: nomi
 
+trade-off fra avere tanti dati (step piccolo) e far fare abbastanza operazioni alla AI
+sapendo che poi, step corrisponde a periodo di scambio ai. Dopo test empirici.... 200 lascia fare abbastanza operazioni alle AI (media tempo fra un buy e sell?)
 
-# IDEE cap 4
+Alla fine confronto fra performance di:
+- AI con meta-learner
+- AI casuale
+- AI piu promettente di tutte
 
+Serve sistema (anche a manina) che switcha le AI secondo quanto deciso da meta-learner, mentre calcola perf / gain per confronto finale con le altre
+NO MAX GAIN E GENETIC
+
+CAP 4
 XXBT
 - AI trigger a confronto (un paio)
 - AI trigger generali
@@ -97,4 +107,14 @@ NB!!!!!!!!!!!
 - Ogni quanto fare lo scambio? 
   Parametro che va RICAVATO: Una volta che hai il grafico SCELTE (scrivi csv pandas) calcola la media di quanto passa da un cambio AI all'altro
   (ogni quanto una AI mugliore viene sorpassata) e hai trovato l'intervallo di temop fra una run del learner e l'altra
-- Nei test assoluti, calcola un guadagno totale prodotto dalla AI da 2014 a 2020.
+- Nei test assoluti, calcola un guadagno totale prodotto dalla AI da 2014 a 2020. Poi confronta con le singole AI oppure con SOLO LA MIGLIORE
+- Non hai mai parlato di n_eexperiments (20).... Come cambia il risultato? deve essere per forza 10000?
+- buy sell -1 1 scambiati ogni tanto
+
+
+PARAMS
+perfetto con performance = profit (tagliato a 100 max)
+step = 250, start = 5000
+
+1) togli via meta 2014 in entrambi
+2) step piu ampio (picchi solo di durata step): analisi per step migliore (quante operazioni riesce a fare in uno step?)
