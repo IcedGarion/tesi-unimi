@@ -146,3 +146,5 @@ figure bandit choice allineate
 bandit final choice (100 / 1000 esperimenti a 0.1)
 
 risultati medieeee
+
+interessante che metalearn sceglie come "seconda" AI verde mentre invece le medie e altro metterebbero come seconda la grigia
