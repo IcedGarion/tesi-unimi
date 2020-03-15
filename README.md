@@ -113,8 +113,36 @@ NB!!!!!!!!!!!
 
 
 PARAMS
-perfetto con performance = profit (tagliato a 100 max)
-step = 250, start = 5000
+perfetto con performance = profit (tagliato a 50 max)
+step = 250, start = 5000, n_exp = 20 / 100 / 1000
 
 1) togli via meta 2014 in entrambi
 2) step piu ampio (picchi solo di durata step): analisi per step migliore (quante operazioni riesce a fare in uno step?)
+
+
+=====
+# PROGRAMMI DA FARE GIRARE ANCORA
+- 2 o 3 mab che si fermano dove c'e' un picco di un'altra AI (non 0) con alto eps, per vedere se sceglie quella col picco
+- ultimo mab in un punto che vuoi tu, ma con altissimo n_experiment (1k o 10k, doveva gia farlo da un po ma non è andato)
+
+- calcolo finale fra performance AI0 e performance META (anche solo un valore numerico e basta)
+  magari confronta anche altre AI oltre a ste 2
+  performance media delle singole VS finale meta
+
+
+- non riesce a beccare sto piccooooooo!!! Magari considera solo la storia piu' recente e non ogni volta tutto il dataset? Considera solo l'ultimo anno, tipo?
+  Prova picco finale (AI3) o picco 2017 (AI7) usando meno dati.... E eps 0.6?
+
+========
+DA SISTEMARE IN GIRO
+gain non e' vera formula guadagno, ma ricavo singole operazioni. Devi dirlo
+
+test per sentyment ai: non ci sono test comparativi e qualitativi, solo comparativi.... i qualitativi son da camviare, è solo una misura di performance finale....
+
+performance in realta' hai usato solo profit... descrizione della funzione (max / min, media,,,)
+
+figure bandit choice allineate
+
+bandit final choice (100 / 1000 esperimenti a 0.1)
+
+risultati medieeee
