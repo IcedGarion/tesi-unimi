@@ -148,3 +148,17 @@ bandit final choice (100 / 1000 esperimenti a 0.1)
 risultati medieeee
 
 interessante che metalearn sceglie come "seconda" AI verde mentre invece le medie e altro metterebbero come seconda la grigia
+
+
+========
+Risultati finali
+
+Buy-Hold
+gain sum 0 loss sum 0 max loss nan prof 0
+MACD
+gain sum 14133.407464689652 loss sum -24133.410409156353 max loss -431.64951945333445 prof 0.5856365604807913
+RSI
+gain sum 15405.007025080475 loss sum -25399.033380238587 max loss -2644.9415984871184 prof 0.606519421210185
+Sentyment
+gain sum 1328.0764682457639 loss sum -11327.883645655587 max loss -621.311992980245 prof 0.11723959300686329
+
