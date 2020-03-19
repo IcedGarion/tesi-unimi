@@ -139,26 +139,19 @@ gain non e' vera formula guadagno, ma ricavo singole operazioni. Devi dirlo
 
 test per sentyment ai: non ci sono test comparativi e qualitativi, solo comparativi.... i qualitativi son da camviare, è solo una misura di performance finale....
 
-performance in realta' hai usato solo profit... descrizione della funzione (max / min, media,,,)
+performance in realta' hai usato solo profit... cerca in giro se non torna
 
-figure bandit choice allineate
+buy hold non e' veramente "da battere", non e' minimale e non fa schifo... nel lungo periodo su prezzi in salita vince sempre! Sistema INTRO e anche in giro
+
+Sentyment non e' "composta" da 10 AI ma a ogni ciclo ne produce 10 nuove e si sceglie la migliore. Cicli di qialche settimana MAI DETTO!
+
+RANDOM ALGORITHM mai parlato... Sostituito dalle strategie per fare confronto? o ci vuole?
+
+# figure bandit choice allineate
 
 bandit final choice (100 / 1000 esperimenti a 0.1)
 
-risultati medieeee
+# risultati medieeee
 
-interessante che metalearn sceglie come "seconda" AI verde mentre invece le medie e altro metterebbero come seconda la grigia
-
-
-========
-Risultati finali
-
-Buy-Hold
-gain sum 0 loss sum 0 max loss nan prof 0
-MACD
-gain sum 14133.407464689652 loss sum -24133.410409156353 max loss -431.64951945333445 prof 0.5856365604807913
-RSI
-gain sum 15405.007025080475 loss sum -25399.033380238587 max loss -2644.9415984871184 prof 0.606519421210185
-Sentyment
-gain sum 1328.0764682457639 loss sum -11327.883645655587 max loss -621.311992980245 prof 0.11723959300686329
+# interessante che metalearn sceglie come "seconda" AI verde mentre invece le medie e altro metterebbero come seconda la grigia
 

@@ -865,7 +865,87 @@ Si è visto come l'algoritmo di reinforcement learning sceglie la migliore AI a 
 
 %Questo dataset finale è analizzato dal punto di vista del guadagno e della performance e %confrontato con le analisi delle singole AI:
 %L'unico vero confronto si può fare quasi soltanto con AI0, la migliore fra tutte le altre %considerate, senza dubbio. 
+\section{Confronto con altre strategie}
+Confronto difficile. I profitti sono fortemente correlati ai prezzi, a seconda della tendenza una strategia va bene oppure no: buy hold imbattibile quando c'è un alto rendimento (il titolo sale e basta), non si può battere. Infatti bitcoin analizzato sul lungo periodo, dove i prezzi salgono e basta per qualche anno, ha un profitto da buy hold incredibile, ma poi c'è il tracollo: se non si ha pronta una strategia oltre a compra e detieni, rischi di perdere tutti i soldi.
+Per questo serve analizzare dei periodi più brevi. La stessa Sentyment cambia le AI e i parametri periodicamente, circa un mese o comunque dell'ordine di grandezza di qualche volta l'anno. Allora all'interno di questi periodi si vede bene e chiaro che fare un buy hold potrebbe non convenire più. Va analizzata l'aspettativa di un investitore, per quanto tempo ha intenzione di mantenere l'investimento.
+Allora Sentyment lavora bene su periodi di due settimane (250) o mensilmente (720 candele). Vanno analizzati periodi diversi in cui l'andamento dei prezzi è diverso, così da avere varietà di dati e confrontare sia nei periodi migliori che nei peggiori, sia quando si sa di avere un vantaggio sulle altre strategie sia quando non è detto che i sia.
+Per esempio, quando c'è un crollo dei prezzi buy hold segue a ruota, mentre un'altra strategia potrebbe vendere e basta, senza più ricomprare finchè non c'è una situazione favorevole. 
+Inoltre se si vuole fare trading attivo e sfruttare i vari brevi periodi per un profitto, senza bloccare gli investimenti, vanno sfruttati i brevi picchi di prezzo e non si può attendere anni e anni, come nel caso di buy hold su lungo periodo. E se un trader non ha avuto la fortuna di poter investire tanto capitale nel 2013 in bitcoin, non è costretto per forza a rinunciare per guadagnare, ma può lo stesso operare nel mercato bitcoin, che ora è più stabile e ha alti e bassi.
 
+Anche RSI, che nel lunghissimo periodo sembrava ben superiore a Sentyment, in realtà in certe situazioni si vede in netta difficoltà.
+
+Comunque ripetendo, in ogni caso, se si considera un periodo in cui c'è soltanto una crescita dei prezzi, per carità con una serie di massimi e minimi locali e non una retta perfetta, ma comunque con il trend sempre in crescita, allora difficilmente una strategia può battere buy hold. Ma nessuno può sapere se si sta attraversando un periodo di questo tipo o se il crollo è dietro all'angolo (cosa che, per buy hold, comporterebbe una grave perdita) e quindi è per questo che buy hold è usata più come una base di confronto, perchè non è una strategia in cui si può operare attivamente e, dato che funziona soltanto in certe situazioni (come anche altre strategie che sono adatte solo a certi pattern), è difficile prevedere se la situazione adatta si sta presentando o no.
+
+Sentyment invece attua un mix di strategie adatte alle varie situazioni: si notano periodi in cui compra e detiene per molto tempo, quando riesce ad identificare correttamente un lungo periodo di crescita e ricalca un buy hold, mentre ha periodi in cui riesce a vendere prima di un calo senza comprare per un po' (righe orizzontali significano che ha venduto e quindi l'unico profitto è quello del budget ricavato dalla vendita che ora è "congelato" al suo valore). Naturalmente non è sempre facile identificare il trend e decidere la migliore strategia in ogni istante, e bisogna anche rischiare: per questo motivo ogni tanto non riesce a vendere tutto prima di un crollo, perchè magari si aspetta una rapida ricrescita (viste situazioni simili in precedenza) o viceversa esita a mantenere un investimento in crescita perchè non si aspetta che il titolo continui a salire incessantemente per tanto tempo.
+
+Infine, dato che si è parlato dell'efficacia di Sentyment sui brevi periodi, è naturale conseguenza che uno strumento di questo tipo faccia più fatica a 
+
+Si registra che in media Sentyment è più proficua nei periodi in cui i prezzi sono calanti, altalenanti o non presentano crescite repentine. Negli altri casi è meglio adottare altre strategie.
+
+
+Nel periodo di fine 2017 in cui Bitcoin ha avuto una grande salita, Sentyment ha ovviamente fatto fatica a stare dietro a buy hold ma, dall'altra parte, appena i prezzi sono nuovamente scesi, il profitto di Sentyment ha continuato a rimanere quasi costante senza crollare, come invece hanno fatto molte altre strategia.
+
+
+Per quanto riguarda un'analisi più quantitativa, è possibile calcolare, per ognuno dei periodi in cui è stato diviso il dataset, diverse statistiche per poterle confrontare con quelle prodotte dalle altre strategie, sempre all'interno dei periodi. È possibile analizzare sotto diversi aspetti e gli indicatori sono molti e ognuno esprime una qualità differente.
+Al fine di questa analisi, che non ha la pretesa di essere un'analisi finanziaria completa sulle strategie di Sentyment ma soltanto una discussione qualitativa sulle sue performance e non vuole introdurre ulteriori concetti finanziari, sono trattate le metriche già esposte, quindi rendimento e profitto. Il rendimento, qua chiamato anche come "guadagno", esprime l'andamento della strategia rispetto ai prezzi mentre il profitto pesa anche il fattore perdite ed esprime quindi anche un fattore di rischio. Purtroppo, però, non è possibile calcolare la performance in quanto basa le sue statistiche sull'analisi delle singole operazioni, vincenti e non, mentre buy hold non esegue mai alcuna operazione, ad eccezione delle due iniziali e finali. Quindi non è possibile misurare la performance per buy hold, che sarà quindi esclusa da questo paragone.
+
+In generale, la misura di performance calcolata per brevi periodi è molto bassa per buy hold, a parte nelle zone di crescita di prezzo, perchè oltre ai guadagni crescenti è caratterizzata da molte perdite quando il titolo scende di prezzo e quindi la metrica definita penalizza la strategie, pesando più le perdite dei guadagni. 
+
+A seconda della lunghezza del periodo considerato si hanno risultati differenti: in periodi più corti Sentyment lavora meglio e buy hold perde di potenza, se il periodo considerato non ha una forte crescita senza perdite. In assoluto i risultati migliori si hanno per periodi molto brevi, per esempio di 100 candele (circa mezza settimana), dove Sentyment raggiunge risultati comparabili a altre strategie come RSI, che sembra sempre andare bene.
+
+QUA CI STAREBBE UNA TABELLA (DUE): periodi X strategie (profit)
+									periodi X strategie (performance)
+
+Con periodi di 720, 1500: 
+Rendimento medio:
+Performance media:
+
+Mean performance with period 1000
+buy hold: 0.0
+macd: 0.5657821210632028
+rsi: 2.1953467930825865
+sentyment: 0.6780549845825439
+Mean profit with period 1000
+buy hold: 0.5404085273781145
+macd: -0.6745042891314967
+rsi: -0.1411501174631185
+sentyment: -0.2429691384122019
+
+Mean performance with period 720
+buy hold: 0.0
+macd: 0.5733546730655771
+rsi: 1.9881815197232546
+sentyment: 0.7743340335712756
+Mean profit with period 720
+buy hold: 0.4184781637772894
+macd: -0.4436644813936811
+rsi: -0.042681071786188074
+sentyment: -0.07103362472806332
+
+
+Mean performance with period 250
+buy hold: 0.0
+macd: 0.5849186318187025
+rsi: 3.301816518804109
+sentyment: 1.2946214582495323
+Mean profit with period 250
+buy hold: 0.0912007176039962
+macd: -0.24408210104489297
+rsi: -0.048536764528905575
+sentyment: -0.07688346165765528
+
+Mean performance with period 100
+buy hold: 0.0
+macd: 0.6191815184336097
+rsi: 2.0131376833638903
+sentyment: 0.9684276489818997
+Mean profit with period 100
+buy hold: 0.029724063309851535
+macd: -0.138792933904424
+rsi: -0.03341234226116994
+sentyment: -0.02061835434600789
+
+\section{Maximum profit}
 
 
 \newpage
