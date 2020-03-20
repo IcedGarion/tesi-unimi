@@ -143,9 +143,11 @@ performance in realta' hai usato solo profit... cerca in giro se non torna
 
 buy hold non e' veramente "da battere", non e' minimale e non fa schifo... nel lungo periodo su prezzi in salita vince sempre! Sistema INTRO e anche in giro
 
-Sentyment non e' "composta" da 10 AI ma a ogni ciclo ne produce 10 nuove e si sceglie la migliore. Cicli di qialche settimana MAI DETTO!
+-----> Sentyment non e' "composta" da 10 AI ma a ogni ciclo ne produce 10 nuove e si sceglie la migliore. Cicli di qialche settimana MAI DETTO!
 
 RANDOM ALGORITHM mai parlato... Sostituito dalle strategie per fare confronto? o ci vuole?
+
+figura 20 -> figura 22
 
 # figure bandit choice allineate
 
@@ -154,4 +156,31 @@ bandit final choice (100 / 1000 esperimenti a 0.1)
 # risultati medieeee
 
 # interessante che metalearn sceglie come "seconda" AI verde mentre invece le medie e altro metterebbero come seconda la grigia
+
+
+
+Mean performance with period 720
+buy hold: 0.0
+macd: 0.5733546730655771
+rsi: 1.9881815197232546
+sentyment: 0.7743340335712756
+Mean profit with period 720
+buy hold: 0.4184781637772894
+macd: -0.4436644813936811
+rsi: -0.042681071786188074
+sentyment: -0.07103362472806332
+
+MAX PROF
+Mean performance with period 100
+buy hold: 0.0
+macd: 0.6191815184336097
+rsi: 2.0131376833638903
+sentyment: 0.9684276489818997
+max profit: 44.89472911611406
+Mean profit with period 100
+buy hold: 0.029724063309851535
+macd: -0.138792933904424
+rsi: -0.03341234226116994
+sentyment: -0.02061835434600789
+max profit: 0.8391547687364111
 
