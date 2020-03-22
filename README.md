@@ -184,3 +184,12 @@ rsi: -0.03341234226116994
 sentyment: -0.02061835434600789
 max profit: 0.8391547687364111
 
+=============0
+MANCA
+
+Cap 3 creazione strategie
+finire di parlare di genetic
+Conclusioni fatte bene, estese a "confronto con altre strategie" e "maximum profit"
+Tabella 250h max profit
+grafico 50k max profit
+grafico strategie e gnetic 100h da analizzare pezzo per pezzo per capire situazioni diverse cosa era meglio fare ("Risultati")
