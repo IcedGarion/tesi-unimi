@@ -188,8 +188,10 @@ max profit: 0.8391547687364111
 MANCA
 
 Cap 3 creazione strategie
-finire di parlare di genetic
 Conclusioni fatte bene, estese a "confronto con altre strategie" e "maximum profit"
-Tabella 250h max profit
-grafico 50k max profit
+grafico 50k max profit + valore 2018 TODO
 grafico strategie e gnetic 100h da analizzare pezzo per pezzo per capire situazioni diverse cosa era meglio fare ("Risultati")
+
+intro: nel capitolo x si parla di....
+
+rileggi tutto
