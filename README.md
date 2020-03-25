@@ -187,11 +187,9 @@ max profit: 0.8391547687364111
 =============0
 MANCA
 
-Cap 3 creazione strategie
-Conclusioni fatte bene, estese a "confronto con altre strategie" e "maximum profit"
-grafico 50k max profit + valore 2018 TODO
+grafico 50k max profit
 grafico strategie e gnetic 100h da analizzare pezzo per pezzo per capire situazioni diverse cosa era meglio fare ("Risultati")
 
-intro: nel capitolo x si parla di....
-
-rileggi tutto
+formula 6 -> formula 7
+tabella x -> tabella x+1
+Immagine x -> Immagine x+1
