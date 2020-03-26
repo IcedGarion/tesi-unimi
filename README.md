@@ -187,9 +187,6 @@ max profit: 0.8391547687364111
 =============0
 MANCA
 
-grafico 50k max profit
+# grafico 50k max profit
 grafico strategie e gnetic 100h da analizzare pezzo per pezzo per capire situazioni diverse cosa era meglio fare ("Risultati")
 
-formula 6 -> formula 7
-tabella x -> tabella x+1
-Immagine x -> Immagine x+1
