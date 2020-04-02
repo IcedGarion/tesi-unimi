@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+
+\title{\textbf{Progettazione e sviluppo di test suite automatica e modulo raccolta dati per intelligenze artificiali che si occupano di creare strategie di investimento}}
+\author{Garion Musetta - 920623}
+
+
+\begin{document}
+\maketitle
+
+\section{Ente presso cui è stato svolto il lavoro di tesi}
+La tesi è stata svolta presso Nexid s.r.l (https://nexid.it/), nella divisione Blockchain e Artificial Intelligence, Nexid Edge. L'azienda si occupa dello sviluppo di strumenti intelligenti per l'analisi del mercato delle criptovalute e la creazione di strategie di investimento. Opera inoltre sulla Blockchain Ethereum per la realizzazione di Smart Contract e per la certificazione di opere in diversi tipi di settori.
+
+\section{Contesto iniziale}
+Nell'ambito di AI per trading finanziario, Nexid ha sviluppato un agente in grado di creare strategie di investimento intelligenti (Sentyment AI). Il software è da perfezionare e testare e necessita della riprogettazione dell'infrastruttura per l'acquisizione dati, oltre ad altri componenti secondari.\\~\\ Sentyment produce diverse AI che si comportano in modo simile, ma soltanto una di queste deve essere scelta periodicamente come operativa, da utilizzare in produzione. Ogni moneta possiede il suo pool di AI. La scelta della migliore si basa su una misura di prestazioni calcolata per le varie AI.
+
+\section{Obiettivi del lavoro}
+Gli obiettivi della tesi sono diversi. È stata richiesta innanzitutto la progettazione di un modulo di raccolta dati allo scopo di renderli disponibili alle AI, insieme ad un coordinatore che espone delle API per interrogare lo stato del sistema e attivare le diverse funzionalità dello stesso.\\ Concentrandosi sulle AI per trading, l'obiettivo principale è lo sviluppo di uno strumento intelligente in grado di scegliere la migliore fra le AI che compongono Sentyment. Il software sviluppato allo scopo, qui chiamato \textit{meta-learner}, verrà integrato in Sentyment e agirà in automatico applicato ad ogni criptovaluta trattata. \textit{Meta-learner} impara dai risultati prodotti dalle AI nel tempo e, dopo un sufficiente numero di dati, è in grado di scegliere una AI che secondo lui è migliore in base ad alcune metriche definite.\\ Lo scopo finale di questa tesi è tuttavia testare Sentyment, ora trattata come un'unica AI composta dal suo rappresentante migliore, scelto in precedenza. È eseguito un confronto dei risultati prodotti con altri strumenti simili, rappresentati soprattutto da altre strategie di investimento utilizzate nell'ambito di applicazione.\\ È inoltre creato un modello ottimale di riferimento per investimenti a breve termine e sviluppati due algoritmi in grado di produrre tali dati. Il modello viene impiegato per confrontare ulteriormente i risultati di Sentyment e delle altre strategie e fornisce anche spunti per eventuali lavori futuri.
+
+\section{Descrizione lavoro svolto}
+
+\section{Tecnologie coinvolte}
+
+\section{Competenze e risultati raggiunti}
+
+\section{Bibliografia}
+
+\end{document}
