@@ -1,0 +1,80 @@
+https://it.overleaf.com/gallery/tagged/presentation
+
+1)
+TITOLO nome 
+
+
+2) Contesto
+Nexid Edge blockchain e AI sviluppa strumenti intelligenti per l’analisi del mercato delle criptovalute e 
+la creazione di strategie di investimento. Inoltre realizza Smart Contract sulla Blockchain Ethereum 
+per la certificazione di opere in diversi tipi di settori.
+
+Nexid ha sviluppato una AI in grado di prevedere il mercato finanziario di 
+alcune criptovalute e di creare strategie di investimento intelligenti.
+
+
+3) Previsione di mercato
+In letteratura ci sono molti lavori di strumenti di AI che approcciano la previsione di serie temporali, alcuni con risultati notevoli (80%).
+Principalmente usano Neural Network con combinazioni di altri strumenti (es, Genetic per scelta feature) e integrazione di notizie dai giornali. 
+I metodi statistici sono ormai stati superati.
+Tuttavia non è stato dimostrato se il mercato sia predicibile o no (Efficient Market Hypothesis).
+Servirebbero dei lavori inconfutabili che non esistono ancora.
+
+Lo strumento di Nexid non effettua previsioni puntuali di prezzi, ma diversifica il portfolio e sceglie in modo intelligente
+varie strategie di investimento in base all'andamento del mercato.
+
+
+4) Financial trading
+Acquistando un asset per un certo prezzo e rivendendolo quando il valore è salito si ottiene un guadagno;
+Ripetendo l'operazione con il budget ricavato, per investirlo nuovamente, è possibile generare ricchezza. 
+Quando però si vende ad un prezzo minore allora si ha una perdita.
+
+Una strategia di investimento fa uso di uno o più indicatori statistici per definire i punti in cui comprare o vendere un titolo.
+Analizzando l'andamento di un mercato nei punti passati è possibile farsi un'idea di come evolve e scegliere una strategia opportuna.
+
+
+5) Strategie di investimento
+Per esempio se si analizza che il mercato è in forte crescita, senza eccessive perdite (come Bitcoin qualche anno dopo la sua creazione), 
+si può optare per un BUY-HOLD (compra e detieni): non si compra e vende continuamente ma soltanto una volta. Poi si mantiene il titolo per
+farlo crescere, dato che i prezzi salgono.
+Se però il mercato dovesse crollare, buy hold, la quale non prevede di vendere, vedrebbe il valore del titolo posseduto scendere e perdere di valore.
+
+Per questo, nelle strategie a breve termine, si fa uso di tecniche più approfondite.
+Esempio Moving Average Crossover: calcola una media a breve termine e una a lungo termine e traccia le linee sul grafico.
+Quando la media breve supera quella lunga allora si genera un segnale di BUY: il prezzo sta salendo più veloce della tendenza media quindi sarà 
+destinato a salire; viceversa si vende quando la media a lungo termine supera quella a breve termine, perchè i prezzi stanno scendendo sotto
+il livello medio considerando molti più prezzi passati e quindi si ha un cambio di tendenza.
+
+<immagine moving_avg>
+
+
+6) Tornando allo scopo della tesi...
+Lo strumento sviluppato da Nexid, Sentyment AI, sceglie quindi in modo intelligente quale strategia applicare a seconda delle varie situazioni,
+dell'andamento dei prezzi e del valore degli indcatori statistici finanziari usati nell'ambito.
+
+Sentyment AI opera su diverse criptovalute. Ogni criptovaluta ha associato un insieme di AI separate e ognuna effettua le sue predizioni 
+e crea le sue strategie. Sono tutte simili fra loro ma hanno parametri differenti e agiscono in modo leggermente diverso.
+
+Lo scopo da raggiungere in questo lavoro di tesi è sviluppare uno strumento in grado di stabilire, a intervalli di tempo da definire,
+quale sia la AI migliore all'interno di ciascun insieme (una AI migliore per ogni criptovaluta).
+Stabilita la migliore, la si può etichettare come "attiva" ed usare in produzione, permettendogli di piazzare direttamente 
+ordini di acquisto e vendita sul mercato.
+
+
+7) 
+
+8)
+
+9)
+
+10)
+
+11)
+
+
+12) Architettura di Sentyment AI e sviluppo moduli
+<solo immagine sentyment e poi ne parli su>
+
+
+13) Tecnologie e Ringraziamenti
+<immagini / scritte: kraken, python, sqlalchemy, flask, pandas, numpy, matplotlb, pyfolio, zipline, tensortrade, talib>
