@@ -12,8 +12,9 @@
 \begin{frame}{Contesto}
 \begin{itemize}
 \item Nexid Edge blockchain e AI sviluppa strumenti intelligenti per l’analisi del mercato delle criptovalute e
-la creazione di strategie di investimento.\\ Inoltre realizza Smart Contract sulla Blockchain Ethereum per la certificazione di opere in diversi tipi di settori.
-\item Ha creato una AI in grado di prevedere il mercato finanziario delle criptovalute e di creare \textbf{strategie di investimento} intelligenti (Sentyment AI).
+la creazione di strategie di investimento
+\item Realizza Smart Contract sulla Blockchain Ethereum per la certificazione di opere in vari settori
+\item Ha creato Sentyment AI, strumento in grado di prevedere il mercato finanziario delle criptovalute e di creare \textbf{strategie di investimento} intelligenti
 \end{itemize}
 \begin{figure}
     \subfigure{\includegraphics[width=.2\linewidth]{nexid}}
@@ -23,21 +24,21 @@ la creazione di strategie di investimento.\\ Inoltre realizza Smart Contract sul
 
 \begin{frame}{Previsione di mercato e serie temporali}
 \begin{itemize}
-\item In letteratura molti strumenti di AI raggiungono precisioni notevoli, con accuratezza sulla predizione dei valori fino a 80\%
-\item Principalmente usano \textit{Neural Network}, \textit{Case Based Reasoning} e \textit{Support Vector Machine}. I metodi statistici sono ormai stati superati
-\item Esiste molta varietà di approcci e i risultati migliori sono dati da combinazioni di tecniche: CBR+Genetic, NN+fuzzy/Genetic. Ogni componente svolge un ruolo preciso (Genetic sceglie topologia rete)
-\item Necessaria anche integrazione delle notizie di giornale su eventi quotidiani: \textit{text mining}
+\item In letteratura molti strumenti di AI raggiungono accuratezza sulla predizione dei valori fino a 80\%
+\item Sono principalmente usati \textit{Neural Network}, \textit{Case Based Reasoning} e \textit{Support Vector Machine} ma c'è molta varietà
+\item I risultati migliori sono dati da combinazioni di tecniche: CBR+Genetic, NN+fuzzy/Genetic.
+\item Necessaria l'integrazione delle notizie sugli eventi quotidiani, estratte dai giornali (\textit{text mining})
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Previsione di mercato e serie temporali}
 \begin{itemize}
-\item Non è tuttavia dimostrato se il mercato sia predicibile o no (\textit{Efficient Market Hypothesis}).
-Servirebbero dei lavori inconfutabili che non esistono ancora.
-\item Lo strumento di Nexid non effettua previsioni puntuali di prezzi, ma diversifica il portfolio e sceglie in modo intelligente varie strategie di investimento in base all'andamento del mercato.
-\item Sentyment AI opera su diverse criptovalute:
+\item Non è dimostrato se il mercato sia predicibile o no (\textit{Efficient Market Hypothesis})
+\item Sentyment non effettua previsioni puntuali di prezzi, ma diversifica il portfolio e sceglie in modo intelligente varie strategie di investimento in base all'andamento del mercato.
+\item L'AI opera su diverse criptovalute:
 \begin{itemize}
-    \item Ogni criptovaluta ha associato un insieme di AI separate e ognuna effettua predizioni crea strategie. \item Sono tutte simili fra loro ma hanno parametri differenti e agiscono in modo leggermente diverso.
+    \item Ogni criptovaluta ha associato un insieme di AI separate che effettuano predizioni e creano strategie indipendentemente
+    \item Nonostante siano simili fra loro ma hanno parametri differenti e agiscono in modo diverso.
     \item Per ogni valuta, solo la migliore AI è usata
 \end{itemize}
 \end{itemize}
@@ -47,9 +48,9 @@ Servirebbero dei lavori inconfutabili che non esistono ancora.
 \begin{itemize}
     \item Dato aggregato che riassume gli scambi del giorno (o orari): candela OHLCV (\textit{open}, \textit{high},     \textit{low}, \textit{close}, \textit{volume})
     \item Acquistando (\textit{buy}) un asset per un certo prezzo e rivendendolo (\textit{sell}) quando il valore è salito si ottiene un guadagno
-    \item Ripetendo l'operazione con il budget appena ricavato, per investirlo nuovamente, si genera sempre più ricchezza. 
-    \item Una \textit{strategia di investimento} fa uso di uno o più indicatori statistici per definire i punti in cui comprare o vendere un titolo.
-    \item Analizzando l'andamento di un mercato è possibile farsi un'idea di come evolve e scegliere una strategia opportuna.
+    \item Investendo nuovamente il budget appena ricavato, si genera sempre più ricchezza
+    \item Una \textit{strategia di investimento} fa uso di uno o più indicatori statistici per definire i punti in cui comprare o vendere un titolo
+    \item Analizzando l'andamento di un mercato è possibile immaginare di come evolve e scegliere una strategia opportuna
     \begin{figure}
     \subfigure{\includegraphics[width=.4\linewidth]{stock2}}
     \subfigure{\includegraphics[width=.33\linewidth]{ohlc}}
@@ -59,11 +60,11 @@ Servirebbero dei lavori inconfutabili che non esistono ancora.
 
 \begin{frame}{Strategie di investimento}
 \begin{itemize}
-    \item Generalmente si cerca di comprare quando il titolo ha prezzo basso e vendere quando è alto: \textit{buy} nelle valli e \textit{sell} nei picchi. 
-    \item L'operazione va effettuata sul breve periodo (su base giornaliera / settimanale) e ripetuta spesso
-    \item È difficile prevedere il preciso andamento e quindi si usano indicatori che lo riassumono
-    \item Se si analizza che il mercato è in forte crescita senza eccessive perdite si può optare per BUY-HOLD: compra all'inizio e mantiene il titolo fino alla fine.
-    \item Se però il mercato crolla, buy hold segue di conseguenza
+    \item Generalmente occorre comprare quando il titolo ha prezzo basso e vendere quando è alto: \textit{buy} nelle valli e \textit{sell} nei picchi. 
+    \item L'operazione va effettuata su base giornaliera / settimanale (breve periodo) e ripetuta spesso
+    \item È difficile prevedere il preciso andamento
+    \item Se si rileva che il mercato è in forte crescita senza eccessive perdite si può optare per BUY-HOLD: si compra all'inizio e si mantiene il titolo fino alla fine.
+    \item Se il mercato crolla, BUY-HOLD segue di conseguenza
 \end{itemize}
 \end{frame}
 
@@ -82,11 +83,10 @@ Servirebbero dei lavori inconfutabili che non esistono ancora.
 
 \begin{frame}{Scopo della tesi}
 \begin{itemize}
-\item Sentyment AI sceglie in modo intelligente quale strategia applicare a seconda delle varie situazioni,
+\item Sentyment AI sceglie quale strategia applicare a seconda della situazione,
 dell'andamento dei prezzi e del valore degli indcatori. Per noi è una \textit{black box}
-\item Sentyment AI opera su diverse criptovalute. Ogni criptovaluta ha associato un insieme di AI separate
-\item L'obiettivo è sviluppare uno strumento in grado di stabilire, a intervalli di tempo da definire,
-quale sia la AI migliore all'interno di ciascun insieme: \textit{meta-learner}
+\item L'obiettivo è sviluppare uno strumento in grado di stabilire, a intervalli di tempo definiti,
+quale sia la AI migliore all'interno di ogni criptovaluta: \textit{meta-learner}
 \item Stabilita la migliore, la si può etichettare come "attiva" ed usare in produzione, permettendogli di piazzare direttamente ordini di acquisto e vendita sul mercato.
 \end{itemize}
 \end{frame}
@@ -96,7 +96,7 @@ quale sia la AI migliore all'interno di ciascun insieme: \textit{meta-learner}
 \begin{itemize}
 \item \textit{Meta-learner} è basato su \textit{multi-armed bandit}, algoritmo di \textit{reinforcement learning}
 \item Si allena sulle performance passate di ciascuna AI
-\item Parte da inizio dataset e si sposta a step di 250 record. Poi esplora le AI in gioco e calcola per ciascuna \textit{guadagno} e \textit{profitto}
+\item Parte da inizio dataset e si sposta a step di 250 record. Poi esplora le AI concorrenti e calcola per ciascuna \textit{guadagno} e \textit{profitto}
 \item A ogni step effettua una scelta: decide se scegliere la AI che finora è stata migliore o se esplorarne una nuova, che potrebbe essere anche meglio
 \end{itemize}
 \begin{figure}
@@ -121,7 +121,7 @@ quale sia la AI migliore all'interno di ciascun insieme: \textit{meta-learner}
 \begin{frame}{Confronto con altri strumenti}
 \begin{itemize}
 \item Si rapportano i risultati di Sentyment a strategie di investimento comunemente utilizzate in analisi tecnica (BUY-HOLD, MACD, RSI)
-\item Altri strumenti intelligenti di investimento sono proprietari o non esattamente come Sentyment. Comunque difficilmente accessibili
+\item Altri strumenti intelligenti di investimento sono proprietari e difficilmente accessibili
 \item Diverse metriche di confronto
 \begin{itemize}
 \item Guadagno assoluto / finale
@@ -129,7 +129,7 @@ quale sia la AI migliore all'interno di ciascun insieme: \textit{meta-learner}
 \end{itemize}
 \item Sentyment pone di più l'attenzione sul limitare le perdite
 \item Analizzate le performance lungo tutto il dataset, a finestre di 100 ore. Sul breve periodo Sentyment lavora meglio
-\item Generalmente Sentyment è comparabile a altre strategie. A seconda della situazione si comporta meglio o peggio: nelle salite è restia a rischiare, nelle discese riesce invece a perdere meno di altri  
+\item Generalmente Sentyment è comparabile a altre strategie. Nelle salite è restia a rischiare, nelle discese riesce invece a perdere meno di altri  
 \end{itemize}
 \end{frame}
 
