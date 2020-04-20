@@ -52,9 +52,8 @@ la creazione di strategie di investimento
     \item Una \textit{strategia di investimento} fa uso di uno o più indicatori statistici per definire i punti in cui comprare o vendere un titolo
     \item Analizzando l'andamento di un mercato è possibile immaginare di come evolve e scegliere una strategia opportuna
     \begin{figure}
-    \subfigure{\includegraphics[width=.4\linewidth]{stock2}}
     \subfigure{\includegraphics[width=.33\linewidth]{ohlc}}
-\end{figure}
+    \end{figure}
 \end{itemize}
 \end{frame}
 
@@ -65,6 +64,9 @@ la creazione di strategie di investimento
     \item È difficile prevedere il preciso andamento
     \item Se si rileva che il mercato è in forte crescita senza eccessive perdite si può optare per BUY-HOLD: si compra all'inizio e si mantiene il titolo fino alla fine.
     \item Se il mercato crolla, BUY-HOLD segue di conseguenza
+    \begin{figure}
+    \subfigure{\includegraphics[width=.33\linewidth]{ohlc}}
+    \end{figure}
 \end{itemize}
 \end{frame}
 
@@ -148,12 +150,17 @@ quale sia la AI migliore all'interno di ogni criptovaluta: \textit{meta-learner}
 \end{frame}
 
 
-\begin{frame}{Sentyment}
-\framesubtitle{Componenti sviluppati}
-\begin{figure}
-        \centering
-        \includegraphics[width=.9\linewidth]{Sentyment}
-\end{figure}
+\begin{frame}{Risultati e sviluppi futuri}
+\begin{itemize}
+    \item \textit{Meta-learner} riesce sempre a scegliere la AI che sembra migliore, analizzando il grafico
+    \item Il confronto di Sentyment con altri strumenti mostra buoni risultati ed espone punti di forza e debolezze
+    \item In futuro 
+    \begin{itemize}
+        \item Aggiungere un ulteriore livello di learning che sceglie la migliore AI più spesso, cambiando ogni mese sfruttando i brevi picchi di performance
+        \item Applicare \textit{meta-learner} a molte più criptovalute
+        \item Testare altre AI più simili a Sentyment anche rispetto a \textit{maximum profit}
+    \end{itemize}
+\end{itemize}
 \end{frame}
 
 \end{document}
